@@ -10,23 +10,24 @@ module ALU(
 
     always @(A or B or OP)begin
     		case (OP)
-    			5'b01000: RES =  A << 1;
-    			5'b10011: RES = B;
-    			5'b11111: RES = 1'b0;
-    			5'b10000: RES = 0'b0;
+    			5'b01000: RES = A << 1;
+                5'b01001: RES = A >> 1;
+    			5'b10000: RES = 32'b00000000000000000000000000000000;
     			5'b10001: RES = A & B;
     			5'b10010: RES = (~A) & B;
+    			5'b10011: RES = B;
     			5'b10100: RES = A & (~B);
     			5'b10101: RES = A;
     			5'b10110: RES = A ^ B;
     			5'b10111: RES = A | B;
-    			5'b11000: RES = (~A) & (~B);
+    			5'b11000: RES = ~(A & B);
     			5'b11001: RES = ~(A ^ B);
     			5'b11010: RES = (~A);
     			5'b11011: RES = (~A) | (B);
     			5'b11100: RES = (~B);
     			5'b11101: RES = A | (~B);
-    			5'b11110: RES = (~A) | (~B);
+    			5'b11110: RES = ~(A | B);
+    			5'b11111: RES = 32'b11111111111111111111111111111111;
     			default : RES = OP;
     		endcase
         end
