@@ -213,7 +213,7 @@ module ALU_TB;
         OP =        ONES;
         A =         32'b00000000000000000000000000000001;
         B =         32'b00000000000000000000000000000010;
-        ESPERADO =  32'b11111111111111111111111111111111;
+        ESPERADO =  32'b00000000000000000000000000000001;
         #100
         if(RES!=ESPERADO)
             $display("Erro ones:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
