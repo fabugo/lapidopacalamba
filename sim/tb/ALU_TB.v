@@ -33,7 +33,7 @@ module ALU_TB;
                     S,
                     C,
                     Z;
-    ALU u1( .OP(OP),
+    alu u1( .OP(OP),
             .A(A),
             .B(B),
             .RES(RES),
