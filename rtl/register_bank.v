@@ -1,4 +1,4 @@
-module register_bank(RA, RB, WC, WPC, W_RB, PRB, PRA);
+module register_bank(RA, RB, WC, WPC, W_RB, PRA, PRB);
 	input 		RA, RB, WC, WPC, W_RB;
 	output 		PRA, PRB;
 
@@ -9,10 +9,10 @@ module register_bank(RA, RB, WC, WPC, W_RB, PRB, PRA);
 
 	reg[31:0] 	registers[0:15];
 
-	always @(W_RB) begin
-		if (W_RB) begin
+	always @(RA or RB or WC or WPC or W_RB) begin
+		if (W_RB == 1'b1) begin
 						registers[WC] = WPC;
-		end else  begin
+		end else if(W_RB == 1'b0)  begin
 						PRA = registers[RA];
 						PRB = registers[RB];
 		end
