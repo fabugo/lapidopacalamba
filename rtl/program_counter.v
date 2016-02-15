@@ -1,15 +1,17 @@
-module program_counter(W_PC, inPC, outPC);
-	input W_PC;
-	input[31:0] inPC;
-	output[31:0] outPC;
+module program_counter(in, W_PC, CLK, out);
+	input 		in, W_PC, CLK;
+	output 		out;
 
-	wire W_PC, inPC;
-	reg outPC;
+	wire[31:0] 	in;
+	wire 		W_PC;
 
-	always @(W_PC) begin
-		if (W_PC) begin
-			assign outPC = inPC;
-		end
+	reg[31:0] 	pc_reg, out;
+
+	always @(posedge CLK) begin
+		case (W_PC)
+			1'b0:		pc_reg = in;
+			1'b1:		out = pc_reg;
+		endcase
 	end
 
 endmodule

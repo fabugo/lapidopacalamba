@@ -1,4 +1,4 @@
-module program_counter_tb;
+module mx_rb_tb;
 
 	reg[31:0] in;
 	reg W_PC;
