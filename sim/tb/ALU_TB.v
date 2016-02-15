@@ -1,4 +1,4 @@
-module ALU_TB;
+module alu_tb;
     parameter   ADD         = 5'b00000,
                 ADDINC      = 5'b00001,
                 INCA        = 5'b00011,
