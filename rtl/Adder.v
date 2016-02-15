@@ -1,4 +1,4 @@
-module Adder(
+module adder(
   input   [31:0] A,
   input   [31:0] B,
   output  [31:0] Result,
@@ -11,7 +11,7 @@ module Adder(
     genvar 	      i;
     generate
         for(i = 0; i < 32; i = i + 1) begin: gen_Adder32
-            FA fulladd(.A(A[i]), .B(B[i]), .Cin(Carry[i]), .Sum(Result[i]), .Cout(Carry[i+1]));
+            fa fulladd(.A(A[i]), .B(B[i]), .Cin(Carry[i]), .Sum(Result[i]), .Cout(Carry[i+1]));
         end
     endgenerate
 endmodule

@@ -1,4 +1,4 @@
-module FA(
+module fa(
     input A, B, Cin,
     output reg Sum, Cout);
     reg AorxB;

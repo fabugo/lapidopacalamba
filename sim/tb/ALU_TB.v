@@ -1,4 +1,4 @@
-module ALU_TB;
+module alu_tb;
     parameter   LSL         = 5'b01000,
                 ASR         = 5'b01001,
                 ZEROS       = 5'b10000,
@@ -27,7 +27,7 @@ module ALU_TB;
                     S,
                     C,
                     Z;
-    ALU u1( .OP(OP),
+    alu u1( .OP(OP),
             .A(A),
             .B(B),
             .RES(RES),
