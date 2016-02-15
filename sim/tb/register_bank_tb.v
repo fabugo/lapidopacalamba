@@ -1,5 +1,6 @@
 module register_bank_tb;
 
+<<<<<<< HEAD
 	reg[31:0] ZERO, UM, DOIS, TRES, QUATRO, CINCO, SEIS, SETE, OITO, NOVE, DEZ, ONZE, DOZE, TREZE, QUATORZE, QUINZE;
 	
 	parameter	ZERO_32			= 32'b0000,
@@ -161,5 +162,42 @@ if(PRB != TREZE_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPrese
 		#2;
 if(PRA != QUATORZE_4) 	$display("ERRO>> Valor errado em PRA. Esperado: %32b \nPresente: %32b\n", 	QUATORZE_4, PRA);
 if(PRB != QUINZE_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente: %32b\n\n", QUINZE_4, 	PRB);
+=======
+	reg[3:0] 	RA, RB, WC;
+	reg[31:0] 	WPC;
+	reg 		W_RB;
+	wire[31:0] 	PRA, PRB;
+
+	register_bank rb(.RA, .RB, .WC, .WPC, .W_RB, .PRB, .PRA);
+
+	integer i;
+
+	reg[31:0] vec[0:15];
+
+	initial begin
+		$display("Preenchendo vetor");
+		for(i = 0; i < 16; i = i + 1)
+			vec[i] = $random;
+		$display("vetor cheio\n enchendo banco de registros");
+		W_RB = 1'b1;
+		for(i = 0; i < 16; i = i + 1)begin
+			#1
+			WC = i;
+			WPC = vec[i];
+		end
+		$display("banco cheio\n lendo do banco e comparando");
+		#1
+		W_RB = 1'b0;
+		#1
+		for(i = 0; i < 15; i = i + 1)begin
+			RA = i;
+			RB = i+1;
+			#1
+			if(PRA != vec[i] || PRB != vec[i+1])
+				$display("\n>ERRO<\nPRA: %32b\nVEC: %32b\nPRB: %32b\nVEC: %32b",
+													   PRA,vec[i],PRB,vec[i+1]);
+		end
+		$display("fim");
+>>>>>>> 111c1ca3e3be52d915b2ff8e41fdfb5fa5234a5f
 	end
 endmodule
