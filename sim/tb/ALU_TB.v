@@ -77,9 +77,9 @@ module alu_tb;
 -------- mnemonico: subdec c, a, b -- codigo: A - B - 1; -- flags: O S C Z
 ------------------------------------------------------------------------------*/
         OP =        SUBDEC;
-        A =         32'b00000000000000000000000000000001;
+        A =         32'b00000000000000000000000000000010;
         B =         32'b00000000000000000000000000000010;
-        ESPERADO =  32'b00000000000000000000000000000010;
+        ESPERADO =  32'b11111111111111111111111111111111;
         #100
         if(RES!=ESPERADO)
             $display("Erro subdec:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
@@ -87,9 +87,9 @@ module alu_tb;
 -------- mnemonico: sub c, a, b -- codigo: A - B; -- flags: O S C Z
 ------------------------------------------------------------------------------*/
         OP =        SUB;
-        A =         32'b00000000000000000000000000000001;
+        A =         32'b00000000000000000000000000000010;
         B =         32'b00000000000000000000000000000010;
-        ESPERADO =  32'b00000000000000000000000000000010;
+        ESPERADO =  32'b00000000000000000000000000000000;
         #100
         if(RES!=ESPERADO)
             $display("Erro sub:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
@@ -99,7 +99,7 @@ module alu_tb;
         OP =        DECA;
         A =         32'b00000000000000000000000000000001;
         B =         32'b00000000000000000000000000000010;
-        ESPERADO =  32'b00000000000000000000000000000010;
+        ESPERADO =  32'b00000000000000000000000000000000;
         #100
         if(RES!=ESPERADO)
             $display("Erro deca:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
