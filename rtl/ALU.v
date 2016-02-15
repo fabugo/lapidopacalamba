@@ -9,7 +9,7 @@ module alu(
     output reg Z);
     wire [31:0] aux_res;
     wire aux_O, aux_C;
-    adder add32(.A(A),.B(B),.Result(aux_res),.Cout(aux_C),.Over(aux_O));
+    adder32 add32(.A(A),.B(B),.Result(aux_res),.Cout(aux_C),.Over(aux_O));
     always @(A or B or OP)begin
     		case (OP)
                 5'b00000: RES = A + B;

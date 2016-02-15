@@ -54,7 +54,7 @@ module alu_tb;
         if(RES!=ESPERADO)
             $display("Erro add:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
 /*------------------------------------------------------------------------------
--------- mnemonico: addinc c, a -- codigo: A << 1; -- flags: O S C Z
+-------- mnemonico: addinc c, a, b -- codigo: A + B + 1; -- flags: O S C Z
 ------------------------------------------------------------------------------*/
         OP =        ADDINC;
         A =         32'b00000000000000000000000000000001;
@@ -64,7 +64,7 @@ module alu_tb;
         if(RES!=ESPERADO)
             $display("Erro addinc:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
 /*------------------------------------------------------------------------------
--------- mnemonico: inc c, a -- codigo: A << 1; -- flags: O S C Z
+-------- mnemonico: inc c, a -- codigo: A + 1; -- flags: O S C Z
 ------------------------------------------------------------------------------*/
         OP =        INCA;
         A =         32'b00000000000000000000000000000001;
@@ -74,7 +74,7 @@ module alu_tb;
         if(RES!=ESPERADO)
             $display("Erro inca:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
 /*------------------------------------------------------------------------------
--------- mnemonico: subdec c, a -- codigo: A << 1; -- flags: O S C Z
+-------- mnemonico: subdec c, a, b -- codigo: A - B - 1; -- flags: O S C Z
 ------------------------------------------------------------------------------*/
         OP =        SUBDEC;
         A =         32'b00000000000000000000000000000001;
@@ -84,7 +84,7 @@ module alu_tb;
         if(RES!=ESPERADO)
             $display("Erro subdec:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
 /*------------------------------------------------------------------------------
--------- mnemonico: sub c, a -- codigo: A << 1; -- flags: O S C Z
+-------- mnemonico: sub c, a, b -- codigo: A - B; -- flags: O S C Z
 ------------------------------------------------------------------------------*/
         OP =        SUB;
         A =         32'b00000000000000000000000000000001;
@@ -94,7 +94,7 @@ module alu_tb;
         if(RES!=ESPERADO)
             $display("Erro sub:\n Esperado:  %32b\n Resultado: %32b\n",RES,ESPERADO);
 /*------------------------------------------------------------------------------
--------- mnemonico: deca c, a -- codigo: A << 1; -- flags: O S C Z
+-------- mnemonico: deca c, a -- codigo: A - 1; -- flags: O S C Z
 ------------------------------------------------------------------------------*/
         OP =        DECA;
         A =         32'b00000000000000000000000000000001;

@@ -1,4 +1,4 @@
-module fa(
+module fulladder(
     input A, B, Cin,
     output reg Sum, Cout);
     reg AorxB;
