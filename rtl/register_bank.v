@@ -9,7 +9,7 @@ module register_bank(RA, RB, WC, WPC, W_RB, PRB, PRA);
 
 	reg[31:0] 	registers[0:15];
 
-	always @(W_RB) begin
+	always @(*) begin
 		if (W_RB) begin
 						registers[WC] = WPC;
 		end else  begin
