@@ -1,8 +1,8 @@
 module program_counter_tb;
 
-	reg[31:0] in;
-	reg W_PC;
-	wire[31:0] out;
+	reg[31:0] 	in;
+	reg 		W_PC;
+	wire[31:0] 	out;
 
 	reg CLK;
 

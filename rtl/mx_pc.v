@@ -1,14 +1,14 @@
-module mx_pc(in_ALU, in_ADD, S_MXPC, out);
-	input 		in_ALU, in_ADD;
-	input 		S_MXPC;
-	output 		out;
+module mx_pc(
+			input 	wire[31:0]	in_ALU,
+			input 	wire[31:0]	in_ADD,
+			input 	wire		S_MXPC,
+			output 	reg[31:0] 	out);
 
-	wire[31:0] 	in_ALU, in_ADD;
-	wire 		S_MXPC;
-	wire[31:0] 	out;
-
-	assign 		out = (S_MXPC)
-					? in_ADD
-					: in_ALU;
+	always @(in_ALU or in_ADD or S_MXPC) begin
+		case(S_MXPC) 
+			1'b0: out = in_ALU;
+			1'b1: out = in_ADD;
+		endcase
+	end
 
 endmodule

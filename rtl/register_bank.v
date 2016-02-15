@@ -1,21 +1,22 @@
-module register_bank(RA, RB, WC, WPC, W_RB, PRA, PRB);
-	input 		RA, RB, WC, WPC, W_RB;
-	output 		PRA, PRB;
-
-	wire[3:0] 	RA, RB, WC;
-	wire[31:0] 	WPC;
-	wire 		W_RB;
-	reg[31:0] 	PRA, PRB;
+module register_bank(
+			input 	wire[3:0]	RA,
+			input 	wire[3:0]	RB,
+			input 	wire[3:0]	WC,
+			input 	wire[31:0]	WPC,
+			input 	wire		W_RB,
+			output	reg[31:0]	PRA,
+			output	reg[31:0]	PRB);
 
 	reg[31:0] 	registers[0:15];
 
 	always @(RA or RB or WC or WPC or W_RB) begin
-		if (W_RB == 1'b1) begin
-						registers[WC] = WPC;
-		end else if(W_RB == 1'b0)  begin
-						PRA = registers[RA];
-						PRB = registers[RB];
-		end
+		case(W_RB) 
+			1'b0: begin
+					PRA = registers[RA];
+					PRB = registers[RB];
+			end
+			1'b1: 	registers[WC] = WPC;
+		endcase
 	end
 
 endmodule

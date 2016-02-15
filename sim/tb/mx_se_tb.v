@@ -1,62 +1,22 @@
 module mx_se_tb;
 
-	reg[31:0] in;
-	reg W_PC;
-	wire[31:0] out;
+	reg[31:0] 	in_RB, in_SE;
+	reg 		S_MXSE;
+	wire[31:0] 	out;
 
-	reg CLK;
-
-	initial CLK = 0;
-
-	always #5 CLK = ~CLK; 
-
-	program_counter pc(.in(in), .W_PC(W_PC), .CLK(CLK), .out(out));
-
+	mx_se mx(.in_RB(in_RB), .in_SE(in_SE), .S_MXSE(S_MXSE), .out(out));
 	
 	initial begin
-		in = 32'b0;
-		W_PC = 1'b0;
-		#10;
-		W_PC = 1'b1;
-		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
-
-		in = 32'b1;
-		W_PC = 1'b0;
-		#10;
-		W_PC = 1'b1;
-		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
+		in_RB = 32'b11111111111111110000000000000000;
+		in_SE = 32'b00000000000000001111111111111111;
 		
-		in = 32'b10;
-		W_PC = 1'b0;
-		#10;
-		W_PC = 1'b1;
-		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
+		S_MXSE = 1'b0;
+		#1;
+		if(out != in_SE) $display("ERRO>> Out esperado (SE): %32b\n Out atual: %32b\n", in_SE, out);		
 
-		in = 32'b100;
-		W_PC = 1'b0;
-		#10;
-		W_PC = 1'b1;
-		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
+		S_MXSE = 1'b1;
+		#1;
+		if(out != in_RB) $display("ERRO>> Out esperado (RB): %32b\n Out atual: %32b\n", in_RB, out);
 
-		in = 32'b1000;
-		W_PC = 1'b0;
-		#10;
-		W_PC = 1'b1;
-		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
 	end
 endmodule
