@@ -5,7 +5,7 @@ module memory_instruction(
 
 	reg[31:0] 	instruction[0:1024];
 
-	always @() begin
+	always @(*) begin
 	end
 
 endmodule

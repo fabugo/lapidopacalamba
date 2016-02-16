@@ -1,8 +1,7 @@
 module register_bank_tb;
 
-<<<<<<< HEAD
 	reg[31:0] ZERO, UM, DOIS, TRES, QUATRO, CINCO, SEIS, SETE, OITO, NOVE, DEZ, ONZE, DOZE, TREZE, QUATORZE, QUINZE;
-	
+
 	parameter	ZERO_32			= 32'b0000,
 				UM_32 			= 32'b0001,
 				DOIS_32 		= 32'b0010,
@@ -36,15 +35,15 @@ module register_bank_tb;
 				TREZE_4 		= 4'b1101,
 				QUATORZE_4 		= 4'b1110,
 				QUINZE_4 		= 4'b1111;
-	
+
 	reg[3:0] RA, RB, WC;
-	reg[31:0] WPC; 
+	reg[31:0] WPC;
 	reg W_RB;
 
 	wire[31:0]  PRA, PRB;
 
 	register_bank rb(.RA(RA), .RB(RB), .WC(WC), .WPC(WPC), .W_RB(W_RB), .PRA(PRA), .PRB(PRB));
-	
+
 	initial begin
 		WC 		= ZERO_4;
 		WPC 	= ZERO_32;
@@ -126,49 +125,44 @@ if(PRB != UM_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente
 		#2;
 if(PRA != DOIS_4) 	$display("ERRO>> Valor errado em PRA. Esperado: %32b \nPresente: %32b\n", 		DOIS_4, 	PRA);
 if(PRB != TRES_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente: %32b\n\n", 	TRES_4, 	PRB);
-		
+
 		RA 		= QUATRO_4;
 		RB 		= CINCO_4;
 		#2;
 if(PRA != QUATRO_4) 	$display("ERRO>> Valor errado em PRA. Esperado: %32b \nPresente: %32b\n", 	QUATRO_4, 	PRA);
 if(PRB != CINCO_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente: %32b\n\n", 	CINCO_4, 	PRB);
-		
+
 		RA 		= SEIS_4;
 		RB 		= SETE_4;
 		#2;
 if(PRA != SEIS_4) 	$display("ERRO>> Valor errado em PRA. Esperado: %32b \nPresente: %32b\n", 		SEIS_4,		PRA);
 if(PRB != SETE_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente: %32b\n\n", 	SETE_4, 	PRB);
-		
+
 		RA 		= OITO_4;
 		RB 		= NOVE_4;
 		#2;
 if(PRA != OITO_4) 	$display("ERRO>> Valor errado em PRA. Esperado: %32b \nPresente: %32b\n", 		OITO_4, 	PRA);
 if(PRB != NOVE_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente: %32b\n\n", 	NOVE_4, 	PRB);
-		
+
 		RA 		= DEZ_4;
 		RB 		= ONZE_4;
 		#2;
 if(PRA != DEZ_4) 	$display("ERRO>> Valor errado em PRA. Esperado: %32b \nPresente: %32b\n", 		DEZ_4, 		PRA);
 if(PRB != ONZE_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente: %32b\n\n", 	ONZE_4, 	PRB);
-		
+
 		RA 		= DOZE_4;
 		RB 		= TREZE_4;
 		#2;
 if(PRA != DOZE_4) 	$display("ERRO>> Valor errado em PRA. Esperado: %32b \nPresente: %32b\n", 		DOZE_4, 	PRA);
 if(PRB != TREZE_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente: %32b\n\n", 	TREZE_4, 	PRB);
-		
+
 		RA 		= QUATORZE_4;
 		RB 		= QUINZE_4;
 		#2;
 if(PRA != QUATORZE_4) 	$display("ERRO>> Valor errado em PRA. Esperado: %32b \nPresente: %32b\n", 	QUATORZE_4, PRA);
 if(PRB != QUINZE_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPresente: %32b\n\n", QUINZE_4, 	PRB);
-=======
-	reg[3:0] 	RA, RB, WC;
-	reg[31:0] 	WPC;
-	reg 		W_RB;
-	wire[31:0] 	PRA, PRB;
-
-	register_bank rb(.RA, .RB, .WC, .WPC, .W_RB, .PRB, .PRA);
+	end
+//random test
 
 	integer i;
 
@@ -198,6 +192,5 @@ if(PRB != QUINZE_4) 	$display("ERRO>> Valor errado em PRB. Esperado: %32b \nPres
 													   PRA,vec[i],PRB,vec[i+1]);
 		end
 		$display("fim");
->>>>>>> 111c1ca3e3be52d915b2ff8e41fdfb5fa5234a5f
 	end
 endmodule

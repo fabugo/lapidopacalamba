@@ -9,9 +9,8 @@ module register_flags(
 			output 	reg			out_C,
 			output 	reg			out_Z);
 
-	always @() begin
+	always @(*) begin
 		case(W_RF)
-			3'b000:	begin end
 			3'b001: 			out_Z = in_Z;
 			3'b010: begin
 								out_S = in_S;
