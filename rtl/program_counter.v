@@ -5,9 +5,7 @@ module program_counter(
 			output	reg[31:0] 	out);
 
 	always @(posedge CLK) begin
-		case (W_PC)
-			1'b1: out = in;
-		endcase
+		if(W_PC == 1'b1) out = in;
 	end
 
 endmodule

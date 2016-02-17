@@ -14,49 +14,22 @@ module program_counter_tb;
 
 	
 	initial begin
+		$display("\n---------------------------");
+		$display("Teste do PC");
+		$display("Total de testes: 3");
+
 		in = 32'b0;
-		W_PC = 1'b0;
-		#10;
 		W_PC = 1'b1;
 		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
+		$display("Teste 1: %s", (in != out) ? "Erro" : "Sucesso");
 
+		W_PC = 1'b0;
 		in = 32'b1;
-		W_PC = 1'b0;
 		#10;
-		W_PC = 1'b1;
-		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
-		
-		in = 32'b10;
-		W_PC = 1'b0;
-		#10;
-		W_PC = 1'b1;
-		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
+		$display("Teste 2: %s", (in == out) ? "Erro" : "Sucesso");
 
-		in = 32'b100;
-		W_PC = 1'b0;
-		#10;
 		W_PC = 1'b1;
 		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
-
-		in = 32'b1000;
-		W_PC = 1'b0;
-		#10;
-		W_PC = 1'b1;
-		#10;
-if(in != out) $display("ERRO>> Out esperado: %32b\n Out atual: %32b\n", in, out);
-		W_PC = 1'b0;
-		#10;
+		$display("Teste 3: %s", (in != out) ? "Erro" : "Sucesso");
 	end
 endmodule
