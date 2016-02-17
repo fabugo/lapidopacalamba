@@ -8,7 +8,8 @@ module tester_flags(
 			output 	reg			out);
 
 	always @(*) begin
-		case(OP_TF) 								//out = 0, pula; out = 1, não pula
+		case(OP_TF) 								//out = 0, pula (seleciona ALU)
+													//out = 1, não pula (seleciona add pc)
 			3'b111: 			out = 1'b1; 		//Não pula
 			3'b000: begin
 				case(cond)
