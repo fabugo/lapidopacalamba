@@ -49,7 +49,6 @@ always @ (posedge CLK) begin
 		ID: begin
 			case(type)
 				3'b001: begin
-						reg_W_RB 	<= 1'b1;
 						reg_OP_ALU 	<= op;
 						reg_OP_TF 	<= 3'b111;
 						reg_W_RB 	<= 1'b1;
@@ -57,7 +56,7 @@ always @ (posedge CLK) begin
 						reg_S_MXSE 	<= 1'b0;
 						reg_S_MXRB 	<= 2'b10;
 
-					if(op == 5'b10011 || op == 5'b11111)
+					if(op == 5'b11111)
 						reg_W_RF 	<= 3'b000);
 					else if(op == 5'b10000)
 						reg_W_RF 	<= 3'B001);
@@ -69,16 +68,40 @@ always @ (posedge CLK) begin
 						reg_W_RF 	<= 3'b010);
 				end
 				3'b010: begin
-
+					reg_OP_SE	<= 1'b1;
+					reg_OP_ALU 	<= op;
+					reg_OP_TF 	<= 3'b111;
+					reg_W_RB 	<= 1'b1;
+					reg_W_DM 	<= 1'b0;
+					reg_S_MXSE 	<= 1'b1;
+					reg_S_MXRB 	<= 2'b10;
 				end
 				3'b100: begin
-
+					reg_OP_TF 	<= 3'b111;
+					reg_W_RB 	<= ~op[4];
+					reg_W_DM 	<= op[4];
+					reg_W_RF 	<= 3'b000;
+					reg_S_MXSE 	<= 1'b0;
+					reg_S_MXRB 	<= 2'b01;
 				end
 				3'b000: begin
-
+					reg_OP_SE 	<= 1'b0;
+					reg_OP_ALU 	<= 5'b10011;
+					reg_OP_TF 	<= {op[2], op[3], op[4]};
+					reg_W_RB 	<= 1'b0;
+					reg_W_DM 	<= 1'b0;
+					reg_S_MXSE 	<= 1'b1;
+					reg_W_RF 	<= 3'b000;
 				end
 				3'b110: begin
-
+					reg_OP_SE 	<= 1'b0;
+					reg_OP_ALU 	<= 5'b10011;
+					reg_OP_TF 	<= {op[2], op[3], op[4]};
+					reg_W_RB 	<= (reg_OP_TF == 3'b011) ? 1'b1 : 1'b0;
+					reg_W_DM 	<= 1'b0;
+					reg_S_MXSE 	<= 1'b0;
+					reg_W_RF 	<= 3'b000;
+					reg_S_MXRB 	<= 2'b00;
 				end
 			endcase
 		end
