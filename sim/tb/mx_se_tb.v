@@ -17,11 +17,11 @@ module mx_se_tb;
 
 		S_MXSE = 1'b0;
 		#1;
-		$display("Teste 1: %s", (out != in_RB) ? "Erro" : "Sucesso");
+		$display("Executando teste 1: %s", (out != in_RB) ? "Erro" : "Sucesso");
 
 		S_MXSE = 1'b1;
 		#1;
-		$display("Teste 2: %s", (out != in_SE) ? "Erro" : "Sucesso");
+		$display("Executando teste 2: %s", (out != in_SE) ? "Erro" : "Sucesso");
 
 	end
 endmodule

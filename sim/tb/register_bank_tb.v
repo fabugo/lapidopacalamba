@@ -17,7 +17,7 @@ module register_bank_tb;
 		$display("Total de testes: 5");
 
 		for(t = 1; t <= 5; t = t + 1) begin
-			$display("Teste %d: Load/Store em todos os registradores com valores aleatorios", t);
+			$display("Executando teste %d: Load/Store em todos os registradores com valores aleatorios", t);
 			$display("-> Preenchendo vetor com valores aleatorios");
 			for(i = 0; i < 16; i = i + 1)
 				vec[i] = $random;

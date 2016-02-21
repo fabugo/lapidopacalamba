@@ -18,14 +18,14 @@ module mx_rb_tb;
 		
 		S_MXRB = 2'b00;
 		#1;
-		$display("Teste 1: %s", (out != in_PC) ? "Erro" : "Sucesso");
+		$display("Executando teste 1: %s", (out != in_PC) ? "Erro" : "Sucesso");
 
 		S_MXRB = 2'b01;
 		#1;
-		$display("Teste 2: %s", (out != in_DM) ? "Erro" : "Sucesso");
+		$display("Executando teste 2: %s", (out != in_DM) ? "Erro" : "Sucesso");
 
 		S_MXRB = 2'b10;
 		#1;
-		$display("Teste 3: %s", (out != in_ALU) ? "Erro" : "Sucesso");
+		$display("Executando teste 3: %s", (out != in_ALU) ? "Erro" : "Sucesso");
 	end
 endmodule

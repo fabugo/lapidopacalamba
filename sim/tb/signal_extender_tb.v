@@ -27,31 +27,31 @@ module signal_extender_tb;
 		in = ZERO_12;
 		OP_SE = 1'b0;
 		#1
-		$display("Teste 1: %s", (out != ZERO_12E) ? "Erro" : "Sucesso");
+		$display("Executando teste 1: %s", (out != ZERO_12E) ? "Erro" : "Sucesso");
 
 		in = ZERO_16;
 		OP_SE = 1'b1;
 		#1
-		$display("Teste 2: %s", (out != ZERO_16E) ? "Erro" : "Sucesso");
+		$display("Executando teste 2: %s", (out != ZERO_16E) ? "Erro" : "Sucesso");
 
 		in = ONE_12;
 		OP_SE = 1'b0;
 		#1
-		$display("Teste 3: %s", (out != ONE_12E) ? "Erro" : "Sucesso");
+		$display("Executando teste 3: %s", (out != ONE_12E) ? "Erro" : "Sucesso");
 
 		in = ONE_16;
 		OP_SE = 1'b1;
 		#1
-		$display("Teste 4: %s", (out != ONE_16E) ? "Erro" : "Sucesso");
+		$display("Executando teste 4: %s", (out != ONE_16E) ? "Erro" : "Sucesso");
 
 		in = RAND_12;
 		OP_SE = 1'b0;
 		#1
-		$display("Teste 5: %s", (out != RAND_12E) ? "Erro" : "Sucesso");
+		$display("Executando teste 5: %s", (out != RAND_12E) ? "Erro" : "Sucesso");
 
 		in = RAND_16;
 		OP_SE = 1'b1;
 		#1
-		$display("Teste 6: %s", (out != RAND_16E) ? "Erro" : "Sucesso");
+		$display("Executando teste 6: %s", (out != RAND_16E) ? "Erro" : "Sucesso");
 	end
 endmodule

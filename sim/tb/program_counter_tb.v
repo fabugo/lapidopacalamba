@@ -21,15 +21,15 @@ module program_counter_tb;
 		in = 32'b0;
 		W_PC = 1'b1;
 		#10;
-		$display("Teste 1: %s", (in != out) ? "Erro" : "Sucesso");
+		$display("Executando teste 1: %s", (in != out) ? "Erro" : "Sucesso");
 
 		W_PC = 1'b0;
 		in = 32'b1;
 		#10;
-		$display("Teste 2: %s", (in == out) ? "Erro" : "Sucesso");
+		$display("Executando teste 2: %s", (in == out) ? "Erro" : "Sucesso");
 
 		W_PC = 1'b1;
 		#10;
-		$display("Teste 3: %s", (in != out) ? "Erro" : "Sucesso");
+		$display("Executando teste 3: %s", (in != out) ? "Erro" : "Sucesso");
 	end
 endmodule
