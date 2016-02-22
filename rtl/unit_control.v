@@ -6,6 +6,7 @@ module unit_control(
 			output 	reg	[4:0]	OP_ALU,
 			output 	reg	[2:0]	OP_TF,
 			output 	reg			OP_SE,
+			output 	reg			W_PC,
 			output 	reg			W_DM,
 			output 	reg			W_MI,
 			output 	reg			W_RB,
@@ -22,6 +23,7 @@ parameter 	IF = 2'b00,
 
 reg	[4:0]	reg_OP_ALU;
 reg	[2:0]	reg_OP_TF;
+reg 		reg_OP_SE;
 reg			reg_W_DM;
 reg			reg_W_RB;
 reg			reg_W_RF;
@@ -57,15 +59,15 @@ always @ (posedge CLK) begin
 						reg_S_MXRB 	<= 2'b10;
 
 					if(op == 5'b11111)
-						reg_W_RF 	<= 3'b000);
+						reg_W_RF 	<= 3'b000;
 					else if(op == 5'b10000)
-						reg_W_RF 	<= 3'B001);
+						reg_W_RF 	<= 3'B001;
 					else if(startWith(uc.OP_ALU, "01"))
-						reg_W_RF 	<= 3'b011);
+						reg_W_RF 	<= 3'b011;
 					else if(startWith(uc.OP_ALU, "00"))
-						reg_W_RF 	<= 3'b100);
+						reg_W_RF 	<= 3'b100;
 					else
-						reg_W_RF 	<= 3'b010);
+						reg_W_RF 	<= 3'b010;
 				end
 				3'b010: begin
 					reg_OP_SE	<= 1'b1;

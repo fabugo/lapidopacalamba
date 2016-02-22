@@ -1,22 +1,29 @@
 module sub_tb;
     reg     [31:0]  A,
-                    B;
+                    B,
+                    ESPERADO;
     wire    [31:0]  RES;
     wire            O,
                     C;
     reg             Bin;
+    integer i,pass,erro;
+    parameter loops = 99999;
     subtractor32 sub32(.A(A),.B(B),.Bin(Bin),.Result(RES),.Bout(C),.Over(O));
-
     initial begin
-        //carry teste
-        A = 32'b00000000000000000000000000000000;
-        B = 32'b00000000000000000000000000000001;
-        Bin = 0;
-        #2
-        //overflow test
-        A = 32'b10000000000000000000000000000000;
-        B = 32'b00000000000000000000000000000001;
-        Bin = 0;
-        #2;
-    end
-endmodule
+        $display("Executando %d testes",loops);
+            pass = 0; erro = 0;
+            for(i=0; i<loops; i=i+1)begin
+                A = $random;
+                B = $random;
+                Bin = $random;
+                ESPERADO = A-B-Bin;
+                #10
+                if(RES != ESPERADO)begin erro = erro - 1;
+                $display("%d: ERRO!\nA: %b\nB: %B\nEsperado: %b\n Resultado %b\n",i,A,B,ESPERADO,RES);
+                end
+                else                    pass = pass - 1;
+            end
+            if(!erro)   $display("Ta tranquilo, ta favoravel");
+            else        $display("\n\nVish.exe");
+        end
+    endmodule

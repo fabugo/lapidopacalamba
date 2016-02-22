@@ -87,14 +87,27 @@ module alu(
 
 	always@(*) begin
 						RES = aux_RES;
+		//logica de flags
 		if(!RES)		Z = 1;
 		else			Z = 0;
 						S = RES[31];
-		if(OP[2])begin	C = sub_C;
-						O = sub_O;
+		if(OP[4:3] == 2'b01)begin//operacao de deslocamento
+			if(OP[0])	C = A[0];
+			else		C = A[31];
 		end
-		else begin		C = add_C;
+		else begin//operacoes aritimeticas
+			if(OP[2] == 1)begin
+						C = sub_C;
+						O = sub_O;
+			end
+			else if(!OP[2])begin
+						C = add_C;
 						O = add_O;
+			end
+			else begin
+						C = 0;
+						O = 0;
+			end
 		end
 	end
 endmodule
