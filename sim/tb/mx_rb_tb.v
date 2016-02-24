@@ -19,13 +19,16 @@ module mx_rb_tb;
 		S_MXRB = 2'b00;
 		#1;
 		$display("Executando teste 1: %s", (out != in_PC) ? "Erro" : "Sucesso");
+		if(out != in_PC) $display("Saida esperada: %32b. Saida obtida: %32b", in_PC, out);
 
 		S_MXRB = 2'b01;
 		#1;
 		$display("Executando teste 2: %s", (out != in_DM) ? "Erro" : "Sucesso");
+		if(out != in_DM) $display("Saida esperada: %32b. Saida obtida: %32b", in_DM, out);
 
 		S_MXRB = 2'b10;
 		#1;
 		$display("Executando teste 3: %s", (out != in_ALU) ? "Erro" : "Sucesso");
+		if(out != in_ALU) $display("Saida esperada: %32b. Saida obtida: %32b", in_ALU, out);
 	end
 endmodule

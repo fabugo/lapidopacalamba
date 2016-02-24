@@ -2,7 +2,6 @@ module unit_control(
 			input 				CLK,
 			input 		[2:0]	type,
 			input 		[4:0]	op,
-			output	reg	[31:0]	out,
 			output 	reg	[4:0]	OP_ALU,
 			output 	reg	[2:0]	OP_TF,
 			output 	reg			OP_SE,
@@ -31,7 +30,7 @@ reg			reg_S_MXPC;
 reg	[1:0]	reg_S_MXRB;
 reg			reg_S_MXSE;
 
-always @ (STATE or type or op) begin
+always @ (STATE) begin
 	NEXT = IF;
 	case(STATE)
 		IF : NEXT = ID;

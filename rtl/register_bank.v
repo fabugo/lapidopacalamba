@@ -9,7 +9,7 @@ module register_bank(
 
 	reg[31:0] 	registers[0:15];
 
-	always @(RA or RB or WC or WPC or W_RB) begin
+	always @(*) begin
 		case(W_RB) 
 			1'b0: begin
 					PRA = registers[RA];

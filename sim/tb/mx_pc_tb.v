@@ -18,9 +18,11 @@ module mx_pc_tb;
 		S_MXPC = 1'b0;
 		#1;
 		$display("Executando teste 1: %s", (out != in_ALU) ? "Erro" : "Sucesso");
+		if(out != in_ALU) $display("Saida esperada: %32b. Saida obtida: %32b", in_ALU, out);
 		
 		S_MXPC = 1'b1;
 		#1;
 		$display("Executando teste 2: %s", (out != in_ADD) ? "Erro" : "Sucesso");
+		if(out != in_ALU) $display("Saida esperada: %32b. Saida obtida: %32b", in_ADD, out);
 	end
 endmodule

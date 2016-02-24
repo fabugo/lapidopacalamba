@@ -18,10 +18,12 @@ module mx_se_tb;
 		S_MXSE = 1'b0;
 		#1;
 		$display("Executando teste 1: %s", (out != in_RB) ? "Erro" : "Sucesso");
+		if(out != in_RB) $display("Saida esperada: %32b. Saida obtida: %32b", in_RB, out);
 
 		S_MXSE = 1'b1;
 		#1;
 		$display("Executando teste 2: %s", (out != in_SE) ? "Erro" : "Sucesso");
+		if(out != in_SE) $display("Saida esperada: %32b. Saida obtida: %32b", in_SE, out);
 
 	end
 endmodule

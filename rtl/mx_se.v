@@ -4,7 +4,7 @@ module mx_se(
 			input 	wire		S_MXSE,
 			output reg[31:0]	out);
 
-	always @(in_RB or in_SE or S_MXSE) begin
+	always @(*) begin
 		case(S_MXSE) 
 			1'b0: out = in_RB;
 			1'b1: out = in_SE;

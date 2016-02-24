@@ -4,7 +4,7 @@ module mx_pc(
 			input 	wire		S_MXPC,
 			output 	reg[31:0] 	out);
 
-	always @(in_ALU or in_ADD or S_MXPC) begin
+	always @(*) begin
 		case(S_MXPC) 
 			1'b0: out = in_ALU;
 			1'b1: out = in_ADD;
