@@ -1,3 +1,5 @@
+`include "rtl\\modules\\ram.vhd"
+
 module pc_mi_tb();
 	reg CLK;
 	initial CLK = 0;
