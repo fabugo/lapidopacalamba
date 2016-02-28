@@ -7,7 +7,7 @@ module unit_control(
 			output 	reg			OP_SE,
 			output 	reg			W_PC,
 			output 	reg			W_DM,
-			output 	reg			W_MI,
+			output 	reg			W_IM,
 			output 	reg			W_RB,
 			output 	reg			W_RF,
 			output 	reg			S_MXPC,
@@ -45,7 +45,7 @@ always @ (posedge CLK) STATE <= NEXT;
 
 always @ (posedge CLK) begin
 	case(STATE)
-		IF: 			W_MI 	<= 1'b1;
+		IF: 			W_IM 	<= 1'b1;
 
 		ID: begin
 			case(type)
