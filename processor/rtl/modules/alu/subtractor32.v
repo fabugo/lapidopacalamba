@@ -2,7 +2,7 @@ module subtractor32(A, B, borrowIn, result, borrowOut, overflow);
 	
 	input	wire[31:0] 	A, B;
 	input	wire		borrowIn;
-	output  wire[31:0] 	result;
+	output	wire[31:0] 	result;
 	output	wire		borrowOut, overflow;
 
 	wire [32:0]			borrows; //array de todos os borrows

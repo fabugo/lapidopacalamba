@@ -5,7 +5,7 @@ module adder32(A, B, carryIn, result, carryOut, overflow);
 	output  wire [31:0]	result;
 	output	wire		carryOut, overflow;
 
-	wire [32:0]     	carries; //array de todos os carries
+	wire [32:0]			carries; //array de todos os carries
 
 	assign 	carries[0] 	= carryIn;
 	assign 	carryOut 	= carries[32];
