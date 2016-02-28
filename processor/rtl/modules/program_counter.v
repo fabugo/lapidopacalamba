@@ -1,11 +1,15 @@
-module program_counter(
-			input 	wire[31:0]	in,
-			input 	wire		W_PC,
-			input 				CLK,
-			output	reg[31:0] 	out);
+//Módulo para o registrador do contador de programa
+module program_counter(in, W_PC, CLK, out);
 
-	always @(posedge CLK) begin
-		if(W_PC == 1'b1) out <= in;
-	end
+	input 	wire[31:0]	in;
+	input 	wire		W_PC, CLK;
+	output	reg[31:0] 	out;
+
+	/*	
+		Quando W_PC for 1 e o CLK tiver uma borda de subida,
+		o valor da entrada é registrado.
+	*/
+	always @(posedge CLK)
+		if(W_PC == 1'b1) 		out <= in;
 
 endmodule

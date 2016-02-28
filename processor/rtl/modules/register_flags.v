@@ -1,15 +1,15 @@
-module register_flags(
-			input 	wire		in_O,
-			input 	wire		in_S,
-			input 	wire		in_C,
-			input 	wire		in_Z,
-			input	wire[2:0]	W_RF,
-			input 				CLK,
-			output 	reg			out_O,
-			output 	reg			out_S,
-			output 	reg			out_C,
-			output 	reg			out_Z);
+//Módulo do registrador de flags
+module register_flags(in_O, in_S, in_C, in_Z, W_RF, CLK, out_O, out_S, out_C, out_Z);
 	
+	input 	wire		in_O, in_S, in_C, in_Z, CLK;
+	input	wire[2:0]	W_RF;
+	output 	reg			out_O, out_S, out_C, out_Z;
+	
+	/*
+		Quando o CLK tiver uma borda de subida as flags são
+		registradas de acordo com o valor de W_RF.
+		*Com W_RF = 000, nenhuma flag é registrada
+	*/
 	always @(posedge CLK) begin
 		case(W_RF)
 			3'b001: 			out_Z <= in_Z;

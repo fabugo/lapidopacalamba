@@ -1,8 +1,8 @@
 module tester_flags_tb;
 
-	reg O, S, C, Z;
-	reg[2:0] cond, OP_TF;
-	wire  out;
+	reg 		O, S, C, Z;
+	reg	[2:0] 	cond, OP_TF;
+	wire  		out;
 	tester_flags tf(.O(O), .S(S), .C(C), .Z(Z), .cond(cond), .OP_TF(OP_TF), .out(out));
 
 	integer exit, erro;

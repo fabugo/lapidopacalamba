@@ -1,16 +1,18 @@
-module tester_flags(
-			input 	wire		O,
-			input 	wire		S,
-			input 	wire		C,
-			input 	wire		Z,
-			input 	wire[2:0]	cond,
-			input	wire[2:0]	OP_TF,
-			output 	reg			out);
+//Módulo do testador de flags (combinacional)
+module tester_flags(O, S, C, Z, cond, OP_TF, out);
+	
+	input 	wire		O, S, C, Z;
+	input 	wire[2:0]	cond, OP_TF;
+	output 	reg			out;
 
+	/*	
+		A saída out é usada como seleção para o mux MX_PC.
+		Quando out = 0, o pulo é executado. (No MX_PC, a entrada da ALU é selecionada)
+		Quando out = 1, o pulo não é executado. (No MX_PC, a entrada do somador é selecionada)
+	*/
 	always @(*) begin
-		case(OP_TF) 								//out = 0, pula (seleciona ALU)
-													//out = 1, não pula (seleciona add pc)
-			3'b111: 			out = 1'b1; 		//Não pula
+		case(OP_TF)
+			3'b111: 			out = 1'b1; 		//outras instr.	-> nunca pula
 			3'b000: begin
 				case(cond)
 					3'b000: 	out = 1'b1;			//jf.true 		-> nunca pula
