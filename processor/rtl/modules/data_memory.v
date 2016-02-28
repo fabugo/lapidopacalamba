@@ -17,16 +17,16 @@ module data_memory(
 			ram_mem[i] = {32{1'b0}};
 
 	assign Q = ram_mem[ADDRESS];
-	
+
 	always @(posedge CLK)
 		if (WE == 1'b1)
 			ram_mem[ADDRESS] <= DATA;
 
 	always @(read_file)
 		if(read_file == 1'b1)
-			$readmemh("data/rom.out", ram_mem);
+			$readmemh("data/dm.in", ram_mem);
 
 	always @(write_file)
 		if(write_file == 1'b1)
-			$writememh("data/data.out", ram_mem);
+			$writememh("data/dm.out", ram_mem);
 endmodule
