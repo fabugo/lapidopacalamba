@@ -9,21 +9,19 @@ module if_tb();
          				DATA;
         wire    [31:0]	nextPCout,
            				instruction;
+		IF u1(	.CLK(CLK),
+		    	.S_MXPC(S_MXPC),
+		    	.W_PC(W_PC),
+		    	.read_file(read_file),
+		    	.write_file(write_file),
+		    	.WE(WE),
+		    	.dataALU(dataALU),
+		    	.DATA(DATA),
+		    	.nextPCout(nextPCout),
+		    	.instruction(instruction)
+			);
 
-		initial 	CLK = 0;
-		always #5 	CLK = ~CLK;
-
-IF u1(	.CLK(CLK),
-    	.S_MXPC(S_MXPC),
-    	.W_PC(W_PC),
-    	.read_file(read_file),
-    	.write_file(write_file),
-    	.WE(WE),
-    	.dataALU(dataALU),
-    	.DATA(DATA),
-    	.nextPCout(nextPCout),
-    	.instruction(instruction)
-	);
+	always #5 	CLK = ~CLK;
 	initial begin
 		$display("\n---------------------------");
 		$display("Teste de integracao (IF)");
