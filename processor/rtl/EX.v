@@ -23,8 +23,7 @@ module EX(	input 	wire 		CLK,
 			output 	wire 		alu_O,
 			output 	wire 		alu_S,
 			output 	wire 		alu_C,
-			output 	wire 		alu_Z
-	);
+			output 	wire 		alu_Z);
 
 	wire[31:0] mxse_out;
 	

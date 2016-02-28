@@ -1,4 +1,21 @@
 module processor();
+	reg CLK;
+	initial CLK = 0;
+	always @(CLK) #5 CLK = ~CLK;
+
+	wire 		tf_out;
+	wire[31:0]	dm_Q;
+	wire[31:0]	alu_result;
+	wire 		alu_O;
+	wire 		alu_S;
+	wire 		alu_C;
+	wire 		alu_Z;
+
+	wire[31:0]	mxrb_out;
+	wire 		rf_O;
+	wire 		rf_S;
+	wire 		rf_C;
+	wire 		rf_Z;
 
 	IF if(	.CLK(CLK),
 			.S_MXPC(S_MXPC),
@@ -11,7 +28,22 @@ module processor();
 			.nextPCout(nextPCout),
 			.instruction(instruction));
 
-	//ID id();
+	ID id(	.CLK(CLK),
+			.instruction(instruction),
+			.WPC(WPC),
+			.PRA(PRA),
+			.PRB(PRB),
+			.outSE(outSE),
+			.cond(cond),
+			.OP_ALU(OP_ALU),
+			.OP_TF(OP_TF),
+			.W_PC(W_PC),
+			.W_DM(W_DM),
+			.W_IM(W_IM),
+			.W_RF(W_RF),
+			.S_MXPC(S_MXPC),
+			.S_MXRB(S_MXRB),
+			.S_MXSE(S_MXSE));
 
 	EX ex(	.CLK(CLK),
 			.rb_PRA(rb_PRA),
