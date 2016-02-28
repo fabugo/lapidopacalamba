@@ -102,7 +102,7 @@ O objetivo deste documento de arquitetura é definir as especificações do proc
     WC      & Write C - Escreve C\\ \hline
     COND    & Condição\\ \hline
     Const16 & Constante de 16 bits \\ \hline
-    MI     & Memory Instruction (Memória de Instruções)\\ \hline
+    IM     & Instruction Memory (Memória de Instruções)\\ \hline
 	PC     & Program Counter (Contador de Programa)\\ \hline
 	RB     & Banco de Registradores\\ \hline
 	UC     & Unit Control (Unidade de Controle)\\ \hline
@@ -173,7 +173,7 @@ Os requisitos foram atendidos, de forma que as instruções, apresentadas nas se
 \section{Visão Geral da Arquitetura}
 Este documento descreve um processador µRISC adaptado à 32 bits. Esse processador possui 16 registradores de propósito geral e é composto por um conjunto de 42 instruções. 
 
-Para uma instrução ser executada são necessários quatro ciclos. Esses ciclos são denominados IF, ID, EX/MEN e WB, como apresentado na figura abaixo. No primeiro ciclo (IF),  a próxima instrução a ser executada, definida pelo contador de programa (PC), é lida da memória de instruções (MI). No segundo ciclo (ID), a instrução é identificada e os operandos são lidos do banco de registradores ou, em caso de operações com constantes, manipulados pelo extensor de sinal (SE). No terceiro ciclo (EX/MEM), a instrução é executa pela unidade lógica aritmética (ALU) ou pela memória, em caso de operações de armazenamento ou leitura. No quarto ciclo (WB), os resultados são escritos no banco de registradores.
+Para uma instrução ser executada são necessários quatro ciclos. Esses ciclos são denominados IF, ID, EX/MEN e WB, como apresentado na figura abaixo. No primeiro ciclo (IF),  a próxima instrução a ser executada, definida pelo contador de programa (PC), é lida da memória de instruções (IM). No segundo ciclo (ID), a instrução é identificada e os operandos são lidos do banco de registradores ou, em caso de operações com constantes, manipulados pelo extensor de sinal (SE). No terceiro ciclo (EX/MEM), a instrução é executa pela unidade lógica aritmética (ALU) ou pela memória, em caso de operações de armazenamento ou leitura. No quarto ciclo (WB), os resultados são escritos no banco de registradores.
 
 \begin{figure}[H]
 \centering
@@ -546,7 +546,7 @@ Tem como funcionalidade armazenar todas as instruções do programa a ser execut
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.3\textwidth]{./pictures/MI.PNG}
+\includegraphics[width=0.3\textwidth]{./pictures/IM.PNG}
 \caption{Memória de Instruções}
 \end{figure}
 
@@ -563,8 +563,8 @@ Tem como funcionalidade armazenar todas as instruções do programa a ser execut
        RI       & 32 & Entrada & Endereço da instrução a ser lida\\ \hline
        WI       & 32 & Entrada & Endereço de entrada na memória de instrução \\ \hline
        I        & 32 & Saída   & Instrução atual \\ \hline
-       W\_MI    & 1 & Entrada  & Sinal que habilita a leitura \\ \hline
-       RST\_MI  & 1 & Entrada  & Sinal que limpa a memória de instruções \\ \hline
+       W\_IM    & 1 & Entrada  & Sinal que habilita a leitura \\ \hline
+       RST\_IM  & 1 & Entrada  & Sinal que limpa a memória de instruções \\ \hline
        
     \end{tabular}
     \caption{Tabela de Sinais da Memória de Instruções}
