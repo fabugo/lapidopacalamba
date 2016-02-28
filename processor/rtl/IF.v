@@ -8,7 +8,6 @@ module IF(	input 	wire 		CLK,
 			input	wire 		im_write_file,
 			input	wire[31:0] 	im_DATA,		//Apenas para teste
 			input	wire 	 	im_WE,			//Apenas para teste
-			input	wire 		im_write_file,
 			output 	wire[31:0]	im_instruction,
 			
 			input	wire 		pc_WPC);
@@ -37,7 +36,7 @@ module IF(	input 	wire 		CLK,
 							.write_file(im_write_file),
 							.WE(im_WE),
 							.CLK(CLK),
-							.ADDRESS(pc_out),
+							.ADDRESS(pc_out[9:0]),
 							.DATA(im_DATA),
 							.Q(im_instruction));
 

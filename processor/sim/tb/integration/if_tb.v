@@ -7,7 +7,6 @@ module if_tb();
 	reg 		im_write_file;
 	reg[31:0] 	im_DATA;
 	reg 	 	im_WE;
-	reg 		im_write_file;
 	wire[31:0]	im_instruction;
 	reg 		pc_WPC;
 
@@ -19,7 +18,6 @@ module if_tb();
 			.im_write_file(im_write_file),
 			.im_DATA(im_DATA),
 			.im_WE(im_WE),
-			.im_write_file(im_write_file),
 			.im_instruction(im_instruction),
 			.pc_WPC(pc_WPC));
 
