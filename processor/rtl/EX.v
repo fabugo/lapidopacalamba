@@ -40,7 +40,7 @@ module EX(	input 	wire 		CLK,
 					.write_file(dm_write_file),
 					.WE(dm_WE),
 					.CLK(CLK),
-					.ADDRESS(rb_PRB),
+					.ADDRESS(rb_PRB[9:0]),
 					.DATA(rb_PRA),
 					.Q(dm_Q));
 
