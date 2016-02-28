@@ -13,7 +13,7 @@ module alu_tb;
     alu u1( .OP(OP),
             .A(A),
             .B(B),
-            .RES(RES),
+            .result(RES),
             .O(O),
             .S(S),
             .C(C),

@@ -1,14 +1,11 @@
-module instruction_memory(
-			input 				read_file,
-			input 				write_file,
-			input 				WE,
-			input 				CLK,
-			input 		[9:0]	ADDRESS,
-			input 		[31:0]	DATA,
-			output 		[31:0]	Q);
+module instruction_memory(read_file, write_file, WE, CLK, ADDRESS, DATA, Q);
+	
+	input	wire 		read_file, write_file, WE, CLK;
+	input 	wire[9:0]	ADDRESS;
+	input 	wire[31:0]	DATA;
+	output 	wire[31:0]	Q;
 
 	parameter dim = 1024;
-
 	reg[31:0] ram_mem[0:dim-1];
 
 	integer i;
@@ -24,9 +21,9 @@ module instruction_memory(
 
 	always @(read_file)
 		if(read_file == 1'b1)
-			$readmemh("data/im.in", ram_mem);
+			$readmemb("data/im.in", ram_mem);
 
 	always @(write_file)
 		if(write_file == 1'b1)
-			$writememh("data/im.out", ram_mem);
+			$writememb("data/im.out", ram_mem);
 endmodule
