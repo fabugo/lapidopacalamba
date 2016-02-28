@@ -1,4 +1,4 @@
-module memory_instruction(
+module instruction_memory(
 			input 				CLK,
 			input 		[2:0]	type,
 			input 		[4:0]	op,
