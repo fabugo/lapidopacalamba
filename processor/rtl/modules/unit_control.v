@@ -61,9 +61,9 @@ always @ (posedge CLK) begin
 						reg_W_RF 	<= 3'b000;
 					else if(op == 5'b10000)
 						reg_W_RF 	<= 3'B001;
-					else if(startWith(uc.OP_ALU, "01"))
+					else if(op[4:3] == 2'b01)
 						reg_W_RF 	<= 3'b011;
-					else if(startWith(uc.OP_ALU, "00"))
+					else if(op[4:3] == 2'b00)
 						reg_W_RF 	<= 3'b100;
 					else
 						reg_W_RF 	<= 3'b010;
