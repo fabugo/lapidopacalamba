@@ -1,44 +1,44 @@
 module IF(	input 	wire 		CLK,
 
-			input	wire 		S_MXPC,
-			input	wire 		W_PC,
-			input	wire 		read_file,
-			input	wire 		write_file,
-			input	wire 		WE,
-			input	wire[31:0]	dataALU,
-			input	wire[31:0]	DATA,
-			output	wire[31:0]	nextPCout,
-			output	wire[31:0]	instruction);
+			input 	wire[31:0]	alu_result,
+			input 	wire 		tf_out,
+			output 	wire[31:0]	mxpc_out,
 
-	wire [31:0] nextPCin;
-	wire [31:0] pcpp;//pc+1
-	wire [31:0] currentPC;
+			input	wire 		im_read_file,
+			input	wire 		im_write_file,
+			input	wire[31:0] 	im_DATA,		//Apenas para teste
+			input	wire 	 	im_WE,			//Apenas para teste
+			input	wire 		im_write_file,
+			output 	wire[31:0]	im_instruction,
+			
+			input	wire 		pc_WPC);
 
-	assign nextPCout = nextPCin;
+	wire[31:0] add_out; //pc+1
+	wire[31:0] pc_out;
 
-	mx_pc mxpc(.in_ALU(dataALU),
-				.in_ADD(pcpp),
-				.S_MXPC(S_MXPC),
-				.out(nextPCin));
+	mx_pc mxpc(	.in_ALU(alu_result),
+				.in_ADD(add_out),
+				.S_MXPC(tf_out),
+				.out(mxpc_out));
 
-	adder32 add(.A(currentPC),
+	adder32 add(.A(pc_out),
 				.B(32'b1),
-				.Cin(1'b0),
-				.Result(pcpp),
-				.Cout(),
-				.Over());
+				.carryIn(1'b0),
+				.result(add_out),
+				.carryOut(),
+				.overflow());
 
-	program_counter pc( .in(nextPCin),
-						.W_PC(W_PC),
+	program_counter pc( .in(mxpc_out),
+						.W_PC(pc_WPC),
 						.CLK(CLK),
-						.out(currentPC));
+						.out(pc_out));
 
-	instruction_memory im(	.read_file(read_file),
-							.write_file(write_file),
-							.WE(WE),
+	instruction_memory im(	.read_file(im_read_file),
+							.write_file(im_write_file),
+							.WE(im_WE),
 							.CLK(CLK),
-							.ADDRESS(currentPC),
-							.DATA(DATA),
-							.Q(instruction));
+							.ADDRESS(pc_out),
+							.DATA(im_DATA),
+							.Q(im_instruction));
 
 endmodule

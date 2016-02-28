@@ -1,42 +1,44 @@
 module if_tb();
-		reg 			CLK,
-                 		S_MXPC,
-                  		W_PC,
-         				read_file,
-         				write_file,
-         				WE;
-        reg     [31:0]	dataALU,
-         				DATA;
-        wire    [31:0]	nextPCout,
-           				instruction;
-		IF u1(	.CLK(CLK),
-		    	.S_MXPC(S_MXPC),
-		    	.W_PC(W_PC),
-		    	.read_file(read_file),
-		    	.write_file(write_file),
-		    	.WE(WE),
-		    	.dataALU(dataALU),
-		    	.DATA(DATA),
-		    	.nextPCout(nextPCout),
-		    	.instruction(instruction)
-			);
+	reg 		CLK;
+	reg[31:0]	alu_result;
+	reg 		tf_out;
+	wire[31:0]	mxpc_out;
+	reg 		im_read_file;
+	reg 		im_write_file;
+	reg[31:0] 	im_DATA;
+	reg 	 	im_WE;
+	reg 		im_write_file;
+	wire[31:0]	im_instruction;
+	reg 		pc_WPC;
+
+	IF id(	.CLK(CLK),
+			.alu_result(alu_result),
+			.tf_out(tf_out),
+			.mxpc_out(mxpc_out),
+			.im_read_file(im_read_file),
+			.im_write_file(im_write_file),
+			.im_DATA(im_DATA),
+			.im_WE(im_WE),
+			.im_write_file(im_write_file),
+			.im_instruction(im_instruction),
+			.pc_WPC(pc_WPC));
 
 	always #5 	CLK = ~CLK;
 	initial begin
 		$display("\n---------------------------");
 		$display("Teste de integracao (IF)");
-				CLK=		0;
-				S_MXPC=		0;
-				W_PC=		0;
-				read_file=	0;
-				write_file=	0;
-				WE=			0;
-				dataALU=	0;
-				DATA=		0;
-			#100
-			read_file = 1;
-			#100
-			read_file = 0;
 		$display("Total de testes: ");
+				CLK=			0;
+				tf_out=			0;
+				pc_WPC=			0;
+				im_read_file=	0;
+				im_write_file=	0;
+				im_WE=			0;
+				alu_result=		0;
+				im_DATA=		0;
+			#100
+			im_read_file = 1;
+			#100
+			im_read_file = 0;
 	end
 endmodule
