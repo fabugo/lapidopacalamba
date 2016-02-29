@@ -4,13 +4,13 @@ module wb_tb();
 	reg	[31:0]	mxpc_out;
 	reg	[31:0]	dm_Q;
 	reg	[31:0]	alu_result;
-	reg	[1:0]	mxrb_SMXRB;
+	reg	[1:0]	uc_S_MXRB;
 	wire[31:0]	mxrb_out;
 	reg 		alu_O;
 	reg 		alu_S;
 	reg 		alu_C;
 	reg 		alu_Z;
-	reg	[2:0]	rf_WRF;
+	reg	[2:0]	uc_W_RF;
 	wire 		rf_O;
 	wire 		rf_S;
 	wire 		rf_C;
@@ -20,13 +20,13 @@ module wb_tb();
 			.mxpc_out(mxpc_out),
 			.dm_Q(dm_Q),
 			.alu_result(alu_result),
-			.mxrb_SMXRB(mxrb_SMXRB),
+			.uc_S_MXRB(uc_S_MXRB),
 			.mxrb_out(mxrb_out),
 			.alu_O(alu_O),
 			.alu_S(alu_S),
 			.alu_C(alu_C),
 			.alu_Z(alu_Z),
-			.rf_WRF(rf_WRF),
+			.uc_W_RF(uc_W_RF),
 			.rf_O(rf_O),
 			.rf_S(rf_S),
 			.rf_C(rf_C),

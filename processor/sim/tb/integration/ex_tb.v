@@ -4,19 +4,19 @@ module ex_tb();
 	reg	[31:0]	rb_PRA;
 	reg	[31:0]	rb_PRB;
 	reg	[31:0]	se_out;
-	reg 		mxse_SMXSE;
+	reg 		uc_S_MXSE;
 	reg 		rf_O;
 	reg 		rf_S;
 	reg 		rf_C;
 	reg 		rf_Z;
 	reg	[2:0]	tf_cond;
-	reg	[2:0]	tf_OPTF;
+	reg	[2:0]	uc_OP_TF;
 	wire 		tf_out;
 	reg 		dm_read_file;
 	reg 		dm_write_file;
-	reg 		dm_WDM;
+	reg 		uc_WE;
 	wire[31:0]	dm_Q;
-	reg	[4:0]	alu_OPALU;
+	reg	[4:0]	uc_OP_ALU;
 	wire[31:0]	alu_result;
 	wire 		alu_O;
 	wire 		alu_S;
@@ -27,19 +27,19 @@ module ex_tb();
 			.rb_PRA(rb_PRA),
 			.rb_PRB(rb_PRB),
 			.se_out(se_out),
-			.mxse_SMXSE(mxse_SMXSE),
+			.uc_S_MXSE(uc_S_MXSE),
 			.rf_O(rf_O),
 			.rf_S(rf_S),
 			.rf_C(rf_C),
 			.rf_Z(rf_Z),
 			.tf_cond(tf_cond),
-			.tf_OPTF(tf_OPTF),
+			.uc_OP_TF(uc_OP_TF),
 			.tf_out(tf_out),
 			.dm_read_file(dm_read_file),
 			.dm_write_file(dm_write_file),
-			.dm_WDM(dm_WDM),
+			.uc_WE(uc_WE),
 			.dm_Q(dm_Q),
-			.alu_OPALU(alu_OPALU),
+			.uc_OP_ALU(uc_OP_ALU),
 			.alu_result(alu_result),
 			.alu_O(alu_O),
 			.alu_S(alu_S),
