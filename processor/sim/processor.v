@@ -44,7 +44,7 @@ module processor();
 			.im_DATA(),
 			.im_WE(),
 			.im_instruction(im_instruction),
-			.pc_WPC(uc_W_PC));
+			.uc_W_PC(uc_W_PC));
 
 	ID id(	.CLK(CLK),
 			.im_instruction(im_instruction),
