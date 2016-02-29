@@ -6,17 +6,39 @@ module unit_control_tb;
 	always #5 CLK = ~CLK;
 
 	reg [31:0]	instr;
-	reg	[4:0]	OP_ALU;
-	reg	[2:0]	OP_TF;
-	wire		OP_SE, W_PC, W_DM, W_MI, W_RB, W_RF, S_MXPC, S_MXSE;
-	reg	[1:0]	S_MXRB;
-	unit_control u2(.CLK(CLK), .type(instr[31:29]), .OP(instr[28:24]), .OP_SE(OP_SE), .W_PC(W_PC), .W_DM(W_DM), .W_MI(W_MI), .W_RB(W_RB), .W_RF(W_RF), .S_MXPC(S_MXPC), .S_MXRB(S_MXRB), .S_MXSE(S_MXSE));
+	wire[4:0]	OP_ALU;
+	wire[2:0]	OP_TF;
+	wire		OP_SE;
+	wire		W_PC;
+	wire		W_DM;
+	wire		W_IM;
+	wire		W_RB;
+	wire[2:0]	W_RF;
+	wire		S_MXPC;
+	wire[1:0]	S_MXRB;
+	wire		S_MXSE;
+
+
+	unit_control uc(.CLK(CLK),
+					.type(instr[31:29]),
+					.op(instr[28:24]),
+					.OP_ALU(OP_ALU),
+					.OP_TF(OP_TF),
+					.OP_SE(OP_SE),
+					.W_PC(W_PC),
+					.W_DM(W_DM),
+					.W_IM(W_IM),
+					.W_RB(W_RB),
+					.W_RF(W_RF),
+					.S_MXPC(S_MXPC),
+					.S_MXRB(S_MXRB),
+					.S_MXSE(S_MXSE));
 
 	integer erro;
 
 	initial begin
 		$display("\n---------------------------");
-		$display("Executando teste da Unidade de Controls");
+		$display("Executando teste da Unidade de Controle");
 		$display("Total de testes: ");
 
 		// Operacões Artimetica

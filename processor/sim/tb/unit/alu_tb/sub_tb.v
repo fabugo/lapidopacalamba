@@ -8,7 +8,7 @@ module sub_tb;
     reg             Bin;
     integer i,pass,erro;
     parameter loops = 99999;
-    subtractor32 sub32(.A(A),.B(B),.Bin(Bin),.Result(RES),.Bout(C),.Over(O));
+    subtractor32 subtractor32(.A(A),.B(B),.borrowIn(Bin),.result(RES),.borrowOut(C),.overflow(O));
     initial begin
         $display("Executando %d testes",loops);
             pass = 0; erro = 0;

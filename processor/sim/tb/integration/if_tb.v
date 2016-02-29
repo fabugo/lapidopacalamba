@@ -1,4 +1,5 @@
 module if_tb();
+
 	reg 		CLK;
 	reg[31:0]	alu_result;
 	reg 		tf_out;

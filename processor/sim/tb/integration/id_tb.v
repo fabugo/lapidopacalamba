@@ -1,4 +1,5 @@
 module id_tb();
+
 	reg			CLK;
 	reg [31:0]	im_instruction;
 	reg [31:0]	rb_WPC;

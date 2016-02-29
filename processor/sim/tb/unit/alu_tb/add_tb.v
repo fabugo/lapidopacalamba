@@ -19,7 +19,7 @@ module add_tb;
             ESPERADO = A+B+Cin;
             #10
             if(RES != ESPERADO)begin erro = erro + 1;
-            $display("%d: ERRO!\nA: %b\nB: %B\nEsperado: %b\n Resultado %b\n",i,A,B,ESPERADO,RES);
+            $display("%d: ERRO!\nA: %b\nB: %B\nEsperado: %b\nResultado %b\n",i,A,B,ESPERADO,RES);
             end
             else                    pass = pass + 1;
         end

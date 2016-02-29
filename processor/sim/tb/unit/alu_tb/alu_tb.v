@@ -1,4 +1,4 @@
-`include "processor\\rtl\\Defines.vh"
+`include "rtl\\Defines.vh"
 
 module alu_tb;
     reg     [4:0]   OP;
