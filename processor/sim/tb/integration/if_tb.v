@@ -2,7 +2,7 @@ module if_tb();
 	reg 		CLK;
 	reg[31:0]	alu_result;
 	reg 		tf_out;
-	reg 		pc_W_PC;
+	reg 		uc_W_PC;
 	wire[31:0]	mxpc_out;
 
 	reg 		im_read_file;
@@ -20,13 +20,13 @@ module if_tb();
 			.im_DATA(im_DATA),
 			.im_WE(im_WE),
 			.im_instruction(im_instruction),
-			.pc_W_PC(pc_W_PC));
+			.uc_W_PC(uc_W_PC));
 
 	always #5 	CLK = ~CLK;
 	initial begin
 		CLK				=	0;
 		tf_out			=	0;
-		pc_W_PC			=	0;
+		uc_W_PC			=	0;
 		im_read_file	=	0;
 		im_write_file	=	0;
 		im_WE			=	0;
@@ -35,7 +35,7 @@ module if_tb();
 		$display("\n---------------------------");
 		alu_result 	= 32'b0;
 		tf_out 		= 0;
-		pc_W_PC 	= 1;
+		uc_W_PC 	= 1;
 		//			add r8, r12, r9
 		im_DATA = 32'b00100000100011001001000000000000;
 		im_WE = 1;
