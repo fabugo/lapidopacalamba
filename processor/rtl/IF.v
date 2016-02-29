@@ -9,8 +9,8 @@ module IF(	input 	wire 		CLK,
 			input	wire[31:0] 	im_DATA,		//Apenas para teste
 			input	wire 	 	im_WE,			//Apenas para teste
 			output 	wire[31:0]	im_instruction,
-			
-			input	wire 		pc_WPC);
+
+			input	wire 		pc_W_PC);
 
 	wire[31:0] add_out; //pc+1
 	wire[31:0] pc_out;
@@ -28,7 +28,7 @@ module IF(	input 	wire 		CLK,
 				.overflow());
 
 	program_counter pc( .in(mxpc_out),
-						.W_PC(pc_WPC),
+						.W_PC(pc_W_PC),
 						.CLK(CLK),
 						.out(pc_out));
 

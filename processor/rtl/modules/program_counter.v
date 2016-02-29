@@ -5,7 +5,7 @@ module program_counter(in, W_PC, CLK, out);
 	input 	wire		W_PC, CLK;
 	output	reg[31:0] 	out;
 
-	/*	
+	/*
 		Quando W_PC for 1 e o CLK tiver uma borda de subida,
 		o valor da entrada é registrado.
 	*/
