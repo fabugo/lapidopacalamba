@@ -1,7 +1,12 @@
 module processor();
+	parameter PERIOD = 5;
+
 	reg CLK;
 	initial CLK = 0;
-	always @(CLK) #5 CLK = ~CLK;
+	always #PERIOD CLK = ~CLK;
+
+	reg 		uc_RESET;
+	reg 		pc_RESET;
 
 	wire[31:0]	mxpc_out;
 	reg 		im_read_file;
@@ -44,7 +49,8 @@ module processor();
 			.im_DATA(),
 			.im_WE(),
 			.im_instruction(im_instruction),
-			.uc_W_PC(uc_W_PC));
+			.uc_W_PC(uc_W_PC),
+			.pc_RESET(pc_RESET));
 
 	ID id(	.CLK(CLK),
 			.im_instruction(im_instruction),
@@ -52,6 +58,7 @@ module processor();
 			.rb_PRA(rb_PRA),
 			.rb_PRB(rb_PRB),
 			.se_out(se_out),
+			.uc_RESET(uc_RESET),
 			.uc_OP_ALU(uc_OP_ALU),
 			.uc_OP_TF(uc_OP_TF),
 			.uc_W_PC(uc_W_PC),
@@ -100,5 +107,18 @@ module processor();
 			.rf_S(rf_S),
 			.rf_C(rf_C),
 			.rf_Z(rf_Z));
+
+	initial begin
+		im_read_file = 1;
+		#PERIOD
+
+		uc_RESET = 1;
+		pc_RESET = 1;
+		#PERIOD
+
+		uc_RESET = 0;
+		pc_RESET = 0;
+		#1000;
+	end
 
 endmodule

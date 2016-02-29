@@ -4,6 +4,7 @@ module if_tb();
 	reg[31:0]	alu_result;
 	reg 		tf_out;
 	reg 		uc_W_PC;
+	reg			pc_RESET;
 	wire[31:0]	mxpc_out;
 
 	reg 		im_read_file;
@@ -21,7 +22,8 @@ module if_tb();
 			.im_DATA(im_DATA),
 			.im_WE(im_WE),
 			.im_instruction(im_instruction),
-			.uc_W_PC(uc_W_PC));
+			.uc_W_PC(uc_W_PC),
+			.pc_RESET(pc_RESET));
 
 	always #5 	CLK = ~CLK;
 	initial begin

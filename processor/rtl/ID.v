@@ -8,6 +8,8 @@ module ID(	input	wire		CLK,
 
 			output	wire[31:0]	se_out,
 
+			input 	wire		uc_RESET,
+
 			output	wire[4:0]	uc_OP_ALU,
 			output	wire[2:0]	uc_OP_TF,
 			output	wire		uc_W_PC,
@@ -24,6 +26,7 @@ module ID(	input	wire		CLK,
 	unit_control uc(.CLK(CLK),
 					.type(im_instruction[31:29]),
 					.op(im_instruction[28:24]),
+					.RESET(uc_RESET),
 					.OP_ALU(uc_OP_ALU),
 					.OP_TF(uc_OP_TF),
 					.OP_SE(OP_SE),

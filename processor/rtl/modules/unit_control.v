@@ -1,6 +1,7 @@
-module unit_control(	input 				CLK,
-						input 		[2:0]	type,
-						input 		[4:0]	op,
+module unit_control(	input 	wire		CLK,
+						input 	wire[2:0]	type,
+						input 	wire[4:0]	op,
+						input	wire		RESET,
 						output 	reg	[4:0]	OP_ALU,
 						output 	reg	[2:0]	OP_TF,
 						output 	reg			OP_SE,
@@ -40,7 +41,7 @@ module unit_control(	input 				CLK,
 		endcase
 	end
 
-	always @ (posedge CLK) STATE <= NEXT;
+	always @ (posedge CLK) STATE <= (RESET) ? IF : NEXT;
 
 	always @ (posedge CLK) begin
 		case(STATE)

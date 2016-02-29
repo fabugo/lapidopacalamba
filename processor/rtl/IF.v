@@ -10,7 +10,8 @@ module IF(	input 	wire 		CLK,
 			input	wire 	 	im_WE,			//Apenas para teste
 			output 	wire[31:0]	im_instruction,
 
-			input	wire 		uc_W_PC);
+			input	wire 		uc_W_PC,
+			input	wire 		pc_RESET);
 
 	wire[31:0] add_out; //pc+1
 	wire[31:0] pc_out;
@@ -30,6 +31,7 @@ module IF(	input 	wire 		CLK,
 	program_counter pc( .in(mxpc_out),
 						.W_PC(uc_W_PC),
 						.CLK(CLK),
+						.RESET(pc_RESET),
 						.out(pc_out));
 
 	instruction_memory im(	.read_file(im_read_file),

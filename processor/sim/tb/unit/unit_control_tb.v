@@ -18,7 +18,6 @@ module unit_control_tb;
 	wire[1:0]	S_MXRB;
 	wire		S_MXSE;
 
-
 	unit_control uc(.CLK(CLK),
 					.type(instr[31:29]),
 					.op(instr[28:24]),

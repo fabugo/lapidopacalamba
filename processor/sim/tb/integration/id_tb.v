@@ -6,6 +6,7 @@ module id_tb();
 	wire[31:0]	rb_PRA;
 	wire[31:0]	rb_PRB;
 	wire[31:0]	se_out;
+	reg			uc_RESET;
 	wire[4:0]	uc_OP_ALU;
 	wire[2:0]	uc_OP_TF,
 				uc_W_RF;
@@ -22,6 +23,7 @@ module id_tb();
 			.rb_PRA(rb_PRA),
 			.rb_PRB(rb_PRB),
 			.se_out(se_out),
+			.uc_RESET(uc_RESET),
 			.uc_OP_ALU(uc_OP_ALU),
 			.uc_OP_TF(uc_OP_TF),
 			.uc_W_PC(uc_W_PC),

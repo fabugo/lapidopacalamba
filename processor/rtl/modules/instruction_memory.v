@@ -25,5 +25,5 @@ module instruction_memory(read_file, write_file, WE, CLK, ADDRESS, DATA, Q);
 
 	always @(write_file)
 		if(write_file == 1'b1)
-			$writememb("data/im.out", ram_mem);
+			$writememh("data/im.out", ram_mem);
 endmodule
