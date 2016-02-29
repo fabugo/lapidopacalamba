@@ -49,6 +49,13 @@ module ex_tb();
 	initial begin
 		$display("\n---------------------------");
 		$display("Teste de integracao (EX)");
+		rb_PRA 		= 32'b1;
+		rb_PRB 		= 32'b0;
+		se_out		= 2;
+		uc_WE  		= 1;
+		uc_OP_ALU 	= 5'b00000;
+		uc_OP_TF    = 3'b111;
+		uc_S_MXSE   = 0;
 		$display("Total de testes: ");
 	end
 endmodule

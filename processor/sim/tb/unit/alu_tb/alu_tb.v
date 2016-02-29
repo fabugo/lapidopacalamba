@@ -1,4 +1,4 @@
-`include "rtl\\Defines.vh"
+`include "processor\\rtl\\Defines.vh"
 
 module alu_tb;
     reg     [4:0]   OP;
@@ -24,9 +24,9 @@ module alu_tb;
 -------- mnemonico: add c, a, b -- codigo: A + B; -- flags: O S C Z
 ------------------------------------------------------------------------------*/
         OP =        `ADD;
-        A =         32'b11111111111111111111111111111111;
-        B =         32'b00000000000000000000000000000001;
-        ESPERADO =  32'b00000000000000000000000000000000;
+        A =         32'b00000000000000000000000000000001;
+        B =         32'b00000000000000000000000000000000;
+        ESPERADO =  32'b00000000000000000000000000000001;
         #5
         if(RES!=ESPERADO)
             $display("Erro add:\n Esperado:  %32b\n Resultado: %32b\n",ESPERADO,RES);

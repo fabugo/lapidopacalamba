@@ -6,11 +6,11 @@ module id_tb();
 	wire[31:0]	rb_PRB;
 	wire[31:0]	se_out;
 	wire[4:0]	uc_OP_ALU;
-	wire[2:0]	uc_OP_TF;
+	wire[2:0]	uc_OP_TF,
+				uc_W_RF;
 	wire		uc_W_PC;
 	wire		uc_W_DM;
 	wire		uc_W_IM;
-	wire		uc_W_RF;
 	wire		uc_S_MXPC;
 	wire[1:0]	uc_S_MXRB;
 	wire		uc_S_MXSE;
@@ -33,12 +33,13 @@ module id_tb();
 
 	always #5 	CLK = ~CLK;
 	initial begin
+		CLK 			= 0;
+		im_instruction 	= 0;
+		rb_WPC 			= 0;
 		$display("\n---------------------------");
 		$display("Teste de integracao (ID)");
-		$display("Total de testes: ");
-		CLK 		= 0;
-		im_instruction = 0;
-		rb_WPC 		= 0;
+		im_instruction = 32'b00100000100011001001000000000000;
 		#100;
+		$display("Total de testes: ");
 	end
 endmodule

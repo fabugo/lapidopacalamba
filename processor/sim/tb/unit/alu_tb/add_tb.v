@@ -8,7 +8,7 @@ module add_tb;
     reg             Cin;
     integer i,pass,erro;
     parameter loops = 99999;
-    adder32 add32(.A(A),.B(B),.Cin(Cin),.Result(RES),.Cout(C),.Over(O));
+    adder32 add32(.A(A),.B(B),.carryIn(Cin),.result(RES),.carryOut(C),.overflow(O));
     initial begin
     $display("Executando %d testes",loops);
         pass = 0; erro = 0;

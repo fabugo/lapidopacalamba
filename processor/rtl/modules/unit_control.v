@@ -45,7 +45,6 @@ module unit_control(	input 				CLK,
 	always @ (posedge CLK) begin
 		case(STATE)
 			IF: 			W_IM 	<= 1'b1;
-
 			ID: begin
 				case(type)
 					3'b001: begin
