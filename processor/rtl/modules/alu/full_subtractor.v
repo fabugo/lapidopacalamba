@@ -1,5 +1,5 @@
 module full_subtractor(A, B, borrowIn, result, borrowOut);
-	
+
 	input 	wire		A, B, borrowIn;
 	output 	reg 		result, borrowOut;
 

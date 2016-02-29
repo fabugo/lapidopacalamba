@@ -1,5 +1,5 @@
 module ID(	input	wire		CLK,
-	
+
 			input	wire[31:0]	im_instruction,
 
 			input	wire[31:0]	rb_WPC,

@@ -1,5 +1,5 @@
 module alu(OP, A, B, result, O, S, C, Z);
-	
+
 	input   wire[4:0]	OP;
 	input   wire[31:0]	A, B;
 	output  reg [31:0]	result;
@@ -20,7 +20,7 @@ module alu(OP, A, B, result, O, S, C, Z);
 						borrowIn;
 
 	adder32 add32(.A(add_A), .B(add_B), .carryIn(carryIn), .result(add_result), .carryOut(add_C), .overflow(add_O));
-	
+
 	subtractor32 sub32(.A(sub_A), .B(sub_B), .borrowIn(borrowIn), .result(sub_result), .borrowOut(sub_C), .overflow(sub_O));
 
 	always @(*) begin

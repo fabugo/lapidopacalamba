@@ -1,11 +1,11 @@
 module WB(	input 	wire 		CLK,
-	
+
 			input 	wire[31:0]	mxpc_out,	//Saída do mux mxpc
 			input 	wire[31:0]	dm_Q,		//Saída da memória de dados
 			input 	wire[31:0]	alu_result,	//Saída da ula
 			input 	wire[1:0]	uc_S_MXRB,
 			output 	wire[31:0]	mxrb_out,
-			
+
 			input 	wire 		alu_O,
 			input 	wire 		alu_S,
 			input 	wire 		alu_C,
@@ -15,7 +15,7 @@ module WB(	input 	wire 		CLK,
 			output 	wire 		rf_S,
 			output 	wire 		rf_C,
 			output 	wire 		rf_Z);
-	
+
 	mx_rb mxrb(	.in_PC(mxpc_out),
 				.in_DM(dm_Q),
 				.in_ALU(alu_result),
@@ -32,5 +32,5 @@ module WB(	input 	wire 		CLK,
 						.out_S(rf_S),
 						.out_C(rf_C),
 						.out_Z(rf_Z));
-	
+
 endmodule

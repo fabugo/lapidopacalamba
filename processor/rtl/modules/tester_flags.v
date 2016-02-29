@@ -1,6 +1,6 @@
 //Módulo do testador de flags (combinacional)
 module tester_flags(O, S, C, Z, cond, OP_TF, out);
-	
+
 	input 	wire		O, S, C, Z;
 	input 	wire[2:0]	cond, OP_TF;
 	output 	reg			out;

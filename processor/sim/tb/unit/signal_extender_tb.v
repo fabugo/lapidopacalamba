@@ -54,5 +54,5 @@ module signal_extender_tb;
 		#1
 		$display("Executando teste 6: %s", (out != RAND_16E) ? "Erro" : "Sucesso");
 	end
-	
+
 endmodule

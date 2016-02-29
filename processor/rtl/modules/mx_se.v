@@ -10,7 +10,7 @@ module mx_se(in_RB, in_SE, S_MXSE, out);
 		Com S_MXSE = 1, a entrada do extensor de sinal é selecionada
 	*/
 	always @(*) begin
-		case(S_MXSE) 
+		case(S_MXSE)
 			1'b0: 				out = in_RB;
 			1'b1: 				out = in_SE;
 		endcase

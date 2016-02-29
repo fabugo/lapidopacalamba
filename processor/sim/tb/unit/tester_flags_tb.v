@@ -40,7 +40,7 @@ module tester_flags_tb;
 			endcase
 		end
 		$display("Finalizado teste 1. %3d erros\n", erro);
-			
+
 		OP_TF = 3'b000;
 		$display("Executando teste 2: jf.COND (Pula se a condicao for falsa)");
 		exit = 0;
@@ -83,7 +83,7 @@ module tester_flags_tb;
 		$display("Finalizado teste 2. %3d erros\n", erro);
 
 		OP_TF = 3'b001;
-			
+
 		$display("Executando teste 3: jt.COND (Pula se a condicao for verdadeira)");
 		exit = 0;
 		erro = 0;

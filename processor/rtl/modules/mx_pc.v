@@ -10,7 +10,7 @@ module mx_pc(in_ALU, in_ADD, S_MXPC, out);
 		Com S_MXPC = 1, a entrada do somador é selecionada
 	*/
 	always @(*) begin
-		case(S_MXPC) 
+		case(S_MXPC)
 			1'b0: 				out = in_ALU;
 			1'b1: 				out = in_ADD;
 		endcase

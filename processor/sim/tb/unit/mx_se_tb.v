@@ -4,7 +4,7 @@ module mx_se_tb;
 	reg 		S_MXSE;
 	wire[31:0] 	out;
 	mx_se mx(.in_RB(in_RB), .in_SE(in_SE), .S_MXSE(S_MXSE), .out(out));
-	
+
 	initial begin
 		$display("\n---------------------------");
 		$display("Teste do MX SE");

@@ -1,5 +1,5 @@
 module full_adder(A, B, carryIn, result, carryOut);
-	
+
 	input 	wire		A, B, carryIn;
 	output 	reg			result, carryOut;
 

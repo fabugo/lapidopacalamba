@@ -4,7 +4,7 @@ module mx_rb_tb;
 	reg	[1:0]	S_MXRB;
 	wire[31:0] 	out;
 	mx_rb mx(.in_PC(in_PC), .in_DM(in_DM), .in_ALU(in_ALU), .S_MXRB(S_MXRB), .out(out));
-	
+
 	initial begin
 		$display("\n---------------------------");
 		$display("Teste do MX RB");

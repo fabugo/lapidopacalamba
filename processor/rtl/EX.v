@@ -26,7 +26,7 @@ module EX(	input 	wire 		CLK,
 			output 	wire 		alu_Z);
 
 	wire[31:0] mxse_out;
-	
+
 	tester_flags tf(.O(rf_O),
 					.S(rf_S),
 					.C(rf_C),
@@ -56,5 +56,5 @@ module EX(	input 	wire 		CLK,
 			.S(alu_S),
 			.C(alu_C),
 			.Z(alu_Z));
-	
+
 endmodule

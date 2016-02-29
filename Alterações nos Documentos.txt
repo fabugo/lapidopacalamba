@@ -1,1 +1,1 @@
-- Alteração do MI (Memory Instruction) para IM (Instruction Memory);
+- Alteracao do MI (Memory Instruction) para IM (Instruction Memory);

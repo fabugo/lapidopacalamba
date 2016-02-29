@@ -1,5 +1,5 @@
 module instruction_memory(read_file, write_file, WE, CLK, ADDRESS, DATA, Q);
-	
+
 	input	wire 		read_file, write_file, WE, CLK;
 	input 	wire[9:0]	ADDRESS;
 	input 	wire[31:0]	DATA;

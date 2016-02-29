@@ -1,5 +1,5 @@
 module adder32(A, B, carryIn, result, carryOut, overflow);
-	
+
 	input   wire[31:0]	A, B;
 	input   wire		carryIn;
 	output  wire [31:0]	result;
@@ -22,5 +22,5 @@ module adder32(A, B, carryIn, result, carryOut, overflow);
 								.carryOut(carries[i+1])
 			);
 	endgenerate
-	
+
 endmodule

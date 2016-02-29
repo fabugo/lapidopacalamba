@@ -1,5 +1,5 @@
 module subtractor32(A, B, borrowIn, result, borrowOut, overflow);
-	
+
 	input	wire[31:0] 	A, B;
 	input	wire		borrowIn;
 	output	wire[31:0] 	result;

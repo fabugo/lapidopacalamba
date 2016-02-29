@@ -18,7 +18,7 @@ module register_bank_tb;
 			$display("Executando teste %1d", t);
 			for(i = 0; i < 16; i = i + 1)
 				vec[i] = $random;
-			
+
 			W_RB = 1'b1;
 			for(i = 0; i < 16; i = i + 1) begin
 				CLK = 0;
