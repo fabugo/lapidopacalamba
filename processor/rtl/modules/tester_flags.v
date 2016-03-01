@@ -39,6 +39,7 @@ module tester_flags(RESET, O, S, C, Z, cond, OP_TF, out);
 			3'b010: 			out = 1'b0;			//j L			-> sempre pula
 			3'b011: 			out = 1'b0;			//jal b 		-> sempre pula
 			3'b100: 			out = 1'b0;			//jr b 			-> sempre pula
+			default:			out = 1'b1;
 		endcase
 	end
 

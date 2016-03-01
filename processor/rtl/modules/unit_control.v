@@ -10,7 +10,6 @@ module unit_control(	input 	wire		CLK,
 						output 	reg			W_IM,
 						output 	reg			W_RB,
 						output 	reg [2:0]	W_RF,
-						output 	reg			S_MXPC,
 						output 	reg	[1:0]	S_MXRB,
 						output 	reg			S_MXSE);
 
@@ -26,7 +25,6 @@ module unit_control(	input 	wire		CLK,
 	reg			reg_W_DM;
 	reg			reg_W_RB;
 	reg	[2:0]	reg_W_RF;
-	reg			reg_S_MXPC;
 	reg	[1:0]	reg_S_MXRB;
 	reg			reg_S_MXSE;
 
@@ -92,6 +90,7 @@ module unit_control(	input 	wire		CLK,
 						reg_W_DM 	<= 1'b0;
 						reg_S_MXSE 	<= 1'b1;
 						reg_W_RF 	<= 3'b000;
+						reg_S_MXRB 	<= 2'b00;
 					end
 					3'b110: begin
 						reg_OP_SE 	<= 1'b0;
@@ -114,9 +113,7 @@ module unit_control(	input 	wire		CLK,
 			end
 
 			WB: begin
-				S_MXPC 	<= reg_S_MXPC;
 				S_MXRB 	<= reg_S_MXRB;
-				S_MXPC 	<= reg_S_MXPC;
 				W_RF 	<= reg_W_RF;
 				W_RB 	<= reg_W_RB;
 				W_PC 	<= 1'b1;

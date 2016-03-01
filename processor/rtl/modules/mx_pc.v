@@ -13,6 +13,7 @@ module mx_pc(in_ALU, in_ADD, S_MXPC, out);
 		case(S_MXPC)
 			1'b0: 				out = in_ALU;
 			1'b1: 				out = in_ADD;
+			default:			out = in_ALU;
 		endcase
 	end
 

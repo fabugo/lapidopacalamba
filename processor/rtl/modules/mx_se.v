@@ -13,6 +13,7 @@ module mx_se(in_RB, in_SE, S_MXSE, out);
 		case(S_MXSE)
 			1'b0: 				out = in_RB;
 			1'b1: 				out = in_SE;
+			default:			out = in_RB;
 		endcase
 	end
 

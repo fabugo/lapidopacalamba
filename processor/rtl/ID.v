@@ -17,7 +17,6 @@ module ID(	input	wire		CLK,
 			output	wire		uc_W_DM,
 			output	wire		uc_W_IM,
 			output	wire[2:0]	uc_W_RF,
-			output	wire		uc_S_MXPC,
 			output  wire[1:0]	uc_S_MXRB,
 			output	wire		uc_S_MXSE);
 
@@ -36,7 +35,6 @@ module ID(	input	wire		CLK,
 					.W_IM(uc_W_IM),
 					.W_RB(uc_W_RB),
 					.W_RF(uc_W_RF),
-					.S_MXPC(uc_S_MXPC),
 					.S_MXRB(uc_S_MXRB),
 					.S_MXSE(uc_S_MXSE));
 

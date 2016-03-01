@@ -15,6 +15,7 @@ module mx_rb(in_PC, in_DM, in_ALU, S_MXRB, out);
 			2'b00: 				out = in_PC;
 			2'b01: 				out = in_DM;
 			2'b10: 				out = in_ALU;
+			default:			out = in_PC;
 		endcase
 	end
 

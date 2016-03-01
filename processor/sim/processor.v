@@ -27,7 +27,6 @@ module processor();
 	wire		uc_W_DM;
 	wire		uc_W_IM;
 	wire[2:0]	uc_W_RF;
-	wire		uc_S_MXPC;
 	wire[1:0]	uc_S_MXRB;
 	wire		uc_S_MXSE;
 
@@ -72,7 +71,6 @@ module processor();
 			.uc_W_DM(uc_W_DM),
 			.uc_W_IM(uc_W_IM),
 			.uc_W_RF(uc_W_RF),
-			.uc_S_MXPC(uc_S_MXPC),
 			.uc_S_MXRB(uc_S_MXRB),
 			.uc_S_MXSE(uc_S_MXSE));
 
@@ -119,12 +117,16 @@ module processor();
 			.rf_Z(rf_Z));
 
 	initial begin
+		im_RESET = 1;
+		#PERIOD
+		im_RESET = 0;
+		#PERIOD
 		im_read_file = 1;
 		#PERIOD
+		im_read_file = 0;
 
 		pc_RESET = 1;
 		uc_RESET = 1;
-		im_RESET = 1;
 		rb_RESET = 1;
 		tf_RESET = 1;
 		dm_RESET = 1;
@@ -139,6 +141,10 @@ module processor();
 		dm_RESET = 0;
 		rf_RESET = 0;
 		#1000;
+
+		im_write_file = 1;
+		#PERIOD
+		im_write_file = 0;
 	end
 
 endmodule

@@ -14,7 +14,6 @@ module unit_control_tb;
 	wire		W_IM;
 	wire		W_RB;
 	wire[2:0]	W_RF;
-	wire		S_MXPC;
 	wire[1:0]	S_MXRB;
 	wire		S_MXSE;
 
@@ -30,7 +29,6 @@ module unit_control_tb;
 					.W_IM(W_IM),
 					.W_RB(W_RB),
 					.W_RF(W_RF),
-					.S_MXPC(S_MXPC),
 					.S_MXRB(S_MXRB),
 					.S_MXSE(S_MXSE));
 

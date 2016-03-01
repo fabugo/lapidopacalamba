@@ -12,6 +12,7 @@ module signal_extender(in, OP_SE, out);
 	always @(*) begin
 		if(OP_SE == 1'b0) 		out = {{20{in[11]}}, in[11:0]};
 		else if(OP_SE == 1'b1) 	out = {{16{in[15]}}, in[15:0]};
+		else 					out = 32'b0;
 	end
 
 endmodule
