@@ -1,5 +1,5 @@
 module processor();
-	parameter PERIOD = 10;
+	parameter PERIOD = 30;
 
 	reg CLK;
 	initial CLK = 0;
@@ -150,7 +150,7 @@ module processor();
 		uc_RESET = 0;
 		//-----------------------------------------------
 		
-		#9000;
+		#120;
 
 		im_write_file = 1;
 		dm_write_file = 1;
