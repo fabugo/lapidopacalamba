@@ -2,6 +2,7 @@ module ID(	input	wire		CLK,
 
 			input	wire[31:0]	im_instruction,
 
+			input 	wire		rb_RESET,
 			input	wire[31:0]	rb_WPC,
 			output	wire[31:0]	rb_PRA,
 			output	wire[31:0]	rb_PRB,
@@ -24,9 +25,9 @@ module ID(	input	wire		CLK,
 	wire W_RB;
 
 	unit_control uc(.CLK(CLK),
+					.RESET(uc_RESET),
 					.type(im_instruction[31:29]),
 					.op(im_instruction[28:24]),
-					.RESET(uc_RESET),
 					.OP_ALU(uc_OP_ALU),
 					.OP_TF(uc_OP_TF),
 					.OP_SE(OP_SE),
@@ -44,6 +45,7 @@ module ID(	input	wire		CLK,
 						.out(se_out));
 
 	register_bank rb(	.CLK(CLK),
+						.RESET(rb_RESET),
 						.RA(im_instruction[19:16]),
 						.RB(im_instruction[15:12]),
 						.WC(im_instruction[23:20]),

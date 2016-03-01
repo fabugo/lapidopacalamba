@@ -6,6 +6,7 @@ module WB(	input 	wire 		CLK,
 			input 	wire[1:0]	uc_S_MXRB,
 			output 	wire[31:0]	mxrb_out,
 
+			input 	wire 		rf_RESET,
 			input 	wire 		alu_O,
 			input 	wire 		alu_S,
 			input 	wire 		alu_C,
@@ -22,7 +23,8 @@ module WB(	input 	wire 		CLK,
 				.S_MXRB(uc_S_MXRB),
 				.out(mxrb_out));
 
-	register_flags rf(	.in_O(alu_O),
+	register_flags rf(	.RESET(rf_RESET),
+						.in_O(alu_O),
 						.in_S(alu_S),
 						.in_C(alu_C),
 						.in_Z(alu_Z),

@@ -2,9 +2,9 @@ module register_bank_tb;
 
 	reg [3:0] 	RA, RB, WC;
 	reg [31:0] 	WPC;
-	reg 		W_RB, CLK;
+	reg 		CLK, RESET, W_RB;
 	wire[31:0]  PRA, PRB;
-	register_bank rb(.RA(RA), .RB(RB), .WC(WC), .WPC(WPC), .W_RB(W_RB), .CLK(CLK), .PRA(PRA), .PRB(PRB));
+	register_bank rb(.CLK(CLK), .RESET(RESET), .RA(RA), .RB(RB), .WC(WC), .WPC(WPC), .W_RB(W_RB), .PRA(PRA), .PRB(PRB));
 
 	integer i, t;
 	reg[31:0] vec[0:15];

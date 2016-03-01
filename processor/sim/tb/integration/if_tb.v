@@ -11,19 +11,21 @@ module if_tb();
 	reg 		im_write_file;
 	reg[31:0] 	im_DATA;
 	reg 	 	im_WE;
+	reg 	 	im_RESET;
 	wire[31:0]	im_instruction;
 
-	IF if_1(	.CLK(CLK),
+	IF if_1(.CLK(CLK),
 			.alu_result(alu_result),
 			.tf_out(tf_out),
 			.mxpc_out(mxpc_out),
+			.im_RESET(im_RESET),
 			.im_read_file(im_read_file),
 			.im_write_file(im_write_file),
 			.im_DATA(im_DATA),
 			.im_WE(im_WE),
 			.im_instruction(im_instruction),
-			.uc_W_PC(uc_W_PC),
-			.pc_RESET(pc_RESET));
+			.pc_RESET(pc_RESET),
+			.uc_W_PC(uc_W_PC));
 
 	always #5 	CLK = ~CLK;
 	initial begin

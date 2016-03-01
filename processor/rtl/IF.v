@@ -4,14 +4,15 @@ module IF(	input 	wire 		CLK,
 			input 	wire 		tf_out,
 			output 	wire[31:0]	mxpc_out,
 
+			input	wire 		im_RESET,
 			input	wire 		im_read_file,
 			input	wire 		im_write_file,
 			input	wire[31:0] 	im_DATA,		//Apenas para teste
 			input	wire 	 	im_WE,			//Apenas para teste
 			output 	wire[31:0]	im_instruction,
 
-			input	wire 		uc_W_PC,
-			input	wire 		pc_RESET);
+			input	wire 		pc_RESET,
+			input	wire 		uc_W_PC);
 
 	wire[31:0] add_out; //pc+1
 	wire[31:0] pc_out;
@@ -28,16 +29,17 @@ module IF(	input 	wire 		CLK,
 				.carryOut(),
 				.overflow());
 
-	program_counter pc( .in(mxpc_out),
-						.W_PC(uc_W_PC),
-						.CLK(CLK),
+	program_counter pc( .CLK(CLK),
 						.RESET(pc_RESET),
+						.in(mxpc_out),
+						.W_PC(uc_W_PC),
 						.out(pc_out));
 
-	instruction_memory im(	.read_file(im_read_file),
+	instruction_memory im(	.CLK(CLK),
+							.RESET(im_RESET),
+							.read_file(im_read_file),
 							.write_file(im_write_file),
 							.WE(im_WE),
-							.CLK(CLK),
 							.ADDRESS(pc_out[9:0]),
 							.DATA(im_DATA),
 							.Q(im_instruction));

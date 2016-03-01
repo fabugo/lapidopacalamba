@@ -1,9 +1,12 @@
 //Módulo do testador de flags (combinacional)
-module tester_flags(O, S, C, Z, cond, OP_TF, out);
+module tester_flags(RESET, O, S, C, Z, cond, OP_TF, out);
 
-	input 	wire		O, S, C, Z;
+	input 	wire		RESET, O, S, C, Z;
 	input 	wire[2:0]	cond, OP_TF;
 	output 	reg			out;
+
+	always @(posedge RESET)
+		out <= 1'b1;
 
 	/*	
 		A saída out é usada como seleção para o mux MX_PC.

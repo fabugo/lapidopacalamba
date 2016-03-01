@@ -6,6 +6,7 @@ module wb_tb();
 	reg	[31:0]	alu_result;
 	reg	[1:0]	uc_S_MXRB;
 	wire[31:0]	mxrb_out;
+	reg 		rf_RESET;
 	reg 		alu_O;
 	reg 		alu_S;
 	reg 		alu_C;
@@ -22,6 +23,7 @@ module wb_tb();
 			.alu_result(alu_result),
 			.uc_S_MXRB(uc_S_MXRB),
 			.mxrb_out(mxrb_out),
+			.rf_RESET(rf_RESET),
 			.alu_O(alu_O),
 			.alu_S(alu_S),
 			.alu_C(alu_C),

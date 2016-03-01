@@ -1,10 +1,10 @@
 module data_memory_tb;
-	reg CLK;
+	reg CLK, RESET;
 	reg[9:0] ADDRESS;
 	reg[31:0] DATA;
 	wire[31:0] Q;
 	reg read_file, write_file, WE;
-	data_memory dm(.read_file(read_file), .write_file(write_file), .WE(WE), .CLK(CLK), .ADDRESS(ADDRESS), .DATA(DATA), .Q(Q));
+	data_memory dm(.CLK(CLK), .RESET(RESET), .read_file(read_file), .write_file(write_file), .WE(WE), .ADDRESS(ADDRESS), .DATA(DATA), .Q(Q));
 
 	parameter dim = 1024;
 

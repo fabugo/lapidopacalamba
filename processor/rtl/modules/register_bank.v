@@ -1,9 +1,9 @@
 //Módulo do banco de registradores  (combinacional e sequencial)
-module register_bank(CLK,RA, RB, WC, WPC, W_RB, PRA, PRB);
+module register_bank(CLK, RESET, RA, RB, WC, WPC, W_RB, PRA, PRB);
 
 	input 	wire[3:0]	RA, RB, WC;
 	input 	wire[31:0]	WPC;
-	input 	wire		W_RB, CLK;
+	input 	wire		CLK, RESET, W_RB;
 	output	wire [31:0]	PRA, PRB;
 
 	reg[31:0] 	registers[0:15];	//16 registradores de 32 bits
@@ -12,12 +12,15 @@ module register_bank(CLK,RA, RB, WC, WPC, W_RB, PRA, PRB);
 	assign 						PRA = registers[RA];
 	assign 						PRB = registers[RB];
 
+	always @(posedge RESET)
+		registers[0] <= 32'b0;
+
 	/*
 		Quando W_RB for 1 e o CLK tiver uma borda de subida,
 		o valor da entrada WPC é registrado no registrador
 		indicado por WC.
 	*/
-	always @(negedge CLK)
-		if(W_RB == 1'b1)		registers[WC] = WPC;
+	always @(posedge CLK)
+		if(W_RB == 1'b1)		registers[WC] <= WPC;
 
 endmodule

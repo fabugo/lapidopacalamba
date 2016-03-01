@@ -1,9 +1,9 @@
 module register_flags_tb;
 
-	reg 			in_O, in_S, in_C, in_Z, CLK;
+	reg 			CLK, RESET, in_O, in_S, in_C, in_Z;
 	reg [2:0] 		W_RF;
 	wire			out_O, out_S, out_C, out_Z;
-	register_flags rf(.in_O(in_O), .in_S(in_S), .in_C(in_C), .in_Z(in_Z), .W_RF(W_RF), .CLK(CLK), .out_O(out_O), .out_S(out_S), .out_C(out_C), .out_Z(out_Z));
+	register_flags rf(.CLK(CLK), .RESET(RESET), .in_O(in_O), .in_S(in_S), .in_C(in_C), .in_Z(in_Z), .W_RF(W_RF), .out_O(out_O), .out_S(out_S), .out_C(out_C), .out_Z(out_Z));
 	
 	initial begin
 		$display("\n---------------------------");

@@ -1,10 +1,11 @@
 module program_counter_tb;
-	reg CLK;
+	
+	reg CLK, RESET;
 
 	reg	[31:0] 	in;
 	reg 		W_PC;
 	wire[31:0] 	out;
-	program_counter pc(.in(in), .W_PC(W_PC), .CLK(CLK), .out(out));
+	program_counter pc(.CLK(CLK), .RESET(RESET), .in(in), .W_PC(W_PC), .out(out));
 
 	initial begin
 		CLK = 0;

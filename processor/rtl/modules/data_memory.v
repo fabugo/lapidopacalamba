@@ -1,6 +1,6 @@
-module data_memory(read_file, write_file, WE, CLK, ADDRESS, DATA, Q);
+module data_memory(CLK, RESET, read_file, write_file, WE, ADDRESS, DATA, Q);
 
-	input	wire 		read_file, write_file, WE, CLK;
+	input	wire 		CLK, RESET, read_file, write_file, WE;
 	input 	wire[9:0]	ADDRESS;
 	input 	wire[31:0]	DATA;
 	output 	wire[31:0]	Q;
@@ -8,10 +8,8 @@ module data_memory(read_file, write_file, WE, CLK, ADDRESS, DATA, Q);
 	parameter dim = 1024;
 	reg[31:0] ram_mem[0:dim-1];
 
-	integer i;
-	initial
-		for(i = 0; i < dim; i = i + 1)
-			ram_mem[i] = {32{1'b0}};
+	always @(posedge RESET)
+		ram_mem[0] <= 32'b0;
 
 	assign Q = ram_mem[ADDRESS];
 

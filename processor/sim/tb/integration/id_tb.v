@@ -2,6 +2,7 @@ module id_tb();
 
 	reg			CLK;
 	reg [31:0]	im_instruction;
+	reg 		rb_RESET;
 	reg [31:0]	rb_WPC;
 	wire[31:0]	rb_PRA;
 	wire[31:0]	rb_PRB;
@@ -19,6 +20,7 @@ module id_tb();
 
 	ID id(	.CLK(CLK),
 			.im_instruction(im_instruction),
+			.rb_RESET(rb_RESET),
 			.rb_WPC(rb_WPC),
 			.rb_PRA(rb_PRA),
 			.rb_PRB(rb_PRB),

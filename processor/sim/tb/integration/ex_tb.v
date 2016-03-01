@@ -5,6 +5,7 @@ module ex_tb();
 	reg	[31:0]	rb_PRB;
 	reg	[31:0]	se_out;
 	reg 		uc_S_MXSE;
+	reg 		tf_RESET;
 	reg 		rf_O;
 	reg 		rf_S;
 	reg 		rf_C;
@@ -12,6 +13,7 @@ module ex_tb();
 	reg	[2:0]	tf_cond;
 	reg	[2:0]	uc_OP_TF;
 	wire 		tf_out;
+	reg 		dm_RESET;
 	reg 		dm_read_file;
 	reg 		dm_write_file;
 	reg 		uc_WE;
@@ -28,6 +30,7 @@ module ex_tb();
 			.rb_PRB(rb_PRB),
 			.se_out(se_out),
 			.uc_S_MXSE(uc_S_MXSE),
+			.tf_RESET(tf_RESET),
 			.rf_O(rf_O),
 			.rf_S(rf_S),
 			.rf_C(rf_C),
@@ -35,6 +38,7 @@ module ex_tb();
 			.tf_cond(tf_cond),
 			.uc_OP_TF(uc_OP_TF),
 			.tf_out(tf_out),
+			.dm_RESET(dm_RESET),
 			.dm_read_file(dm_read_file),
 			.dm_write_file(dm_write_file),
 			.uc_WE(uc_WE),

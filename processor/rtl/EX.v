@@ -5,6 +5,7 @@ module EX(	input 	wire 		CLK,
 			input	wire[31:0]	se_out,
 			input	wire 		uc_S_MXSE,
 
+			input 	wire 		tf_RESET,
 			input 	wire 		rf_O,
 			input 	wire 		rf_S,
 			input 	wire 		rf_C,
@@ -13,6 +14,7 @@ module EX(	input 	wire 		CLK,
 			input 	wire[2:0]	uc_OP_TF,
 			output 	wire 		tf_out,
 
+			input 	wire 		dm_RESET,
 			input 	wire 		dm_read_file,
 			input 	wire 		dm_write_file,
 			input 	wire 		uc_WE,
@@ -27,7 +29,8 @@ module EX(	input 	wire 		CLK,
 
 	wire[31:0] mxse_out;
 
-	tester_flags tf(.O(rf_O),
+	tester_flags tf(.RESET(tf_RESET),
+					.O(rf_O),
 					.S(rf_S),
 					.C(rf_C),
 					.Z(rf_Z),
@@ -35,10 +38,11 @@ module EX(	input 	wire 		CLK,
 					.OP_TF(uc_OP_TF),
 					.out(tf_out));
 
-	data_memory dm(	.read_file(dm_read_file),
+	data_memory dm(	.CLK(CLK),
+					.RESET(dm_RESET),
+					.read_file(dm_read_file),
 					.write_file(dm_write_file),
 					.WE(uc_WE),
-					.CLK(CLK),
 					.ADDRESS(rb_PRB[9:0]),
 					.DATA(rb_PRA),
 					.Q(dm_Q));
