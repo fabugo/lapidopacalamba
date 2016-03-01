@@ -12,8 +12,24 @@ module register_bank(CLK, RESET, RA, RB, WC, WPC, W_RB, PRA, PRB);
 	assign 						PRA = registers[RA];
 	assign 						PRB = registers[RB];
 
-	always @(posedge RESET)
-		registers[0] <= 32'b0;
+	always @(posedge RESET) begin
+		registers[0] 	<= 32'b0;
+		registers[1] 	<= 32'b0;
+		registers[2] 	<= 32'b0;
+		registers[3] 	<= 32'b0;
+		registers[4] 	<= 32'b0;
+		registers[5] 	<= 32'b0;
+		registers[6] 	<= 32'b0;
+		registers[7] 	<= 32'b0;
+		registers[8] 	<= 32'b0;
+		registers[9] 	<= 32'b0;
+		registers[10] 	<= 32'b0;
+		registers[11] 	<= 32'b0;
+		registers[12] 	<= 32'b0;
+		registers[13] 	<= 32'b0;
+		registers[14] 	<= 32'b0;
+		registers[55] 	<= 32'b0;
+	end
 
 	/*
 		Quando W_RB for 1 e o CLK tiver uma borda de subida,

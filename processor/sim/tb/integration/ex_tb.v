@@ -16,7 +16,7 @@ module ex_tb();
 	reg 		dm_RESET;
 	reg 		dm_read_file;
 	reg 		dm_write_file;
-	reg 		uc_WE;
+	reg 		uc_W_DM;
 	wire[31:0]	dm_Q;
 	reg	[4:0]	uc_OP_ALU;
 	wire[31:0]	alu_result;
@@ -41,7 +41,7 @@ module ex_tb();
 			.dm_RESET(dm_RESET),
 			.dm_read_file(dm_read_file),
 			.dm_write_file(dm_write_file),
-			.uc_WE(uc_WE),
+			.uc_W_DM(uc_W_DM),
 			.dm_Q(dm_Q),
 			.uc_OP_ALU(uc_OP_ALU),
 			.alu_result(alu_result),
@@ -56,7 +56,7 @@ module ex_tb();
 		rb_PRA 		= 32'b1;
 		rb_PRB 		= 32'b0;
 		se_out		= 2;
-		uc_WE  		= 1;
+		uc_W_DM  		= 1;
 		uc_OP_ALU 	= 5'b00000;
 		uc_OP_TF	= 3'b111;
 		uc_S_MXSE   = 0;

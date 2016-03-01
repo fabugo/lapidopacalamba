@@ -10,7 +10,7 @@ module if_tb();
 	reg 		im_read_file;
 	reg 		im_write_file;
 	reg[31:0] 	im_DATA;
-	reg 	 	im_WE;
+	reg 	 	uc_W_IM;
 	reg 	 	im_RESET;
 	wire[31:0]	im_instruction;
 
@@ -22,7 +22,7 @@ module if_tb();
 			.im_read_file(im_read_file),
 			.im_write_file(im_write_file),
 			.im_DATA(im_DATA),
-			.im_WE(im_WE),
+			.uc_W_IM(uc_W_IM),
 			.im_instruction(im_instruction),
 			.pc_RESET(pc_RESET),
 			.uc_W_PC(uc_W_PC));
@@ -34,7 +34,7 @@ module if_tb();
 		uc_W_PC			=	0;
 		im_read_file	=	0;
 		im_write_file	=	0;
-		im_WE			=	0;
+		uc_W_IM			=	0;
 		alu_result		=	0;
 		im_DATA			=	0;
 		$display("\n---------------------------");
@@ -43,7 +43,7 @@ module if_tb();
 		uc_W_PC 	= 1;
 		//			add r8, r12, r9
 		im_DATA = 32'b00100000100011001001000000000000;
-		im_WE = 1;
+		uc_W_IM = 1;
 		#10
 		if(im_instruction != 32'b0) $display("ERRO!");
 		//$display("Teste de integracao (IF)");

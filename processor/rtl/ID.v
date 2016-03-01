@@ -33,7 +33,7 @@ module ID(	input	wire		CLK,
 					.W_PC(uc_W_PC),
 					.W_DM(uc_W_DM),
 					.W_IM(uc_W_IM),
-					.W_RB(uc_W_RB),
+					.W_RB(W_RB),
 					.W_RF(uc_W_RF),
 					.S_MXRB(uc_S_MXRB),
 					.S_MXSE(uc_S_MXSE));

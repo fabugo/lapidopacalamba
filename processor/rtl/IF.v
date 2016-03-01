@@ -8,7 +8,7 @@ module IF(	input 	wire 		CLK,
 			input	wire 		im_read_file,
 			input	wire 		im_write_file,
 			input	wire[31:0] 	im_DATA,		//Apenas para teste
-			input	wire 	 	im_WE,			//Apenas para teste
+			input	wire 	 	uc_W_IM,			//Apenas para teste
 			output 	wire[31:0]	im_instruction,
 
 			input	wire 		pc_RESET,
@@ -39,7 +39,7 @@ module IF(	input 	wire 		CLK,
 							.RESET(im_RESET),
 							.read_file(im_read_file),
 							.write_file(im_write_file),
-							.WE(im_WE),
+							.WE(uc_W_IM),
 							.ADDRESS(pc_out[9:0]),
 							.DATA(im_DATA),
 							.Q(im_instruction));

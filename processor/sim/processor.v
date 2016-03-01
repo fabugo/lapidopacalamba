@@ -1,9 +1,9 @@
 module processor();
-	parameter PERIOD = 5;
+	parameter PERIOD = 10;
 
 	reg CLK;
 	initial CLK = 0;
-	always #PERIOD CLK = ~CLK;
+	always #(PERIOD/2) CLK = ~CLK;
 
 	reg 		pc_RESET;
 	reg 		uc_RESET;
@@ -53,8 +53,8 @@ module processor();
 			.im_RESET(im_RESET),
 			.im_read_file(im_read_file),
 			.im_write_file(im_write_file),
-			.im_DATA(),
-			.im_WE(),
+			.im_DATA(32'b0),
+			.uc_W_IM(uc_W_IM),
 			.im_instruction(im_instruction),
 			.pc_RESET(pc_RESET),
 			.uc_W_PC(uc_W_PC));
@@ -92,7 +92,7 @@ module processor();
 			.dm_RESET(dm_RESET),
 			.dm_read_file(dm_read_file),
 			.dm_write_file(dm_write_file),
-			.uc_WE(uc_WE),
+			.uc_W_DM(uc_W_DM),
 			.dm_Q(dm_Q),
 			.uc_OP_ALU(uc_OP_ALU),
 			.alu_result(alu_result),
@@ -119,29 +119,37 @@ module processor();
 			.rf_Z(rf_Z));
 
 	initial begin
+		//-------------------- START --------------------
 		im_RESET = 1;
-		#PERIOD
+		dm_RESET = 1;
+		#1
 		im_RESET = 0;
-		#PERIOD
+		dm_RESET = 0;
+		dm_read_file = 1;
 		im_read_file = 1;
-		#PERIOD
+		#(PERIOD-1)
+		dm_read_file = 0;
 		im_read_file = 0;
-
+		dm_write_file = 0;
+		im_write_file = 0;
+		
 		pc_RESET = 1;
-		uc_RESET = 1;
 		rb_RESET = 1;
 		tf_RESET = 1;
-		dm_RESET = 1;
 		rf_RESET = 1;
-		#PERIOD
+		#1
 
+		uc_RESET = 1;
 		pc_RESET = 0;
-		uc_RESET = 0;
-		im_RESET = 0;
 		rb_RESET = 0;
 		tf_RESET = 0;
-		dm_RESET = 0;
 		rf_RESET = 0;
+		#(PERIOD-1)
+
+		//Start machine in 20ps
+		uc_RESET = 0;
+		//-----------------------------------------------
+		
 		#9000;
 
 		im_write_file = 1;
