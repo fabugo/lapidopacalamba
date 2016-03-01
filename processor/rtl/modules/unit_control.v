@@ -43,8 +43,30 @@ module unit_control(	input 	wire		CLK,
 
 	always @ (posedge CLK) begin
 		case(STATE)
-			IF: 			W_IM 	<= 1'b1;
+			IF: begin
+				OP_ALU 	<= 5'b00000; 	//nao importa
+				OP_TF 	<= 3'b111;		//nao importa
+				OP_SE 	<= 1'b0;		//nao importa
+				W_PC 	<= 1'b1;		//registra a entrada
+				W_DM 	<= 1'b0;		//nao escreve nenhum dado
+				W_RB 	<= 1'b0;		//nao escreve nenhum dado
+				W_RF 	<= 3'b0;		//nao registra nenhuma flag
+				//W_IM 	<= 1'b1;		//indexa a instrução
+				S_MXRB 	<= 2'b0;		//nao importa
+				S_MXSE 	<= 1'b0;		//nao importa
+			end
 			ID: begin
+				OP_ALU 	<= 5'b00000; 	//nao importa
+				OP_TF 	<= 3'b111;		//nao importa
+				OP_SE 	<= 1'b0;		//nao importa
+				W_PC 	<= 1'b0;		//nao registra a entrada
+				W_DM 	<= 1'b0;		//nao escreve nenhum dado
+				W_RB 	<= 1'b0;		//nao escreve nenhum dado
+				W_RF 	<= 3'b0;		//nao registra nenhuma flag
+				//W_IM 	<= 1'b1;		//indexa a instrução
+				S_MXRB 	<= 2'b0;		//nao importa
+				S_MXSE 	<= 1'b0;		//nao importa
+
 				case(type)
 					3'b001: begin
 							reg_OP_ALU 	<= op;
@@ -116,7 +138,6 @@ module unit_control(	input 	wire		CLK,
 				S_MXRB 	<= reg_S_MXRB;
 				W_RF 	<= reg_W_RF;
 				W_RB 	<= reg_W_RB;
-				W_PC 	<= 1'b1;
 			end
 		endcase
 	end

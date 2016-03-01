@@ -16,6 +16,8 @@ module processor();
 	wire[31:0]	mxpc_out;
 	reg 		im_read_file;
 	reg 		im_write_file;
+	reg 		dm_read_file;
+	reg 		dm_write_file;
 	wire[31:0]	im_instruction;
 
 	wire[31:0]	rb_PRA;
@@ -140,11 +142,13 @@ module processor();
 		tf_RESET = 0;
 		dm_RESET = 0;
 		rf_RESET = 0;
-		#1000;
+		#9000;
 
 		im_write_file = 1;
+		dm_write_file = 1;
 		#PERIOD
 		im_write_file = 0;
+		dm_write_file = 0;
 	end
 
 endmodule
