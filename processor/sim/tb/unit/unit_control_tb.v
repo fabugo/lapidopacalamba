@@ -33,11 +33,14 @@ module unit_control_tb;
 					.W_RF(W_RF),
 					.S_MXRB(S_MXRB),
 					.S_MXSE(S_MXSE));
+	
 	parameter loops = 5;
-	integer erro,i;
+	
+	integer erro, i;
+	
 	reg [31:0] vecUC [0:loops];
 	/*Testes por vetores
-	[25:0](6)		tamanho		tipo (estagio)
+	[24:0](6)		tamanho		tipo (estagio)
 		[24:22]TYPE		3 		entrada	(ID)
 		[21:17]OP		5		entrada	(ID)
 		------------------------------------
@@ -51,30 +54,58 @@ module unit_control_tb;
 		[1:0]S_MXRB		2		saida	(WB)
 	*/
 	initial begin
+		erro = 0;
 		$display("\n---------------------------");
 		$display("Executando teste da Unidade de Controle");
-		$readmemb ("vecuc.in",vecUC);
+		$display("Total de testes: ");
+
+		$readmemb ("data/tests/vecuc.in",vecUC); //Contém todos os tipos de instruções
 		RESET = 1;//inicio do IF
 		#5
 		RESET = 0;
-		for(i=0;i<loops;i=i+1)begin
-			@(W_PC)begin
-				#10//inicio do ID
-				instr = {vecUC[i][25:18],23'b0};
-				if(vecUC[i][16]!=OP_TF) $display("to com sono qro dormir");
-				#10//inicio do EX
-				if( vecUC[i][15:11]	!= OP_ALU 	||
-					vecUC[i][10:8]	!= OP_TF 	||
-					vecUC[i][7]	 	!= S_MXSE 	||
-					vecUC[i][6]	 	!= W_DM 	)
-					$display("to com sono qro dormir");
-				#10//inicio do WB
-				if( vecUC[i][5:3]	!= W_RF 	||
-					vecUC[i][2]		!= W_RB 	||
-					vecUC[i][1:0]	!= S_MXRB 	)
-					$display("to com sono qro dormir");
+		for(i = 0; i < loops; i = i+1) begin
+			@(W_PC) begin
+				//-------------------- inicio do ID --------------------
+				#10
+					instr = {vecUC[i][25:18], 23'b0};
+					#1
+					if(vecUC[i][16] 	!= OP_SE)
+						$display("Erro no Estado ID, sinal OP_SE: Esperado: %1b, Obtido: %1b", vecUC[i][16], OP_SE);
+				
+				//-------------------- inicio do EX --------------------
+				#10
+					if(vecUC[i][15:11]	!= OP_ALU) begin
+						erro = erro + 1;
+						$display("Erro no Estado EX, sinal OP_ALU: Esperado: %5b, Obtido: %5b", vecUC[i][15:11], OP_ALU);
+					end
+					if(vecUC[i][10:8]	!= OP_TF) begin
+						erro = erro + 1;
+						$display("Erro no Estado EX, sinal OP_TF: Esperado: %3b, Obtido: %3b", vecUC[i][10:8], OP_TF);
+					end
+					if(vecUC[i][7]		!= S_MXSE) begin
+						erro = erro + 1;
+						$display("Erro no Estado EX, sinal S_MXSE: Esperado: %1b, Obtido: %1b", vecUC[i][7], S_MXSE);
+					end
+					if(vecUC[i][6]		!= W_DM) begin
+						erro = erro + 1;
+						$display("Erro no Estado EX, sinal W_DM: Esperado: %1b, Obtido: %1b", vecUC[i][6], W_DM);
+					end
+				
+				//-------------------- inicio do WB --------------------
+				#10
+					if(vecUC[i][5:3]	!= W_RF) begin
+						erro = erro + 1;
+						$display("Erro no Estado EX, sinal W_RF: Esperado: %3b, Obtido: %3b", vecUC[i][5:3], W_RF);
+					end
+					if(vecUC[i][2]		!= W_RB) begin
+						erro = erro + 1;
+						$display("Erro no Estado EX, sinal W_RB: Esperado: %1b, Obtido: %1b", vecUC[i][2], W_RB);
+					end
+					if(vecUC[i][1:0]	!= S_MXRB) begin
+						erro = erro + 1;
+						$display("Erro no Estado EX, sinal S_MXRB: Esperado: %2b, Obtido: %2b", vecUC[i][1:0], S_MXRB);
+					end
 			end
 		end
-		$display("Total de testes: ");
 	end
 endmodule

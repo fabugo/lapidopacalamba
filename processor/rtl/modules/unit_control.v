@@ -28,7 +28,7 @@ module unit_control(	input 	wire		CLK,
 	reg	[1:0]	reg_S_MXRB;
 	reg			reg_S_MXSE;
 
-	always @ (posedge RESET) begin
+	always @(posedge RESET) begin
 		STATE 		<= 2'bxx;
 		NEXT 		<= IF;
 		OP_ALU 		<= 5'b00000; 	//nao importa
@@ -51,7 +51,7 @@ module unit_control(	input 	wire		CLK,
 		reg_S_MXSE 	<= 0;
 	end
 
-	always @ (STATE) begin
+	always @(STATE) begin
 		NEXT = IF;
 		case(STATE)
 			IF : NEXT = ID;
@@ -62,9 +62,9 @@ module unit_control(	input 	wire		CLK,
 		endcase
 	end
 
-	always @ (posedge CLK) STATE <= NEXT;
+	always @(posedge CLK) STATE <= NEXT;
 
-	always @ (STATE) begin
+	always @(*) begin
 		case(STATE)
 			IF: begin
 				OP_ALU 	= 5'b00000; 	//nao importa
