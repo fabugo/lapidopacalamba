@@ -28,19 +28,27 @@ module unit_control(	input 	wire		CLK,
 	reg	[1:0]	reg_S_MXRB;
 	reg			reg_S_MXSE;
 
-	always @ (negedge RESET) begin
-		STATE 	= 2'bxx;
-		NEXT 	= IF;
-		OP_ALU 	= 5'b00000; 	//nao importa
-		OP_TF 	= 3'b111;		//nao importa
-		OP_SE 	= 1'b0;		//nao importa
-		W_PC 	= 1'b0;		//nao registra a entrada
-		W_DM 	= 1'b0;		//nao escreve nenhum dado
-		W_RB 	= 1'b0;		//nao escreve nenhum dado
-		W_RF 	= 3'b0;		//nao registra nenhuma flag
-		W_IM 	= 1'b0;		//nao importa
-		S_MXRB 	= 2'b0;		//nao importa
-		S_MXSE 	= 1'b0;		//nao importa
+	always @ (posedge RESET) begin
+		STATE 		<= 2'bxx;
+		NEXT 		<= IF;
+		OP_ALU 		<= 5'b00000; 	//nao importa
+		OP_TF 		<= 3'b111;		//nao importa
+		OP_SE 		<= 1'b0;		//nao importa
+		W_PC 		<= 1'b0;		//nao registra a entrada
+		W_DM 		<= 1'b0;		//nao escreve nenhum dado
+		W_RB 		<= 1'b0;		//nao escreve nenhum dado
+		W_RF 		<= 3'b0;		//nao registra nenhuma flag
+		W_IM 		<= 1'b0;		//nao importa
+		S_MXRB 		<= 2'b0;		//nao importa
+		S_MXSE 		<= 1'b0;		//nao importa
+		reg_OP_ALU 	<= 0;
+		reg_OP_TF 	<= 0;
+		reg_OP_SE 	<= 0;
+		reg_W_DM 	<= 0;
+		reg_W_RB 	<= 0;
+		reg_W_RF 	<= 0;
+		reg_S_MXRB 	<= 0;
+		reg_S_MXSE 	<= 0;
 	end
 
 	always @ (STATE) begin
@@ -54,33 +62,33 @@ module unit_control(	input 	wire		CLK,
 		endcase
 	end
 
-	always @ (posedge CLK) STATE = NEXT;
+	always @ (posedge CLK) STATE <= NEXT;
 
-	always @ (posedge CLK) begin
+	always @ (STATE) begin
 		case(STATE)
 			IF: begin
 				OP_ALU 	= 5'b00000; 	//nao importa
 				OP_TF 	= 3'b111;		//nao importa
-				OP_SE 	= 1'b0;		//nao importa
-				W_PC 	= 1'b1;		//registra a entrada
-				W_DM 	= 1'b0;		//nao escreve nenhum dado
-				W_RB 	= 1'b0;		//nao escreve nenhum dado
-				W_RF 	= 3'b0;		//nao registra nenhuma flag
-				W_IM 	= 1'b0;		//nao importa
-				S_MXRB 	= 2'b0;		//nao importa
-				S_MXSE 	= 1'b0;		//nao importa
+				OP_SE 	= 1'b0;			//nao importa
+				W_PC 	= 1'b1;			//registra a entrada
+				W_DM 	= 1'b0;			//nao escreve nenhum dado
+				W_RB 	= 1'b0;			//nao escreve nenhum dado
+				W_RF 	= 3'b0;			//nao registra nenhuma flag
+				W_IM 	= 1'b0;			//nao importa
+				S_MXRB 	= 2'b0;			//nao importa
+				S_MXSE 	= 1'b0;			//nao importa
 			end
 			ID: begin
 				OP_ALU 	= 5'b00000; 	//nao importa
 				OP_TF 	= 3'b111;		//nao importa
-				OP_SE 	= 1'b0;		//nao importa
-				W_PC 	= 1'b0;		//nao registra a entrada
-				W_DM 	= 1'b0;		//nao escreve nenhum dado
-				W_RB 	= 1'b0;		//nao escreve nenhum dado
-				W_RF 	= 3'b0;		//nao registra nenhuma flag
-				W_IM 	= 1'b0;		//nao importa
-				S_MXRB 	= 2'b0;		//nao importa
-				S_MXSE 	= 1'b0;		//nao importa
+				OP_SE 	= 1'b0;			//nao importa
+				W_PC 	= 1'b0;			//nao registra a entrada
+				W_DM 	= 1'b0;			//nao escreve nenhum dado
+				W_RB 	= 1'b0;			//nao escreve nenhum dado
+				W_RF 	= 3'b0;			//nao registra nenhuma flag
+				W_IM 	= 1'b0;			//nao importa
+				S_MXRB 	= 2'b0;			//nao importa
+				S_MXSE 	= 1'b0;			//nao importa
 
 				case(type)
 					3'b001: begin 					//Operações da ALU
@@ -95,7 +103,7 @@ module unit_control(	input 	wire		CLK,
 						if(op == 5'b11111)			//ones, não atualiza nenhuma
 							reg_W_RF 	= 3'b000;
 						else if(op == 5'b10000)		//zeros, atualiza Z
-							reg_W_RF 	= 3'B001;
+							reg_W_RF 	= 3'b001;
 						else if(op[4:3] == 2'b01)	//atualiza S C Z
 							reg_W_RF 	= 3'b011;
 						else if(op[4:3] == 2'b00)	//atualiza O S C Z

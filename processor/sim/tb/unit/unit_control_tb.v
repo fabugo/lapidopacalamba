@@ -6,17 +6,19 @@ module unit_control_tb;
 	always #5 CLK = ~CLK;
 
 	reg [31:0]	instr;
+
 	wire[4:0]	OP_ALU;
 	wire[2:0]	OP_TF;
 	wire		OP_SE;
 	wire		W_PC;
 	wire		W_DM;
-	wire		W_IM;
 	wire		W_RB;
 	wire[2:0]	W_RF;
 	wire[1:0]	S_MXRB;
 	wire		S_MXSE;
 
+	wire		W_IM;
+	reg 		RESET;
 	unit_control uc(.CLK(CLK),
 					.RESET(RESET),
 					.type(instr[31:29]),
@@ -31,107 +33,48 @@ module unit_control_tb;
 					.W_RF(W_RF),
 					.S_MXRB(S_MXRB),
 					.S_MXSE(S_MXSE));
-
-	integer erro;
-
+	parameter loops = 5;
+	integer erro,i;
+	reg [31:0] vecUC [0:loops];
+	/*Testes por vetores
+	[25:0](6)		tamanho		tipo (estagio)
+		[24:22]TYPE		3 		entrada	(ID)
+		[21:17]OP		5		entrada	(ID)
+		------------------------------------
+		[16]OP_SE		1		saida	(ID)
+		[15:11]OP_ALU	5		saida	(EX)
+		[10:8]OP_TF		3		saida	(EX)
+		[7]S_MXSE		1		saida	(EX)
+		[6]W_DM			1		saida	(EX)
+		[5:3]W_RF		3		saida	(WB)
+		[2]W_RB			1		saida	(WB)
+		[1:0]S_MXRB		2		saida	(WB)
+	*/
 	initial begin
 		$display("\n---------------------------");
 		$display("Executando teste da Unidade de Controle");
-		$display("Total de testes: ");
-
-		// Operacões Artimetica
-		instr = {`ADD, {27{1'b0}}};
+		$readmemb ("vecuc.in",vecUC);
+		RESET = 1;//inicio do IF
 		#5
-
-		instr = {`ADDINC, {27{1'b0}}};
-		#1
-
-		instr = {`INCA, {27{1'b0}}};
-		#1
-
-		instr = {`SUBDEC, {27{1'b0}}};
-		#1
-
-		instr = {`SUB, {27{1'b0}}};
-		#1
-
-		instr = {`DECA, {27{1'b0}}};
-		#1
-
-
-		// Operacões de Deslocamento
-		instr = {`LSL, {27{1'b0}}};
-		#1
-
-		instr = {`ASR, {27{1'b0}}};
-		#1
-
-
-		// Operacões Lógicas
-		instr = {`ZEROS, {27{1'b0}}};
-		#1
-
-		instr = {`AND, {27{1'b0}}};
-		#1
-
-		instr = {`ANDNOTA, {27{1'b0}}};
-		#1
-
-		instr = {`PASSB, {27{1'b0}}};
-		#1
-
-		instr = {`ANDNOTB, {27{1'b0}}};
-		#1
-
-		instr = {`PASSA, {27{1'b0}}};
-		#1
-
-		instr = {`XOR, {27{1'b0}}};
-		#1
-
-		instr = {`OR, {27{1'b0}}};
-		#1
-
-		instr = {`NAND, {27{1'b0}}};
-		#1
-
-		instr = {`XNOR, {27{1'b0}}};
-		#1
-
-		instr = {`PASSNOTA, {27{1'b0}}};
-		#1
-
-		instr = {`ORNOTA, {27{1'b0}}};
-		#1
-
-		instr = {`PASSNOTB, {27{1'b0}}};
-		#1
-
-		instr = {`ORNOTB, {27{1'b0}}};
-		#1
-
-		instr = {`NOR, {27{1'b0}}};
-		#1
-
-		instr = {`ONES, {27{1'b0}}};
-		#1
-
-
-		// Operacões de Desvio
-		instr = {`JUMPER, {27{1'b0}}};
-		#1
-
-		instr = {`JT, {27{1'b0}}};
-		#1
-
-		instr = {`JF, {27{1'b0}}};
-		#1
-
-		instr = {`JAL, {27{1'b0}}};
-		#1
-
-		instr = {`JR, {27{1'b0}}};
-		#1;
-
+		RESET = 0;
+		for(i=0;i<loops;i=i+1)begin
+			@(W_PC)begin
+				#10//inicio do ID
+				instr = {vecUC[i][25:18],23'b0};
+				if(vecUC[i][16]!=OP_TF) $display("to com sono qro dormir");
+				#10//inicio do EX
+				if( vecUC[i][15:11]	!= OP_ALU 	||
+					vecUC[i][10:8]	!= OP_TF 	||
+					vecUC[i][7]	 	!= S_MXSE 	||
+					vecUC[i][6]	 	!= W_DM 	)
+					$display("to com sono qro dormir");
+				#10//inicio do WB
+				if( vecUC[i][5:3]	!= W_RF 	||
+					vecUC[i][2]		!= W_RB 	||
+					vecUC[i][1:0]	!= S_MXRB 	)
+					$display("to com sono qro dormir");
+			end
+		end
+		$display("Total de testes: ");
 	end
 endmodule

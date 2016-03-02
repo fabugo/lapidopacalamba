@@ -32,6 +32,14 @@
 	`define JF		  	5'b01001
 	`define JAL		 	5'b01001
 	`define JR		  	5'b01001
-
 `endif //OPCODE
 `define OPCODE
+//-------------------------------
+`ifndef TYPE
+	`define ALU		 	3'b001
+	`define CONS	 	3'b010
+	`define MEMO	   	3'b100
+	`define DESV	  	3'b000
+	`define DESR	  	3'b110
+`endif //TYPE
+`define TYPE
