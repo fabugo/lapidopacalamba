@@ -132,6 +132,31 @@ module processor();
 		im_read_file = 0;
 		dm_write_file = 0;
 		im_write_file = 0;
+
+		pc_RESET = 1;
+		rb_RESET = 1;
+		tf_RESET = 1;
+		rf_RESET = 1;
+		#1
+
+		pc_RESET = 0;
+		rb_RESET = 0;
+		tf_RESET = 0;
+		rf_RESET = 0;
+		#(PERIOD-1)
+
+		uc_RESET = 1;
+		#1
+		uc_RESET = 0;
+		//-----------------------------------------------
+		
+		#15000;
+
+		im_write_file = 1;
+		dm_write_file = 1;
+		#PERIOD
+		im_write_file = 0;
+		dm_write_file = 0;
 	end
 
 endmodule

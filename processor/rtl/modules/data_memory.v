@@ -8,7 +8,7 @@ module data_memory(CLK, RESET, read_file, write_file, WE, ADDRESS, DATA, Q);
 	parameter dim = 1024;
 	reg[31:0] ram_mem[0:dim-1];
 
-	reg[9:0] i;
+	integer i;
 	always @(posedge RESET) begin
 		for(i = 0; i <= dim-1; i = i + 1)
 			ram_mem[i] = 32'b0;

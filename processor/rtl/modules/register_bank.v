@@ -12,7 +12,7 @@ module register_bank(CLK, RESET, RA, RB, WC, WPC, W_RB, PRA, PRB);
 	assign 						PRA = registers[RA];
 	assign 						PRB = registers[RB];
 
-	reg[3:0] i;
+	integer i;
 	always @(posedge RESET) begin
 		for(i = 0; i <= 15; i = i + 1)
 			registers[i] = 32'b0;

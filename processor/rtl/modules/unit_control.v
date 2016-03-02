@@ -67,8 +67,6 @@ module unit_control(	input 	wire		CLK,
 	always @(*) begin
 		case(STATE)
 			IF: begin
-				OP_ALU 	= 5'b00000; 	//nao importa
-				OP_TF 	= 3'b111;		//nao importa
 				OP_SE 	= 1'b0;			//nao importa
 				W_PC 	= 1'b1;			//registra a entrada
 				W_DM 	= 1'b0;			//nao escreve nenhum dado
@@ -123,8 +121,8 @@ module unit_control(	input 	wire		CLK,
 					end
 					3'b100: begin 					//Operações de Memória
 						reg_OP_TF 	= 3'b111;
-						reg_W_RB 	= ~op[4];
-						reg_W_DM 	= op[4];
+						reg_W_RB 	= ~op[0];
+						reg_W_DM 	= op[0];
 						reg_W_RF 	= 3'b000;
 						reg_S_MXSE 	= 1'b0;
 						reg_S_MXRB 	= 2'b01;
@@ -132,7 +130,7 @@ module unit_control(	input 	wire		CLK,
 					3'b000: begin 					//Operações de Desvio
 						reg_OP_SE 	= 1'b0;
 						reg_OP_ALU 	= 5'b10011;
-						reg_OP_TF 	= {op[2], op[3], op[4]};
+						reg_OP_TF 	= {op[2], op[1], op[0]};
 						reg_W_RB 	= 1'b0;
 						reg_W_DM 	= 1'b0;
 						reg_S_MXSE 	= 1'b1;
@@ -142,7 +140,7 @@ module unit_control(	input 	wire		CLK,
 					3'b110: begin 					//jal e jr
 						reg_OP_SE 	= 1'b0;
 						reg_OP_ALU 	= 5'b10011;
-						reg_OP_TF 	= {op[2], op[3], op[4]};
+						reg_OP_TF 	= {op[2], op[1], op[0]};
 						reg_W_RB 	= (reg_OP_TF == 3'b011) ? 1'b1 : 1'b0;
 						reg_W_DM 	= 1'b0;
 						reg_S_MXSE 	= 1'b0;

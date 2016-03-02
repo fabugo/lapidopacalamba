@@ -81,7 +81,7 @@ module alu(OP, A, B, result, O, S, C, Z);
 			5'b11111: aux_result = 32'b1;		//ones c <=> c = 1
 			5'b01100: aux_result = B;			//loadlit c, Const <=> c = Const
 			5'b01101: aux_result = B | (A & 8'hffff0000);			//lcl c, Const <=> c = Const16 | (C&0xffff0000)
-			5'b01110: aux_result = (A << 16) | (A & 8'h0000ffff);	//lch c, Const <=> c = (Const16 « 16) | (C&0x0000ffff)
+			5'b01110: aux_result = (B << 16) | (A & 8'h0000ffff);	//lch c, Const <=> c = (Const16 « 16) | (C&0x0000ffff)
 			default : aux_result = OP;
 		endcase
 		result = aux_result;

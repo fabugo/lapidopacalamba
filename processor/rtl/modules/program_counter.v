@@ -6,7 +6,7 @@ module program_counter(CLK, RESET, in, W_PC, out);
 	output	reg[31:0] 	out;
 
 	always @(posedge RESET)
-						out <= 32'b0;
+						out <= {32{1'b1}};
 
 	//Quando W_PC for 1 e o CLK tiver uma borda de subida, o valor da entrada é registrado.
 	always @(posedge CLK)
