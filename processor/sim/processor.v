@@ -150,7 +150,7 @@ module processor();
 		uc_RESET = 0;
 		//-----------------------------------------------
 		
-		#15000;
+		#1000;
 
 		im_write_file = 1;
 		dm_write_file = 1;

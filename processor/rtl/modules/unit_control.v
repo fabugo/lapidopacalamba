@@ -68,7 +68,7 @@ module unit_control(	input 	wire		CLK,
 		case(STATE)
 			IF: begin
 				OP_SE 	= 1'b0;			//nao importa
-				W_PC 	= 1'b1;			//registra a entrada
+				W_PC 	= 1'b0;			//registra a entrada
 				W_DM 	= 1'b0;			//nao escreve nenhum dado
 				W_RB 	= 1'b0;			//nao escreve nenhum dado
 				W_RF 	= 3'b0;			//nao registra nenhuma flag
@@ -161,6 +161,7 @@ module unit_control(	input 	wire		CLK,
 				S_MXRB 	= reg_S_MXRB;
 				W_RF 	= reg_W_RF;
 				W_RB 	= reg_W_RB;
+				W_PC	= 1'b1;
 			end
 		endcase
 	end
