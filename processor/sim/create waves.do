@@ -41,8 +41,8 @@ add wave -noupdate -expand -group rb -radix unsigned /processor/id/rb/RA
 add wave -noupdate -expand -group rb -radix unsigned /processor/id/rb/RB
 add wave -noupdate -expand -group rb -radix unsigned /processor/id/rb/WC
 add wave -noupdate -expand -group rb -radix decimal /processor/id/rb/WPC
-add wave -noupdate -expand -group rb /processor/id/rb/RESET
-add wave -noupdate -expand -group rb /processor/id/rb/W_RB
+add wave -noupdate -expand -group rb -radix binary /processor/id/rb/RESET
+add wave -noupdate -expand -group rb -radix binary /processor/id/rb/W_RB
 add wave -noupdate -expand -group rb -radix decimal /processor/id/rb/PRA
 add wave -noupdate -expand -group rb -radix decimal /processor/id/rb/PRB
 add wave -noupdate -expand -group tf -radix binary /processor/ex/tf/RESET
@@ -88,7 +88,7 @@ add wave -noupdate -expand -group rf /processor/wb/rf/out_S
 add wave -noupdate -expand -group rf /processor/wb/rf/out_C
 add wave -noupdate -expand -group rf /processor/wb/rf/out_Z
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {14681 ps} 0}
+WaveRestoreCursors {{Cursor 1} {145 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 232
 configure wave -valuecolwidth 71
@@ -104,4 +104,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {14562 ps} {14707 ps}
+WaveRestoreZoom {99963 ps} {100108 ps}

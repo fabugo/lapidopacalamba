@@ -22,7 +22,7 @@ module tester_flags(RESET, O, S, C, Z, cond, OP_TF, out);
 					3'b001: 	out = S;			//jf.neg		-> pula se (S == 0)
 					3'b010: 	out = Z;			//jf.zero		-> pula se (Z == 0)
 					3'b100: 	out = C;			//jf.carry		-> pula se (C == 0)
-					3'b101: 	out = S & Z;		//jf.negzero	-> pula se ((S && Z) == 0)
+					3'b101: 	out = S | Z;		//jf.negzero	-> pula se ((S || Z) == 0)
 					3'b111: 	out = O;			//jf.overflow	-> pula se (O == 0)
 				endcase
 			end
@@ -32,7 +32,7 @@ module tester_flags(RESET, O, S, C, Z, cond, OP_TF, out);
 					3'b001: 	out = ~S;			//jt.neg		-> pula se (S == 1)
 					3'b010: 	out = ~Z;			//jt.zero		-> pula se (Z == 1)
 					3'b100: 	out = ~C;			//jt.carry		-> pula se (C == 1)
-					3'b101: 	out = ~(S & Z);		//jt.negzero	-> pula se ((S && Z) == 1)
+					3'b101: 	out = ~(S | Z);		//jt.negzero	-> pula se ((S || Z) == 1)
 					3'b111: 	out = ~O;			//jt.overflow	-> pula se (O == 1)
 				endcase
 			end
