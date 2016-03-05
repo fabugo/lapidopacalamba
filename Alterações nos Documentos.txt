@@ -1,1 +1,3 @@
 - Alteracao do MI (Memory Instruction) para IM (Instruction Memory);
+
+- A instrução passb deixa de atualizar flags;

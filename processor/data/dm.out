@@ -2,7 +2,7 @@
 // instance=/processor/ex/dm/ram_mem
 // format=hex addressradix=h dataradix=h version=1.0 wordsperline=1 noaddress
 ffffffff
-00000000
+ffffffff
 ffffffff
 ffffffff
 00000000

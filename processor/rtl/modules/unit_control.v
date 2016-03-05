@@ -98,7 +98,7 @@ module unit_control(	input 	wire		CLK,
 							reg_S_MXRB 	= 2'b10;
 
 						// Define o sinal que define quais flags serão atualizadas
-						if(op == 5'b11111)			//ones, não atualiza nenhuma
+						if(op == 5'b11111 || op == 5'b10011)			//ones e passb, não atualizam nenhuma
 							reg_W_RF 	= 3'b000;
 						else if(op == 5'b10000)		//zeros, atualiza Z
 							reg_W_RF 	= 3'b001;
