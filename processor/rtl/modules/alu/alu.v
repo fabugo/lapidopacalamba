@@ -62,7 +62,10 @@ module alu(OP, A, B, result, O, S, C, Z);
 				aux_result 	= sub_result;
 			end
 			5'b01000: aux_result = A << 1; 		//lsl c, a <=> c = << a
-			5'b01001: aux_result = A >> 1; 		//asr c, a <=> c = >> a
+			5'b01001: begin
+					aux_result = A >>> 1; 		//asr c, a <=> c = >>> a
+					aux_result[31] = aux_result[30]; //O deslocamento não está conservando o bit, mesmo usando >>>.
+			end
 			5'b10000: aux_result = 32'b0; 		//zeros c <=> c = 0
 			5'b10001: aux_result = A & B; 		//and c, a, b <=> c = a & b
 			5'b10010: aux_result = (~A) & B;	//andnota c, a, b <=> c = !a & b
