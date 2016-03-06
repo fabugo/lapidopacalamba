@@ -21,7 +21,6 @@ module unit_control(	input 	wire		CLK,
 
 	reg	[4:0]	reg_OP_ALU;
 	reg	[2:0]	reg_OP_TF;
-	reg 		reg_OP_SE;
 	reg			reg_W_DM;
 	reg			reg_W_RB;
 	reg	[2:0]	reg_W_RF;
@@ -43,7 +42,6 @@ module unit_control(	input 	wire		CLK,
 		S_MXSE 		<= 1'b0;		//nao importa
 		reg_OP_ALU 	<= 0;
 		reg_OP_TF 	<= 0;
-		reg_OP_SE 	<= 0;
 		reg_W_DM 	<= 0;
 		reg_W_RB 	<= 0;
 		reg_W_RF 	<= 0;
@@ -110,7 +108,7 @@ module unit_control(	input 	wire		CLK,
 							reg_W_RF 	= 3'b010;
 					end
 					3'b010: begin 					//Operações de Constante
-						reg_OP_SE	= 1'b1;
+						OP_SE	= 1'b1;
 						reg_OP_ALU 	= op;
 						reg_OP_TF 	= 3'b111;
 						reg_W_RB 	= 1'b1;
@@ -128,7 +126,7 @@ module unit_control(	input 	wire		CLK,
 						reg_S_MXRB 	= 2'b01;
 					end
 					3'b000: begin 					//Operações de Desvio
-						reg_OP_SE 	= 1'b0;
+						OP_SE 	= 1'b0;
 						reg_OP_ALU 	= 5'b10011;
 						reg_OP_TF 	= {op[2], op[1], op[0]};
 						reg_W_RB 	= 1'b0;
@@ -138,7 +136,7 @@ module unit_control(	input 	wire		CLK,
 						reg_S_MXRB 	= 2'b00;
 					end
 					3'b110: begin 					//jal e jr
-						reg_OP_SE 	= 1'b0;
+						OP_SE 	= 1'b0;
 						reg_OP_ALU 	= 5'b10011;
 						reg_OP_TF 	= {op[2], op[1], op[0]};
 						reg_W_RB 	= (reg_OP_TF == 3'b011) ? 1'b1 : 1'b0;
