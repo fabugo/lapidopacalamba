@@ -1,15 +1,3 @@
 - Alteracao do MI (Memory Instruction) para IM (Instruction Memory);
 
 - A instrução passb deixa de atualizar flags;
-
-
-
-
-
-- O código do teste1 está errado
-	L3
-		lcl	r3,255 = 1111 1111, deveria ser 1111 1111 1111 1111 = 65535
-		lch	r3,127 = 0111 1111, deveria ser 0111 1111 1111 1111 = 32767
-	
-	L5
-		lch	r3,128 = 1000 0000, deveria ser 1000 0000 0000 0000 = 32768
