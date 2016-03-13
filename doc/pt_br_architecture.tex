@@ -726,7 +726,7 @@ Responsável por armazenar os estados das flags Overflow, Carry, Sinal e Zero. E
 % fim
 
 \subsection{Testador de Flags}
-Esse módulo combinacional foi criado com o objetivo de decidir se um jump será ou não realizado conforme a condição (COND).O testador verifica se uma determinada flag esta no estado desejado.
+Esse módulo combinacional foi criado com o objetivo de decidir se um jump será ou não realizado conforme a condição (COND) e o sinal vindo da unidade de controle. A partir do sinal COND, este módulo decide se o teste será feito utilizando a flag O(111), S(001), C(100), Z(010), S | Z(101), ou ainda, se o teste será feito com a condição true(000). A saída deste módulo é ligada diretamente ao multiplexador do pc, que seleciona se o próximo valor do PC virá da ALU (saída 0 do testador, indicando que o pulo deve ser feito) ou do somador do PC (saída 1 do testador, indicando que deve seguir o fluxo normal).
 
 \begin{figure}[H]
 \centering
@@ -750,7 +750,7 @@ Esse módulo combinacional foi criado com o objetivo de decidir se um jump será
         COND &   3   & Entrada &Condição que será testada \\ \hline
         S\_MXPC  &   1   & Saída & Sinal que indica se o salto será ou não realizado \\
         \hline
-        OP\_TF & 1  &  Entrada  & Sinal de controle do testador de flags \\ \hline
+        OP\_TF & 3  &  Entrada  & Sinal de controle do testador de flags \\ \hline
     \end{tabular}
     \caption{Tabela de Sinais do Testador de Flags}
   \end{center}
@@ -777,7 +777,7 @@ Esse modelo de implementação tem melhor desempenho em relação ao modelo micr
     TYPE\_OP      &  8  & Entrada & Instrução atual \\ \hline
     OP\_ALU       &  5   & Saída   & Código de operação da instrução atual \\ \hline
     OP\_SE        &  1   & Saída   & Sinal de controle do extensor de sinais. Sendo 0 extende de 12 para 32, sendo 1 extende de 16 para 32 \\ \hline
-    OP\_TF        &  3   & Saída   & Sinal que indica se o jump é true ou false \\ \hline
+    OP\_TF        &  3   & Saída   & Sinal que indica se a instrução é jt, jf, jal, j, ou jr \\ \hline
     W\_PC         &  1   & Saída   & Sinal de controle do PC \\ \hline
     W\_RB         &  1   & Saída   & Sinal que habilita a escrita no banco de registradores \\ \hline
     W\_DM         &  1   & Saída   & Sinal que habilita a escrita na memória de dados \\ \hline
@@ -792,7 +792,6 @@ Esse modelo de implementação tem melhor desempenho em relação ao modelo micr
 
 %Como esta arquitetura é baseada em RISC e o projeto exige um processador que faça juízo ao nome LAPIDOPACALAMBA, a unidade de controle será implementada em hardwired.
 
-\newpage
 \section{Assembly}
 Para a codificação dos programas deve ser utilizada a linguagem Assembly. Através dos mnemônicos já descritos anteriormente, serão escritas as instruções a serem executadas. Em seguida, através de um programa montador, o código fonte do programa será traduzido em linguagem de máquina para um arquivo binário que poderá ser entendido pelo processador e executado.\newline
 
