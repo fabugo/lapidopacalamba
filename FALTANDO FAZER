@@ -1,0 +1,11 @@
+NO DOC:
+	• modificar datapaths no documento especificos e geral
+	• adicionar unidade de adiantamento
+	• modificar sessões da unidade de controle que agora é gerador de sinal
+	•
+	
+NO RTL:
+	• construir modulos integrados dos estagios
+	• integrar os modulos integrados junto com os regs de pipeline
+	• construir testes para os modulos integrados
+	•
