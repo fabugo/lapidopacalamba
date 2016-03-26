@@ -4,6 +4,8 @@ module reg_IFID_EXMEM(	input 	wire 		CLK,
 
 						input	wire[3:0]	in_WC,
 						input	wire[31:0]	in_PC,
+						input 	wire[3:0]	in_RA,
+						input 	wire[3:0]	in_RB,
 						input	wire[31:0]	in_PRA,
 						input	wire[31:0]	in_PRB,
 						input 	wire		in_S_MXSE,
@@ -15,6 +17,8 @@ module reg_IFID_EXMEM(	input 	wire 		CLK,
 
 						output	reg	[3:0]	out_WC,
 						output	reg	[31:0]	out_PC,
+						input 	wire[3:0]	out_RA,
+						input 	wire[3:0]	out_RB,
 						output	reg	[31:0]	out_PRA,
 						output	reg	[31:0]	out_PRB,
 						output 	reg	[31:0]	out_se_out,
@@ -52,5 +56,5 @@ always @(posedge RESET)
 						out_W_RB	<= in_W_RB;
 						out_W_RF	<= in_W_RF;
 		end
-		
+
 endmodule
