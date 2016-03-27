@@ -2,12 +2,13 @@ module reg_IFID_EXMEM(	input 	wire 		CLK,
 						input	wire		RESET,
 						input	wire		ENABLE,
 
-						input	wire[3:0]	in_WC,
-						input	wire[31:0]	in_PC,
 						input 	wire[3:0]	in_RA,
 						input 	wire[3:0]	in_RB,
+						input	wire[3:0]	in_WC,
+						input	wire[31:0]	in_PC,
 						input	wire[31:0]	in_PRA,
 						input	wire[31:0]	in_PRB,
+						input 	wire[31:0]	in_se_out,
 						input 	wire		in_S_MXSE,
 						input 	wire[4:0]	in_OP_ALU,
 						input 	wire		in_W_DM,
@@ -15,10 +16,10 @@ module reg_IFID_EXMEM(	input 	wire 		CLK,
 						input 	wire		in_W_RB,
 						input 	wire[2:0]	in_W_RF,
 
+						output 	reg[3:0]	out_RA,
+						output 	reg[3:0]	out_RB,
 						output	reg	[3:0]	out_WC,
 						output	reg	[31:0]	out_PC,
-						input 	wire[3:0]	out_RA,
-						input 	wire[3:0]	out_RB,
 						output	reg	[31:0]	out_PRA,
 						output	reg	[31:0]	out_PRB,
 						output 	reg	[31:0]	out_se_out,
@@ -30,6 +31,8 @@ module reg_IFID_EXMEM(	input 	wire 		CLK,
 						output 	reg [2:0]	out_W_RF);
 
 always @(posedge RESET)
+						out_RA 		<= 4'b0;
+						out_RB 		<= 4'b0;
 						out_WC 		<= 4'b0;
 						out_PC 		<= 31'b0;
 						out_PRA 	<= 31'b0;
@@ -44,6 +47,8 @@ always @(posedge RESET)
 
 	always @(posedge CLK)
 		if(ENABLE == 1'b1) begin
+						out_RA 		<= in_RA;
+						out_RB 		<= in_RB;
 						out_WC 		<= in_WC;
 						out_PC 		<= in_PC;
 						out_PRA 	<= in_PRA;
