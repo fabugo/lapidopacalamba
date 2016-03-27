@@ -178,8 +178,7 @@ module processor();
 									.out_S_MXRB(reg_exmem_wb_S_MXRB),
 									.out_W_RB(reg_exmem_wb_W_RB));
 
-	WB wb(							.CLK(CLK),
-									.in_WC(reg_exmem_wb_WC),
+	WB wb(							.in_WC(reg_exmem_wb_WC),
 									.in_PC(reg_exmem_wb_PC),
 									.in_PR(reg_exmem_wb_PR),
 									.in_alu_res(reg_exmem_wb_alu_res),

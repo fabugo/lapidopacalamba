@@ -4,7 +4,7 @@ module EX_MEM(	input 	wire 		CLK,
 				input 	wire 		dm_read_file,
 				input 	wire 		dm_write_file,
 
-				input	wire		in_mxrb,
+				input	wire[31:0]	in_mxrb,
 				input	wire[3:0]	in_wb_RA,
 				input	wire[3:0]	in_wb_RB,
 
