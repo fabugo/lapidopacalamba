@@ -1,18 +1,21 @@
 //Módulo multiplexador MX_A (combinacional)
-module mx_A(in_RA, in_mxRB, forward, out);
+module mx_A(in_PRA, in_mxrb, forward, out);
 
-	input 	wire[31:0]	in_RA, in_mxRB;
+	input 	wire[31:0]	in_PRA, in_mxrb;
 	input 	wire		forward;
 
 	output 	reg	[31:0]	out;
 
 	/*
-		Com S_MXSE = 0, a entrada do banco de registradores
-		Com S_MXSE = 1, a entrada do multiplexador do estágio WB
+		Com forward = 0, a entrada do banco de registradores é selecionada
+		Com forward = 1, a entrada do multiplexador rb é selecionada
 	*/
 	always @(*) begin
-		if(forward)		out = in_mxRB;
-		else			out = in_RA;
+		case(forward)
+			1'b0: 				out = in_PRA;
+			1'b1: 				out = in_mxrb;
+			default:			out = in_PRB;
+		endcase
 	end
 
 endmodule

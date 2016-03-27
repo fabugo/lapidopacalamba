@@ -3,6 +3,7 @@ module mx_pc(in_ALU, in_ADD, S_MXPC, out);
 
 	input 	wire[31:0]	in_ALU, in_ADD;
 	input 	wire		S_MXPC;
+	
 	output 	reg	[31:0]	out;
 
 	/*
