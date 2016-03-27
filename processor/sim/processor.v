@@ -5,119 +5,189 @@ module processor();
 	initial CLK = 0;
 	always #(PERIOD/2) CLK = ~CLK;
 
+	reg 		reg_ifid_exmem_RESET;
+	reg 		reg_ifid_exmem_ENABLE;
+	reg 		reg_exmem_wb_RESET;
+	reg 		reg_exmem_wb_ENABLE;
+
 	reg 		pc_RESET;
-	reg 		uc_RESET;
 	reg 		im_RESET;
 	reg 		rb_RESET;
 	reg 		tf_RESET;
 	reg 		dm_RESET;
-	reg 		rf_RESET;
 
-	wire[31:0]	mxpc_out;
 	reg 		im_read_file;
 	reg 		im_write_file;
+	reg			im_WE;
+	reg [31:0]	im_DATA;
 	reg 		dm_read_file;
 	reg 		dm_write_file;
-	wire[31:0]	im_instruction;
 
-	wire[31:0]	rb_PRA;
-	wire[31:0]	rb_PRB;
-	wire[31:0]	se_out;
-	wire[4:0]	uc_OP_ALU;
-	wire[2:0]	uc_OP_TF;
-	wire		uc_W_PC;
-	wire		uc_W_DM;
-	wire		uc_W_IM;
-	wire[2:0]	uc_W_RF;
-	wire[1:0]	uc_S_MXRB;
-	wire		uc_S_MXSE;
+	//IF-ID
+	wire[3:0]	ifid_RA;
+	wire[3:0]	ifid_RB;
+	wire[3:0]	ifid_WC;
+	wire[31:0]	ifid_PC;
+	wire[31:0]	ifid_PRA;
+	wire[31:0]	ifid_PRB;
+	wire[31:0]	ifid_se_out;
+	wire		ifid_S_MXSE;
+	wire[4:0]	ifid_OP_ALU;
+	wire		ifid_W_DM;
+	wire[1:0]	ifid_S_MXRB;
+	wire		ifid_W_RB;
 
-	wire 		tf_out;
-	wire[31:0]	dm_Q;
-	wire[31:0]	alu_result;
-	wire 		alu_O;
-	wire 		alu_S;
-	wire 		alu_C;
-	wire 		alu_Z;
+	//reg IF-ID_EX-MEM
+	wire[3:0]	reg_ifid_exmem_RA;
+	wire[3:0]	reg_ifid_exmem_RB;
+	wire[3:0]	reg_ifid_exmem_WC;
+	wire[31:0]	reg_ifid_exmem_PC;
+	wire[31:0]	reg_ifid_exmem_PRA;
+	wire[31:0]	reg_ifid_exmem_PRB;
+	wire[31:0]	reg_ifid_exmem_se_out;
+	wire		reg_ifid_exmem_S_MXSE;
+	wire[4:0]	reg_ifid_exmem_OP_ALU;
+	wire		reg_ifid_exmem_W_DM;
+	wire[1:0]	reg_ifid_exmem_S_MXRB;
+	wire		reg_ifid_exmem_W_RB;
 
-	wire[31:0]	mxrb_out;
-	wire 		rf_O;
-	wire 		rf_S;
-	wire 		rf_C;
-	wire 		rf_Z;
+	//EX-MEM
+	wire[3:0]	exmem_RA;
+	wire[3:0]	exmem_RB;
+	wire[3:0]	exmem_WC;
+	wire[31:0]	exmem_PC;
+	wire[31:0]	exmem_PR;
+	wire[31:0]	exmem_alu_res;
+	wire[3:0]	exmem_flags;
+	wire[1:0]	exmem_S_MXRB;
+	wire		exmem_W_RB;
 
-	IF if_1(.CLK(CLK),
-			.alu_result(alu_result),
-			.tf_out(tf_out),
-			.mxpc_out(mxpc_out),
-			.im_RESET(im_RESET),
-			.im_read_file(im_read_file),
-			.im_write_file(im_write_file),
-			.im_DATA(32'b0),
-			.uc_W_IM(uc_W_IM),
-			.im_instruction(im_instruction),
-			.pc_RESET(pc_RESET),
-			.uc_W_PC(uc_W_PC));
+	//reg EX-MEM_WB
+	wire[3:0]	reg_exmem_wb_RA;
+	wire[3:0]	reg_exmem_wb_RB;
+	wire[3:0]	reg_exmem_wb_WC;
+	wire[31:0]	reg_exmem_wb_PC;
+	wire[31:0]	reg_exmem_wb_PR;
+	wire[31:0]	reg_exmem_wb_alu_res;
+	wire[1:0]	reg_exmem_wb_S_MXRB;
+	wire		reg_exmem_wb_W_RB;
 
-	ID id(	.CLK(CLK),
-			.im_instruction(im_instruction),
-			.rb_RESET(rb_RESET),
-			.rb_WPC(mxrb_out),
-			.rb_PRA(rb_PRA),
-			.rb_PRB(rb_PRB),
-			.se_out(se_out),
-			.uc_RESET(uc_RESET),
-			.uc_OP_ALU(uc_OP_ALU),
-			.uc_OP_TF(uc_OP_TF),
-			.uc_W_PC(uc_W_PC),
-			.uc_W_DM(uc_W_DM),
-			.uc_W_IM(uc_W_IM),
-			.uc_W_RF(uc_W_RF),
-			.uc_S_MXRB(uc_S_MXRB),
-			.uc_S_MXSE(uc_S_MXSE));
+	//WB
+	wire[31:0]	wb_mxrb_out;
+	wire		wb_W_RB;
 
-	EX ex(	.CLK(CLK),
-			.rb_PRA(rb_PRA),
-			.rb_PRB(rb_PRB),
-			.se_out(se_out),
-			.uc_S_MXSE(uc_S_MXSE),
-			.rf_O(rf_O),
-			.rf_S(rf_S),
-			.rf_C(rf_C),
-			.rf_Z(rf_Z),
-			.tf_RESET(tf_RESET),
-			.tf_cond(im_instruction[14:12]),
-			.uc_OP_TF(uc_OP_TF),
-			.tf_out(tf_out),
-			.dm_RESET(dm_RESET),
-			.dm_read_file(dm_read_file),
-			.dm_write_file(dm_write_file),
-			.uc_W_DM(uc_W_DM),
-			.dm_Q(dm_Q),
-			.uc_OP_ALU(uc_OP_ALU),
-			.alu_result(alu_result),
-			.alu_O(alu_O),
-			.alu_S(alu_S),
-			.alu_C(alu_C),
-			.alu_Z(alu_Z));
+	IF_ID if_id(					.CLK(CLK),
+									.pc_RESET(pc_RESET),
+									.im_RESET(im_RESET),
+									.im_read_file(im_read_file),
+									.im_write_file(im_write_file),
+									.im_WE(im_WE),
+									.im_DATA(im_DATA),
+									.rb_RESET(rb_RESET),
+									.tf_RESET(tf_RESET),
+									.in_flags(exmem_flags),
+									.in_WPC(wb_mxrb_out),
+									.in_W_RB(wb_W_RB),
+									.out_RA(ifid_RA),
+									.out_RB(ifid_RB),
+									.out_WC(ifid_WC),
+									.out_PC(ifid_PC),
+									.out_PRA(ifid_PRA),
+									.out_PRB(ifid_PRB),
+									.out_se_out(ifid_se_out),
+									.out_S_MXSE(ifid_S_MXSE),
+									.out_OP_ALU(ifid_OP_ALU),
+									.out_W_DM(ifid_W_DM),
+									.out_S_MXRB(ifid_S_MXRB),
+									.out_W_RB(ifid_W_RB));
 
-	WB wb(	.CLK(CLK),
-			.mxpc_out(mxpc_out),
-			.dm_Q(dm_Q),
-			.alu_result(alu_result),
-			.uc_S_MXRB(uc_S_MXRB),
-			.mxrb_out(mxrb_out),
-			.rf_RESET(rf_RESET),
-			.alu_O(alu_O),
-			.alu_S(alu_S),
-			.alu_C(alu_C),
-			.alu_Z(alu_Z),
-			.uc_W_RF(uc_W_RF),
-			.rf_O(rf_O),
-			.rf_S(rf_S),
-			.rf_C(rf_C),
-			.rf_Z(rf_Z));
+	reg_IFID_EXMEM reg_ifid_exmem(	.CLK(CLK),
+									.RESET(reg_ifid_exmem_RESET),
+									.ENABLE(reg_ifid_exmem_ENABLE),
+									.in_RA(ifid_RA),
+									.in_RB(ifid_RB),
+									.in_WC(ifid_WC),
+									.in_PC(ifid_PC),
+									.in_PRA(ifid_PRA),
+									.in_PRB(ifid_PRB),
+									.in_se_out(ifid_se_out),
+									.in_S_MXSE(ifid_S_MXSE),
+									.in_OP_ALU(ifid_OP_ALU),
+									.in_W_DM(ifid_W_DM),
+									.in_S_MXRB(ifid_S_MXRB),
+									.in_W_RB(ifid_W_RB),
+									.out_RA(reg_ifid_exmem_RA),
+									.out_RB(reg_ifid_exmem_RB),
+									.out_WC(reg_ifid_exmem_WC),
+									.out_PC(reg_ifid_exmem_PC),
+									.out_PRA(reg_ifid_exmem_PRA),
+									.out_PRB(reg_ifid_exmem_PRB),
+									.out_se_out(reg_ifid_exmem_se_out),
+									.out_S_MXSE(reg_ifid_exmem_S_MXSE),
+									.out_OP_ALU(reg_ifid_exmem_OP_ALU),
+									.out_W_DM(reg_ifid_exmem_W_DM),
+									.out_S_MXRB(reg_ifid_exmem_S_MXRB),
+									.out_W_RB(reg_ifid_exmem_W_RB));
 
+	EX_MEM ex_mem(					.CLK(CLK),
+									.dm_RESET(dm),
+									.dm_read_file(dm_read_file),
+									.dm_write_file(dm_write_file),
+									.in_mxrb(wb_mxrb_out),
+									.in_wb_RA(reg_exmem_wb_RA),
+									.in_wb_RB(reg_exmem_wb_RB),
+									.in_ex_RA(reg_ifid_exmem_RA),
+									.in_ex_RB(reg_ifid_exmem_RB),
+									.in_WC(reg_ifid_exmem_WC),
+									.in_PC(reg_ifid_exmem_PC),
+									.in_PRA(reg_ifid_exmem_PRA),
+									.in_PRB(reg_ifid_exmem_PRB),
+									.in_se_out(reg_ifid_exmem_se_out),
+									.in_S_MXSE(reg_ifid_exmem_S_MXSE),
+									.in_OP_ALU(reg_ifid_exmem_OP_ALU),
+									.in_W_DM(reg_ifid_exmem_W_DM),
+									.in_S_MXRB(reg_ifid_exmem_S_MXRB),
+									.in_W_RB(reg_ifid_exmem_W_RB),
+									.out_RA(exmem_RA),
+									.out_RB(exmem_RB),
+									.out_WC(exmem_WC),
+									.out_PC(exmem_PC),
+									.out_PR(exmem_PR),
+									.out_alu_res(exmem_alu_res),
+									.out_flags(exmem_flags),
+									.out_S_MXRB(exmem_S_MXRB),
+									.out_W_RB(exmem_W_RB));
+
+	reg_EXMEM_WB reg_exmem_wb(		.CLK(CLK),
+									.RESET(reg_exmem_wb_RESET),
+									.ENABLE(reg_exmem_wb_ENABLE),
+									.in_RA(exmem_RA),
+									.in_RB(exmem_RB),
+									.in_WC(exmem_WC),
+									.in_PC(exmem_PC),
+									.in_PR(exmem_PR),
+									.in_alu_res(exmem_alu_res),
+									.in_S_MXRB(exmem_S_MXRB),
+									.in_W_RB(exmem_W_RB),
+									.out_RA(reg_exmem_wb_RA),
+									.out_RB(reg_exmem_wb_RB),
+									.out_WC(reg_exmem_wb_WC),
+									.out_PC(reg_exmem_wb_PC),
+									.out_PR(reg_exmem_wb_PR),
+									.out_alu_res(reg_exmem_wb_alu_res),
+									.out_S_MXRB(reg_exmem_wb_S_MXRB),
+									.out_W_RB(reg_exmem_wb_W_RB));
+
+	WB wb(							.CLK(CLK),
+									.in_WC(reg_exmem_wb_WC),
+									.in_PC(reg_exmem_wb_PC),
+									.in_PR(reg_exmem_wb_PR),
+									.in_alu_res(reg_exmem_wb_alu_res),
+									.in_S_MXRB(reg_exmem_wb_S_MXRB),
+									.in_W_RB(reg_exmem_wb_W_RB),
+									.out_WPC(wb_mxrb_out),
+									.out_W_RB(wb_W_RB));
+/*
 	initial begin
 		//-------------------- START --------------------
 		im_RESET = 1;
@@ -158,5 +228,5 @@ module processor();
 		im_write_file = 0;
 		dm_write_file = 0;
 	end
-
+*/
 endmodule
