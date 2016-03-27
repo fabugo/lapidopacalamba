@@ -5,7 +5,7 @@ NO DOC:
 	•
 	
 NO RTL:
-	• construir modulos integrados dos estagios
-	• integrar os modulos integrados junto com os regs de pipeline
-	• construir testes para os modulos integrados
-	•
+	• construir testes de unidades para os elementos aletrados
+	• construir testes de unidades para os novos elementos
+	• construir testes de unidades para os módulos integrados
+	• Verificar o fluxo de execução do processor.v e verificar seu funcionamento
