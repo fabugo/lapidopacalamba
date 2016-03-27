@@ -4,7 +4,7 @@ module forward_unit(	input wire [3:0]	RAex,
 						input wire [3:0]	RBwb,
 
 						output reg [3:0] 	fwA,
-						output reg [3:0]	fwB,
+						output reg [3:0]	fwB
 	);
 
 	always @ (*) begin
