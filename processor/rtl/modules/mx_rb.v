@@ -3,6 +3,7 @@ module mx_rb(in_PC, in_DM, in_ALU, S_MXRB, out);
 
 	input 	wire[31:0]	in_PC, in_DM, in_ALU;
 	input 	wire[1:0]	S_MXRB;
+	
 	output 	reg	[31:0]	out;
 
 	/*

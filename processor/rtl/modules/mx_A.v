@@ -1,5 +1,5 @@
 //Módulo multiplexador MX_A (combinacional)
-module mx_A(in_PRA, in_mxrb, forward, out);
+module mx_a(in_PRA, in_mxrb, forward, out);
 
 	input 	wire[31:0]	in_PRA, in_mxrb;
 	input 	wire		forward;
@@ -14,7 +14,7 @@ module mx_A(in_PRA, in_mxrb, forward, out);
 		case(forward)
 			1'b0: 				out = in_PRA;
 			1'b1: 				out = in_mxrb;
-			default:			out = in_PRB;
+			default:			out = in_PRA;
 		endcase
 	end
 

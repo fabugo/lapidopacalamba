@@ -1,5 +1,5 @@
 //Módulo multiplexador MX_B (combinacional)
-module mx_B(in_PRB, in_SE, in_mxrb, forward, S_MXSE, out);
+module mx_b(in_PRB, in_SE, in_mxrb, forward, S_MXSE, out);
 
 	input 	wire[31:0]	in_PRB, in_SE, in_mxrb;
 	input 	wire		S_MXSE;
