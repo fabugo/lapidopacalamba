@@ -3,7 +3,6 @@ module flags_tb;
 	reg	 [4:0]   OP;
 	reg	 [31:0]  A,
 					B;
-	reg			R_ALU;
 	wire	[31:0]  RES;
 	wire			O,
 					S,
@@ -13,7 +12,6 @@ module flags_tb;
 	alu u1( .OP(OP),
 			.A(A),
 			.B(B),
-			.R_ALU(R_ALU),
 			.RES(RES),
 			.O(O),
 			.S(S),
