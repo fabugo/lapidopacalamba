@@ -35,7 +35,15 @@ module IF_ID(	input 	wire 		CLK,
 	wire		OP_SE;
 	wire[2:0]	OP_TF;
 
-	assign out_PRA = PRB;
+	assign out_WC 		= instruction[23:20];
+	assign out_RA 		= instruction[19:16];
+	assign out_RB 		= instruction[15:12];
+	
+	assign out_PC		= add_out;
+	assign out_PRB 		= PRB;
+	assign out_se_out 	= se_out;
+
+
 
 	mx_pc mxpc(				.in_SE(se_out),
 							.in_RB(PRB),
