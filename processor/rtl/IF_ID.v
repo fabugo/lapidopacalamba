@@ -45,7 +45,7 @@ module IF_ID(	input 	wire 		CLK,
 
 
 
-	mx_pc mxpc(				.in_SE(se_out),
+	mx_pc mx_pc(				.in_SE(se_out),
 							.in_RB(PRB),
 							.in_ADD(add_out),
 							.S_MXPC(tf_out),

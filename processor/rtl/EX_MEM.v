@@ -44,12 +44,12 @@ module EX_MEM(	input 	wire 		CLK,
 	assign out_S_MXRB 	= in_S_MXRB;
 	assign out_W_RB 	= in_W_RB;
 
-	mx_a mxa(		.in_PRA(in_PRA),
+	mx_a mx_a(		.in_PRA(in_PRA),
 					.in_mxrb(in_mxrb),
 					.forward(fu_a),
 					.out(mxa_out));
 
-	mx_b mxb(		.in_PRB(in_PRB),
+	mx_b mx_b(		.in_PRB(in_PRB),
 					.in_SE(in_se_out), 
 					.in_mxrb(in_mxrb), 
 					.forward(fu_b), 

@@ -13,7 +13,7 @@ module WB(	input	wire[3:0]	in_WC,
 	assign out_W_RB = in_W_RB;
 	assign out_WPC 	= mxrb_out;
 
-	mx_rb mxrb(	.in_PC(in_PC),
+	mx_rb mx_rb(.in_PC(in_PC),
 				.in_DM(in_PR),
 				.in_ALU(in_alu_res),
 				.S_MXRB(in_S_MXRB),

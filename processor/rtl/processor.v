@@ -94,7 +94,7 @@ module processor(	input 	wire 		CLK,
 									.out_S_MXRB(ifid_S_MXRB),
 									.out_W_RB(ifid_W_RB));
 
-	reg_IFID_EXMEM reg_ifid_exmem(	.CLK(CLK),
+	reg_IFID_EXMEM reg_ifid(	.CLK(CLK),
 									.RESET(reg_ifid_exmem_RESET),
 									.ENABLE(reg_ifid_exmem_ENABLE),
 									.in_RA(ifid_RA),
@@ -151,7 +151,7 @@ module processor(	input 	wire 		CLK,
 									.out_S_MXRB(exmem_S_MXRB),
 									.out_W_RB(exmem_W_RB));
 
-	reg_EXMEM_WB reg_exmem_wb(		.CLK(CLK),
+	reg_EXMEM_WB reg_exmem(		.CLK(CLK),
 									.RESET(reg_exmem_wb_RESET),
 									.ENABLE(reg_exmem_wb_ENABLE),
 									.in_RA(exmem_RA),
