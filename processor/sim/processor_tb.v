@@ -5,6 +5,9 @@ module processor_tb();
 	initial CLK = 0;
 	always #(PERIOD/2) CLK = ~CLK;
 
+	reg 		reg_ifid_exmem_RESET;
+	reg 		reg_exmem_wb_RESET;
+
 	reg 		pc_RESET;
 	reg 		im_RESET;
 	reg 		rb_RESET;
@@ -19,6 +22,8 @@ module processor_tb();
 	reg 		dm_write_file;
 
 	processor processor(.CLK(CLK),
+						.reg_ifid_exmem_RESET(reg_ifid_exmem_RESET),
+						.reg_exmem_wb_RESET(reg_exmem_wb_RESET),
 						.pc_RESET(pc_RESET),
 						.im_RESET(im_RESET),
 						.rb_RESET(rb_RESET),
@@ -33,16 +38,22 @@ module processor_tb();
 
 	initial begin
 		//-------------------- START --------------------
+		reg_ifid_exmem_RESET = 0;
+		reg_exmem_wb_RESET = 0;
 		pc_RESET = 0;
+		im_RESET = 0;
 		rb_RESET = 0;
 		tf_RESET = 0;
+		dm_RESET = 0;
 		im_read_file = 0;
 		im_write_file = 0;
 		im_WE = 0;
 		im_DATA = 0;
 		dm_read_file = 0;
 		dm_write_file = 0;
+		#1
 
+		//Reset and read memories
 		im_RESET = 1;
 		dm_RESET = 1;
 		#1
@@ -50,17 +61,21 @@ module processor_tb();
 		dm_RESET = 0;
 		dm_read_file = 1;
 		im_read_file = 1;
-		#(PERIOD-1)
+		#(PERIOD-2)
 		dm_read_file = 0;
 		im_read_file = 0;
 		dm_write_file = 0;
 		im_write_file = 0;
 
+		//Reset modules and regs
+		reg_ifid_exmem_RESET = 1;
+		reg_exmem_wb_RESET = 1;
 		pc_RESET = 1;
 		rb_RESET = 1;
 		tf_RESET = 1;
 		#1
-
+		reg_ifid_exmem_RESET = 0;
+		reg_exmem_wb_RESET = 0;
 		pc_RESET = 0;
 		rb_RESET = 0;
 		tf_RESET = 0;

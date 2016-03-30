@@ -28,7 +28,6 @@ module IF_ID(	input 	wire 		CLK,
 
 	wire[31:0]	se_out, PRB, add_out;
 	wire[1:0]	tf_out;
-	wire[2:0]	tf_cond;
 	wire[31:0]	mxpc_out;
 	wire[31:0]	pc_out;
 	wire[31:0]	instruction;
@@ -71,7 +70,7 @@ module IF_ID(	input 	wire 		CLK,
 							.RB(instruction[15:12]),
 							.WC(instruction[23:20]),
 							.WPC(in_WPC),
-							.W_RB(W_RB),
+							.W_RB(in_W_RB),
 							.PRA(out_PRA),
 							.PRB(PRB));
 
@@ -94,7 +93,7 @@ module IF_ID(	input 	wire 		CLK,
 							.S(in_flags[1]),
 							.C(in_flags[2]),
 							.Z(in_flags[3]),
-							.cond(tf_cond),
+							.cond(instruction[14:12]),
 							.OP_TF(OP_TF),
 							.out(tf_out));
 

@@ -1,4 +1,7 @@
 module processor(	input 	wire 		CLK,
+
+					input	wire 		reg_ifid_exmem_RESET,
+					input	wire 		reg_exmem_wb_RESET,
 	
 					input	wire 		pc_RESET,
 					input	wire 		im_RESET,
@@ -63,7 +66,7 @@ module processor(	input 	wire 		CLK,
 	wire		reg_exmem_wb_W_RB;
 
 	//WB
-	wire[31:0]	wb_mxrb_out;
+	wire[31:0]	wb_WPC;
 	wire		wb_W_RB;
 
 	IF_ID if_id(					.CLK(CLK),
@@ -76,7 +79,7 @@ module processor(	input 	wire 		CLK,
 									.rb_RESET(rb_RESET),
 									.tf_RESET(tf_RESET),
 									.in_flags(exmem_flags),
-									.in_WPC(wb_mxrb_out),
+									.in_WPC(wb_WPC),
 									.in_W_RB(wb_W_RB),
 									.out_RA(ifid_RA),
 									.out_RB(ifid_RB),
@@ -123,7 +126,7 @@ module processor(	input 	wire 		CLK,
 									.dm_RESET(dm),
 									.dm_read_file(dm_read_file),
 									.dm_write_file(dm_write_file),
-									.in_mxrb(wb_mxrb_out),
+									.in_mxrb(wb_WPC),
 									.in_wb_RA(reg_exmem_wb_RA),
 									.in_wb_RB(reg_exmem_wb_RB),
 									.in_ex_RA(reg_ifid_exmem_RA),
@@ -174,7 +177,7 @@ module processor(	input 	wire 		CLK,
 									.in_alu_res(reg_exmem_wb_alu_res),
 									.in_S_MXRB(reg_exmem_wb_S_MXRB),
 									.in_W_RB(reg_exmem_wb_W_RB),
-									.out_WPC(wb_mxrb_out),
+									.out_WPC(wb_WPC),
 									.out_W_RB(wb_W_RB));
 
 endmodule
