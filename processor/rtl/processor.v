@@ -1,27 +1,17 @@
-module processor();
-	parameter PERIOD = 30;
+module processor(	input 	wire 		CLK,
+	
+					input	wire 		pc_RESET,
+					input	wire 		im_RESET,
+					input	wire 		rb_RESET,
+					input	wire 		tf_RESET,
+					input	wire 		dm_RESET,
 
-	reg CLK;
-	initial CLK = 0;
-	always #(PERIOD/2) CLK = ~CLK;
-
-	reg 		reg_ifid_exmem_RESET;
-	reg 		reg_ifid_exmem_ENABLE;
-	reg 		reg_exmem_wb_RESET;
-	reg 		reg_exmem_wb_ENABLE;
-
-	reg 		pc_RESET;
-	reg 		im_RESET;
-	reg 		rb_RESET;
-	reg 		tf_RESET;
-	reg 		dm_RESET;
-
-	reg 		im_read_file;
-	reg 		im_write_file;
-	reg			im_WE;
-	reg [31:0]	im_DATA;
-	reg 		dm_read_file;
-	reg 		dm_write_file;
+					input	wire 		im_read_file,
+					input	wire 		im_write_file,
+					input	wire 		im_WE,
+					input	wire[31:0]	im_DATA,
+					input	wire 		dm_read_file,
+					input	wire 		dm_write_file);
 
 	//IF-ID
 	wire[3:0]	ifid_RA;
@@ -186,46 +176,5 @@ module processor();
 									.in_W_RB(reg_exmem_wb_W_RB),
 									.out_WPC(wb_mxrb_out),
 									.out_W_RB(wb_W_RB));
-/*
-	initial begin
-		//-------------------- START --------------------
-		im_RESET = 1;
-		dm_RESET = 1;
-		#1
-		im_RESET = 0;
-		dm_RESET = 0;
-		dm_read_file = 1;
-		im_read_file = 1;
-		#(PERIOD-1)
-		dm_read_file = 0;
-		im_read_file = 0;
-		dm_write_file = 0;
-		im_write_file = 0;
 
-		pc_RESET = 1;
-		rb_RESET = 1;
-		tf_RESET = 1;
-		rf_RESET = 1;
-		#1
-
-		pc_RESET = 0;
-		rb_RESET = 0;
-		tf_RESET = 0;
-		rf_RESET = 0;
-		#(PERIOD-1)
-
-		uc_RESET = 1;
-		#1
-		uc_RESET = 0;
-		//-----------------------------------------------
-		
-		#100000;
-
-		im_write_file = 1;
-		dm_write_file = 1;
-		#PERIOD
-		im_write_file = 0;
-		dm_write_file = 0;
-	end
-*/
 endmodule

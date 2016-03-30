@@ -47,7 +47,6 @@ module IF_ID(	input 	wire 		CLK,
 	program_counter pc( 	.CLK(CLK),
 							.RESET(pc_RESET),
 							.in(mxpc_out),
-							.W_PC(1'b1),
 							.out(pc_out));
 
 	adder32 add(			.A(pc_out),
