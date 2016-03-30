@@ -6,7 +6,9 @@ module processor_tb();
 	always #(PERIOD/2) CLK = ~CLK;
 
 	reg 		reg_ifid_exmem_RESET;
+	reg 		reg_ifid_exmem_ENABLE;
 	reg 		reg_exmem_wb_RESET;
+	reg 		reg_exmem_wb_ENABLE;
 
 	reg 		pc_RESET;
 	reg 		im_RESET;
@@ -23,7 +25,9 @@ module processor_tb();
 
 	processor processor(.CLK(CLK),
 						.reg_ifid_exmem_RESET(reg_ifid_exmem_RESET),
+						.reg_ifid_exmem_ENABLE(reg_ifid_exmem_ENABLE),
 						.reg_exmem_wb_RESET(reg_exmem_wb_RESET),
+						.reg_exmem_wb_ENABLE(reg_exmem_wb_ENABLE),
 						.pc_RESET(pc_RESET),
 						.im_RESET(im_RESET),
 						.rb_RESET(rb_RESET),
@@ -79,10 +83,15 @@ module processor_tb();
 		pc_RESET = 0;
 		rb_RESET = 0;
 		tf_RESET = 0;
-		#(PERIOD-1)
+		#1
+
+		//Enable regs
+		reg_ifid_exmem_ENABLE = 1;
+		reg_exmem_wb_ENABLE = 1;
+		#(PERIOD-2)
 		//-----------------------------------------------
 		
-		#100000;
+		#800;
 
 		im_write_file = 1;
 		dm_write_file = 1;

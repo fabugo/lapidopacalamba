@@ -1,7 +1,9 @@
 module processor(	input 	wire 		CLK,
 
 					input	wire 		reg_ifid_exmem_RESET,
+					input	wire 		reg_ifid_exmem_ENABLE,
 					input	wire 		reg_exmem_wb_RESET,
+					input	wire 		reg_exmem_wb_ENABLE,
 	
 					input	wire 		pc_RESET,
 					input	wire 		im_RESET,
