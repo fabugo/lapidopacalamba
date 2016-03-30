@@ -123,7 +123,7 @@ module processor(	input 	wire 		CLK,
 									.out_W_RB(reg_ifid_exmem_W_RB));
 
 	EX_MEM ex_mem(					.CLK(CLK),
-									.dm_RESET(dm),
+									.dm_RESET(dm_RESET),
 									.dm_read_file(dm_read_file),
 									.dm_write_file(dm_write_file),
 									.in_mxrb(wb_WPC),
