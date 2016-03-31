@@ -74,18 +74,18 @@ module processor_tb();
 		//Reset modules and regs
 		reg_ifid_exmem_RESET = 1;
 		reg_exmem_wb_RESET = 1;
-		pc_RESET = 1;
 		rb_RESET = 1;
 		tf_RESET = 1;
 		#1
 		reg_ifid_exmem_RESET = 0;
 		reg_exmem_wb_RESET = 0;
-		pc_RESET = 0;
+		pc_RESET = 1;
 		rb_RESET = 0;
 		tf_RESET = 0;
 		#1
 
 		//Enable regs
+		pc_RESET = 0;
 		reg_ifid_exmem_ENABLE = 1;
 		reg_exmem_wb_ENABLE = 1;
 		#(PERIOD-2)
