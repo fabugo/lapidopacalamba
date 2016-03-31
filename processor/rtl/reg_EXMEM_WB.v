@@ -2,8 +2,6 @@ module reg_EXMEM_WB(	input 	wire 		CLK,
 						input	wire		RESET,
 						input	wire		ENABLE,
 
-						input 	wire[3:0]	in_RA,
-						input 	wire[3:0]	in_RB,
 						input	wire[3:0]	in_WC,
 						input	wire[31:0]	in_PC,
 						input	wire[31:0]	in_PR,
@@ -11,8 +9,6 @@ module reg_EXMEM_WB(	input 	wire 		CLK,
 						input 	wire[1:0]	in_S_MXRB,
 						input 	wire		in_W_RB,
 
-						output 	reg [3:0]	out_RA,
-						output 	reg [3:0]	out_RB,
 						output	reg	[3:0]	out_WC,
 						output	reg	[31:0]	out_PC,
 						output	reg	[31:0]	out_PR,
@@ -21,8 +17,6 @@ module reg_EXMEM_WB(	input 	wire 		CLK,
 						output 	reg 		out_W_RB);
 
 	always @(posedge RESET) begin
-						out_RA 		<= 4'b0;
-						out_RB 		<= 4'b0;
 						out_WC 		<= 4'b0;
 						out_PC 		<= 31'b0;
 						out_PR 		<= 31'b0;
@@ -33,8 +27,6 @@ module reg_EXMEM_WB(	input 	wire 		CLK,
 
 	always @(posedge CLK)
 		if(ENABLE == 1'b1) begin
-						out_RA 		<= in_RA;
-						out_RA 		<= in_RB;
 						out_WC 		<= in_WC;
 						out_PC 		<= in_PC;
 						out_PR 		<= in_PR;

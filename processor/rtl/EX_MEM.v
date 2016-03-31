@@ -5,12 +5,12 @@ module EX_MEM(	input 	wire 		CLK,
 				input 	wire 		dm_write_file,
 
 				input	wire[31:0]	in_mxrb,
-				input	wire[3:0]	in_wb_RA,
-				input	wire[3:0]	in_wb_RB,
+				input	wire[3:0]	in_wb_WC,
+				input	wire 		in_wb_W_RB,
 
-				input	wire[3:0]	in_ex_RA,
-				input	wire[3:0]	in_ex_RB,
-				input	wire[3:0]	in_WC,
+				input	wire[3:0]	in_RA,
+				input	wire[3:0]	in_RB,
+				input	wire[3:0]	in_ex_WC,
 				input	wire[31:0]	in_PC,
 				input	wire[31:0]	in_PRA,
 				input	wire[31:0]	in_PRB,
@@ -19,10 +19,8 @@ module EX_MEM(	input 	wire 		CLK,
 				input	wire[4:0]	in_OP_ALU,
 				input	wire 		in_W_DM,
 				input	wire[1:0]	in_S_MXRB,
-				input	wire 		in_W_RB,
+				input	wire 		in_ex_W_RB,
 
-				output	wire[3:0]	out_RA,
-				output	wire[3:0]	out_RB,
 				output	wire[3:0]	out_WC,
 				output	wire[31:0]	out_PC,
 				output	wire[31:0]	out_PR,
@@ -37,12 +35,10 @@ module EX_MEM(	input 	wire 		CLK,
 	wire 		fu_b;
 	wire[31:0]	mxb_out;
 
-	assign out_RA 		= in_ex_RA;
-	assign out_RB 		= in_ex_RB;
-	assign out_WC 		= in_WC;
+	assign out_WC 		= in_ex_WC;
 	assign out_PC 		= in_PC;
 	assign out_S_MXRB 	= in_S_MXRB;
-	assign out_W_RB 	= in_W_RB;
+	assign out_W_RB 	= in_ex_W_RB;
 
 	mx_a mx_a(		.in_PRA(in_PRA),
 					.in_mxrb(in_mxrb),
@@ -65,10 +61,10 @@ module EX_MEM(	input 	wire 		CLK,
 					.C(out_flags[2]),
 					.Z(out_flags[3]));
 
-	forward_unit fu(.ex_RA(in_ex_RA),
-					.ex_RB(in_ex_RB),
-					.wb_RA(in_wb_RA),
-					.wb_RB(in_wb_RB),
+	forward_unit fu(.RA(in_RA),
+					.RB(in_RB),
+					.WC(in_wb_WC),
+					.W_RB(in_wb_W_RB),
 					.out_A(fu_a),
 					.out_B(fu_b));
 
@@ -77,8 +73,8 @@ module EX_MEM(	input 	wire 		CLK,
 					.read_file(dm_read_file),
 					.write_file(dm_write_file),
 					.WE(in_W_DM),
-					.ADDRESS(in_PRB[9:0]),
-					.DATA(in_PRA),
+					.ADDRESS(mx_b[9:0]),
+					.DATA(mxa_out),
 					.Q(out_PR));
 	
 endmodule

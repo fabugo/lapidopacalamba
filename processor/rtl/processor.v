@@ -47,8 +47,6 @@ module processor(	input 	wire 		CLK,
 	wire		reg_ifid_exmem_W_RB;
 
 	//EX-MEM
-	wire[3:0]	exmem_RA;
-	wire[3:0]	exmem_RB;
 	wire[3:0]	exmem_WC;
 	wire[31:0]	exmem_PC;
 	wire[31:0]	exmem_PR;
@@ -58,8 +56,6 @@ module processor(	input 	wire 		CLK,
 	wire		exmem_W_RB;
 
 	//reg EX-MEM_WB
-	wire[3:0]	reg_exmem_wb_RA;
-	wire[3:0]	reg_exmem_wb_RB;
 	wire[3:0]	reg_exmem_wb_WC;
 	wire[31:0]	reg_exmem_wb_PC;
 	wire[31:0]	reg_exmem_wb_PR;
@@ -129,11 +125,11 @@ module processor(	input 	wire 		CLK,
 									.dm_read_file(dm_read_file),
 									.dm_write_file(dm_write_file),
 									.in_mxrb(wb_WPC),
-									.in_wb_RA(reg_exmem_wb_RA),
-									.in_wb_RB(reg_exmem_wb_RB),
-									.in_ex_RA(reg_ifid_exmem_RA),
-									.in_ex_RB(reg_ifid_exmem_RB),
-									.in_WC(reg_ifid_exmem_WC),
+									.in_wb_WC(reg_exmem_wb_WC),
+									.in_wb_W_RB(reg_exmem_wb_W_RB),
+									.in_RA(reg_ifid_exmem_RA),
+									.in_RB(reg_ifid_exmem_RB),
+									.in_ex_WC(reg_ifid_exmem_WC),
 									.in_PC(reg_ifid_exmem_PC),
 									.in_PRA(reg_ifid_exmem_PRA),
 									.in_PRB(reg_ifid_exmem_PRB),
@@ -142,9 +138,7 @@ module processor(	input 	wire 		CLK,
 									.in_OP_ALU(reg_ifid_exmem_OP_ALU),
 									.in_W_DM(reg_ifid_exmem_W_DM),
 									.in_S_MXRB(reg_ifid_exmem_S_MXRB),
-									.in_W_RB(reg_ifid_exmem_W_RB),
-									.out_RA(exmem_RA),
-									.out_RB(exmem_RB),
+									.in_ex_W_RB(reg_ifid_exmem_W_RB),
 									.out_WC(exmem_WC),
 									.out_PC(exmem_PC),
 									.out_PR(exmem_PR),
@@ -156,16 +150,12 @@ module processor(	input 	wire 		CLK,
 	reg_EXMEM_WB reg_exmem(		.CLK(CLK),
 									.RESET(reg_exmem_wb_RESET),
 									.ENABLE(reg_exmem_wb_ENABLE),
-									.in_RA(exmem_RA),
-									.in_RB(exmem_RB),
 									.in_WC(exmem_WC),
 									.in_PC(exmem_PC),
 									.in_PR(exmem_PR),
 									.in_alu_res(exmem_alu_res),
 									.in_S_MXRB(exmem_S_MXRB),
 									.in_W_RB(exmem_W_RB),
-									.out_RA(reg_exmem_wb_RA),
-									.out_RB(reg_exmem_wb_RB),
 									.out_WC(reg_exmem_wb_WC),
 									.out_PC(reg_exmem_wb_PC),
 									.out_PR(reg_exmem_wb_PR),
