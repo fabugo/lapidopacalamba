@@ -5,13 +5,15 @@ module WB(	input	wire[3:0]	in_WC,
 			input	wire[1:0]	in_S_MXRB,
 			input	wire		in_W_RB,
 
+			output	wire[3:0]	out_WC,
 			output	wire[31:0]	out_WPC,
 			output	wire		out_W_RB);
 	
 	wire[31:0] mxrb_out;
 
-	assign out_W_RB = in_W_RB;
+	assign out_WC 	= in_WC;
 	assign out_WPC 	= mxrb_out;
+	assign out_W_RB = in_W_RB;
 
 	mx_rb mx_rb(.in_PC(in_PC),
 				.in_DM(in_PR),

@@ -23,7 +23,7 @@ module register_bank(CLK, RESET, RA, RB, WC, WPC, W_RB, PRA, PRB);
 		o valor da entrada WPC é registrado no registrador
 		indicado por WC.
 	*/
-	always @(posedge CLK)
+	always @(negedge CLK)
 		if(W_RB == 1'b1)		registers[WC] <= WPC;
 
 endmodule

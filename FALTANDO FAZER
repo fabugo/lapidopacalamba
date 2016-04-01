@@ -4,6 +4,10 @@ NO DOC:
 	• modificar sessões da unidade de controle que agora é gerador de sinal
 	•
 	
+DATAPATH
+	• Alterar a memoria para usar a saida de mxa e mxb
+	• Inserir o sinal OP_FU, gerado pelo SG e emitido oao FU (2 bits)
+
 NO RTL:
 	• construir testes de unidades para os elementos aletrados
 	• construir testes de unidades para os novos elementos

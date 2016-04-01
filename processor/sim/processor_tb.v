@@ -1,5 +1,5 @@
 module processor_tb();
-	parameter PERIOD = 30;
+	parameter PERIOD = 10;
 
 	reg CLK;
 	initial CLK = 0;
@@ -71,6 +71,8 @@ module processor_tb();
 		dm_write_file = 0;
 		im_write_file = 0;
 
+
+		#(PERIOD/2)
 		//Reset modules and regs
 		reg_ifid_exmem_RESET = 1;
 		reg_exmem_wb_RESET = 1;
@@ -88,10 +90,10 @@ module processor_tb();
 		pc_RESET = 0;
 		reg_ifid_exmem_ENABLE = 1;
 		reg_exmem_wb_ENABLE = 1;
-		#(PERIOD-2)
+
 		//-----------------------------------------------
 		
-		#800;
+		#9000;
 
 		im_write_file = 1;
 		dm_write_file = 1;
