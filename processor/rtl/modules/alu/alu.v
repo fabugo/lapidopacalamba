@@ -1,6 +1,8 @@
-module alu(OP, A, B, result, O, S, C, Z);
+module alu(OP, W_RF, A, B, result, O, S, C, Z);
 
 	input   wire[4:0]	OP;
+	input   wire[2:0]	W_RF;
+
 	input   wire[31:0]	A, B;
 	output  reg [31:0]	result;
 	output  reg			O, S, C, Z;
@@ -92,25 +94,16 @@ module alu(OP, A, B, result, O, S, C, Z);
 
 	//logica de flags
 	always@(*) begin
-						Z = (result == 32'b0) ? 1 : 0;
-						S = result[31];
-		if(OP[4:3] == 2'b01) begin //operacao de deslocamento
-			if(OP[0])	C = A[0];
-			else		C = A[31];
-		end
-		else begin //operacoes aritimeticas
-			if(OP[2] == 1)begin
-						C = sub_C;
-						O = sub_O;
-			end
-			else if(!OP[2])begin
-						C = add_C;
-						O = add_O;
-			end
-			else begin
-						C = 0;
-						O = 0;
-			end
+		if(W_RF >= 3'b001 && W_RF <= 3'b100) begin
+				Z = (result == 32'b0) ? 1 : 0;
+			if(W_RF >= 3'b010)
+				S = result[31];
+			if(W_RF >= 3'b011)
+				C = (OP[4:3] == 2'b01)
+					? (OP[0]) 		? A[0]  : A[31] //operacao de deslocamento
+					: (OP[2] == 1)	? sub_C : add_C; //operacoes aritimeticas
+			if(W_RF == 3'b100)
+				O = (OP[2] == 1) ? sub_O : add_O;
 		end
 	end
 

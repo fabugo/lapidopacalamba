@@ -29,6 +29,7 @@ module processor(	input 	wire 		CLK,
 	wire[1:0]	ifid_OP_FU;
 	wire		ifid_S_MXSE;
 	wire[4:0]	ifid_OP_ALU;
+	wire[2:0]	ifid_W_RF;
 	wire		ifid_W_DM;
 	wire[1:0]	ifid_S_MXRB;
 	wire		ifid_W_RB;
@@ -44,6 +45,7 @@ module processor(	input 	wire 		CLK,
 	wire[1:0]	reg_ifid_exmem_OP_FU;
 	wire		reg_ifid_exmem_S_MXSE;
 	wire[4:0]	reg_ifid_exmem_OP_ALU;
+	wire[2:0]	reg_ifid_exmem_W_RF;
 	wire		reg_ifid_exmem_W_DM;
 	wire[1:0]	reg_ifid_exmem_S_MXRB;
 	wire		reg_ifid_exmem_W_RB;
@@ -93,6 +95,7 @@ module processor(	input 	wire 		CLK,
 									.out_OP_FU(ifid_OP_FU),
 									.out_S_MXSE(ifid_S_MXSE),
 									.out_OP_ALU(ifid_OP_ALU),
+									.out_W_RF(ifid_W_RF),
 									.out_W_DM(ifid_W_DM),
 									.out_S_MXRB(ifid_S_MXRB),
 									.out_W_RB(ifid_W_RB));
@@ -110,6 +113,7 @@ module processor(	input 	wire 		CLK,
 									.in_OP_FU(ifid_OP_FU),
 									.in_S_MXSE(ifid_S_MXSE),
 									.in_OP_ALU(ifid_OP_ALU),
+									.in_W_RF(ifid_W_RF),
 									.in_W_DM(ifid_W_DM),
 									.in_S_MXRB(ifid_S_MXRB),
 									.in_W_RB(ifid_W_RB),
@@ -123,6 +127,7 @@ module processor(	input 	wire 		CLK,
 									.out_OP_FU(reg_ifid_exmem_OP_FU),
 									.out_S_MXSE(reg_ifid_exmem_S_MXSE),
 									.out_OP_ALU(reg_ifid_exmem_OP_ALU),
+									.out_W_RF(reg_ifid_exmem_W_RF),
 									.out_W_DM(reg_ifid_exmem_W_DM),
 									.out_S_MXRB(reg_ifid_exmem_S_MXRB),
 									.out_W_RB(reg_ifid_exmem_W_RB));
@@ -144,6 +149,7 @@ module processor(	input 	wire 		CLK,
 									.in_OP_FU(reg_ifid_exmem_OP_FU),
 									.in_S_MXSE(reg_ifid_exmem_S_MXSE),
 									.in_OP_ALU(reg_ifid_exmem_OP_ALU),
+									.in_W_RF(reg_ifid_exmem_W_RF),
 									.in_W_DM(reg_ifid_exmem_W_DM),
 									.in_S_MXRB(reg_ifid_exmem_S_MXRB),
 									.in_ex_W_RB(reg_ifid_exmem_W_RB),
