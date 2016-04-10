@@ -11,3 +11,11 @@ _vmake
 vlog5byk89
 wlftgezx9j
 processor/lapidopacalamba
+
+processor/db/
+processor/lapidopacalamba.qpf
+processor/lapidopacalamba.qsf
+processor/lapidopacalamba.qws
+processor/lapidopacalamba.tis_db_list.ddb
+processor/output_files/
+processor/rtl/modules/alu/subtractor32.v.bak

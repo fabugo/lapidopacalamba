@@ -3,9 +3,8 @@ module program_counter_tb;
 	reg CLK, RESET;
 
 	reg	[31:0] 	in;
-	reg 		W_PC;
 	wire[31:0] 	out;
-	program_counter pc(.CLK(CLK), .RESET(RESET), .in(in), .W_PC(W_PC), .out(out));
+	program_counter pc(.CLK(CLK), .RESET(RESET), .in(in), .out(out));
 
 	initial begin
 		CLK = 0;
@@ -14,7 +13,6 @@ module program_counter_tb;
 		$display("Total de testes: 3");
 
 		in = 32'b0;
-		W_PC = 1'b1;
 		#1;
 		CLK = 1;
 		#1
@@ -22,16 +20,15 @@ module program_counter_tb;
 		if(out != in) $display("Saida esperada: %8h. Saida obtida: %8h", in, out);
 
 		CLK = 0;
-		W_PC = 1'b0;
 		in = 32'b1;
 		#1;
 		CLK = 1;
 		#1
-		$display("Executando teste 2: %s", (in == out) ? "Erro" : "Sucesso");
-		if(out == in) $display("Saida esperada: %8h. Saida obtida: %8h", in, out);
+		$display("Executando teste 2: %s", (in != out) ? "Erro" : "Sucesso");
+		if(out != in) $display("Saida esperada: %8h. Saida obtida: %8h", in, out);
 
 		CLK = 0;
-		W_PC = 1'b1;
+		in = 32'b1111;
 		#1;
 		CLK = 1;
 		#1

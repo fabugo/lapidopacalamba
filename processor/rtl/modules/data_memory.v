@@ -5,7 +5,7 @@ module data_memory(CLK, RESET, read_file, write_file, WE, ADDRESS, DATA, Q);
 	input 	wire[31:0]	DATA;
 	output 	wire[31:0]	Q;
 
-	parameter dim = 1024;
+	parameter dim = 16;
 	reg[31:0] ram_mem[0:dim-1];
 
 	integer i;

@@ -1,5 +1,5 @@
 module processor_tb();
-	parameter PERIOD = 10;
+	parameter PERIOD = 2;
 
 	reg CLK;
 	initial CLK = 0;

@@ -2,7 +2,7 @@ module tester_flags_tb;
 
 	reg 		RESET, O, S, C, Z;
 	reg	[2:0] 	cond, OP_TF;
-	wire  		out;
+	wire[1:0]	out;
 	tester_flags tf(.RESET(RESET), .O(O), .S(S), .C(C), .Z(Z), .cond(cond), .OP_TF(OP_TF), .out(out));
 
 	integer exit, erro;
@@ -25,7 +25,7 @@ module tester_flags_tb;
 				C = i[2];
 				Z = i[3];
 				#1
-				if(out == 1'b0) begin
+				if(out != 2'b10) begin
 					erro = erro + 1;
 					$display("-> Erro para as entradas: O: %b, S: %b, C: %b, Z: %b, cond: %3b. O pulo nao era esperado.", O, S, C, Z, cond);
 				end
@@ -53,18 +53,18 @@ module tester_flags_tb;
 				C = i[2];
 				Z = i[3];
 				#1
-				if(out == 1'b0 && ((cond == 0)
+				if((out == 2'b01 || out == 2'b01) && ((cond == 0)
 						|| (cond == 1 && S == 1)
 						|| (cond == 2 && Z == 1)
 						|| (cond == 4 && C == 1)
-						|| (cond == 5 && (S & Z) == 1)
+						|| (cond == 5 && (S | Z) == 1)
 						|| (cond == 7 && O == 1))) begin
 					erro = erro + 1;
 					$display("-> Erro para as entradas: O: S: C: Z: cond: . O pulo nao era esperado.", O, S, C, Z, cond);
-				end else if(out == 1'b1 && cond != 0 && ((cond == 1 && S == 0)
+				end else if(out != 2'b00 && cond != 0 && ((cond == 1 && S == 0)
 						|| (cond == 2 && Z == 0)
 						|| (cond == 4 && C == 0)
-						|| (cond == 5 && (S & Z) == 0)
+						|| (cond == 5 && (S | Z) == 0)
 						|| (cond == 7 && O == 0))) begin
 					erro = erro + 1;
 					$display("-> Erro para as entradas: O: %b, S: %b, C: %b, Z: %b, cond: %3b. O pulo esperado nao foi executado.", O, S, C, Z, cond);
@@ -95,18 +95,18 @@ module tester_flags_tb;
 				C = i[2];
 				Z = i[3];
 				#1
-				if(out == 1'b0 && (cond != 0) && ((cond == 1 && S == 0)
+				if((out == 2'b01 || out == 2'b01) && (cond != 0) && ((cond == 1 && S == 0)
 						|| (cond == 2 && Z == 0)
 						|| (cond == 4 && C == 0)
-						|| (cond == 5 && ~(S & Z) == 0)
+						|| (cond == 5 && ~(S | Z) == 0)
 						|| (cond == 7 && O == 0))) begin
 					erro = erro + 1;
 					$display("-> Erro para as entradas: O: %b, S: %b, C: %b, Z: %b, cond: %3b. O pulo nao era esperado.", O, S, C, Z, cond);
-				end else if(out == 1'b1 && ((cond == 0)
+				end else if(out != 2'b00 && ((cond == 0)
 						|| (cond == 1 && S == 1)
 						|| (cond == 2 && Z == 1)
 						|| (cond == 4 && C == 1)
-						|| (cond == 5 && ~(S & Z) == 1)
+						|| (cond == 5 && ~(S | Z) == 1)
 						|| (cond == 7 && O == 1))) begin
 					erro = erro + 1;
 					$display("-> Erro para as entradas: O: %b, S: %b, C: %b, Z: %b, cond: %3b. O pulo esperado nao foi executado.", O, S, C, Z, cond);
@@ -135,7 +135,7 @@ module tester_flags_tb;
 				C = i[2];
 				Z = i[3];
 				#1
-				if(out == 1'b1) begin
+				if(out != 2'b00) begin
 					erro = erro + 1;
 					$display("-> Erro para as entradas: O: %b, S: %b, C: %b, Z: %b, cond: %3b. O pulo esperado nao foi executado.", O, S, C, Z, cond);
 				end
@@ -163,7 +163,7 @@ module tester_flags_tb;
 				C = i[2];
 				Z = i[3];
 				#1
-				if(out == 1'b1) begin
+				if(out != 2'b01) begin
 					erro = erro + 1;
 					$display("-> Erro para as entradas: O: %b, S: %b, C: %b, Z: %b, cond: %3b. O pulo esperado nao foi executado.", O, S, C, Z, cond);
 				end
@@ -191,7 +191,7 @@ module tester_flags_tb;
 				C = i[2];
 				Z = i[3];
 				#1
-				if(out == 1'b1) begin
+				if(out != 2'b01) begin
 					erro = erro + 1;
 					$display("-> Erro para as entradas: O: %b, S: %b, C: %b, Z: %b, cond: %3b. O pulo esperado nao foi executado.", O, S, C, Z, cond);
 				end
