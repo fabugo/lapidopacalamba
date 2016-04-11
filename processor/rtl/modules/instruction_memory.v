@@ -5,7 +5,7 @@ module instruction_memory(CLK, RESET, read_file, write_file, WE, ADDRESS, DATA, 
 	input 	wire[31:0]	DATA;
 	output 	wire[31:0]	Q;
 
-	parameter dim = 16;
+	parameter dim = 1024;
 	reg[31:0] ram_mem[0:dim-1];
 
 	integer i;
