@@ -1,8 +1,8 @@
 module processor_tb();
-	parameter PERIOD = 2;
+	parameter PERIOD = 10;
 
 	reg CLK;
-	initial CLK = 0;
+	initial CLK = 1;
 	always #(PERIOD/2) CLK = ~CLK;
 
 	reg 		reg_ifid_exmem_RESET;
@@ -42,6 +42,7 @@ module processor_tb();
 
 	initial begin
 		//-------------------- START --------------------
+		#(PERIOD/2)
 		reg_ifid_exmem_RESET = 0;
 		reg_exmem_wb_RESET = 0;
 		pc_RESET = 0;
