@@ -1,5 +1,6 @@
 ;Testes das operações de memória
 ;Para o teste N, escreve 1 na posicao N da memória, se o teste passar, ou -1, caso contrário
+
 .module memory
 .pseg
 		loadlit r14, 1
@@ -64,5 +65,6 @@ TESTE5:	inca r12, r12
 		store r13, r15
 		j END
 END5:	store r13, r14
+
 END:	j END
 .end

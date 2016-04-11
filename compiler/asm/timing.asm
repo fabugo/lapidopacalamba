@@ -1,5 +1,7 @@
 ;Testes usado para verificar o timming do processador
-;Este código executa 43 instruções antes de chegar ao halt L2
+;Este código executa 43 instruções antes de chegar ao halt, assim
+;o tempo de processamento será de 43*clock
+
 .module timming
 .pseg
 		loadlit r0, 1

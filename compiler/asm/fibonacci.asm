@@ -37,5 +37,5 @@ FIM: store r3,r4		;Armazena no endereço presente em 'r3' o valor presente em 'r
 HALT: j HALT
 
 .dseg
-POS:	.word 9
+POS:	.word 45
 .end

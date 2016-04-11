@@ -1,6 +1,7 @@
 // memory data file (do not edit the following line - required for mem load use)
 // instance=/processor_tb/processor/ex_mem/dm/ram_mem
 // format=hex addressradix=h dataradix=h version=1.0 wordsperline=1 noaddress
+0000002d
 00000000
 00000000
 00000000
@@ -15,8 +16,7 @@
 00000000
 00000000
 00000000
-00000000
-00000000
+29cea5dd
 00000000
 00000000
 00000000
