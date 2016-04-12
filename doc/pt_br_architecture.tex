@@ -56,7 +56,10 @@
   15/01/2016 &  Alterações no documento & Patricia Gomes \\ \hline 
   29/01/2016 &  Correções do documento & Patricia Gomes \\ \hline 
   30/01/2016 &  Revisão das tabelas de instruções & Matheus Borges \\ \hline 
-  31/01/2016 &  Revisão da formatação do documento & Matheus Borges \\ \hline 
+  31/01/2016 &  Revisão da formatação do documento & Matheus Borges \\ \hline
+  08/04/2016 &  Alterações dos datapath para pipeline & Matheus Borges \\ \hline
+  11/04/2016 &  Alterações das descrições dos módulos para pipeline & Fábio Barros\\ \hline
+  11/04/2016 &  Revisão das descrições de funcionamento & Matheus Borges\\ \hline
   
 
 \end{longtable}
@@ -68,7 +71,7 @@
 \subsection{Objetivo} 
 O processador pode ser definido como o cérebro do computador, é ele o responsável por realizar todas as instruções dentro do computador como operações de lógicas e cálculos. Além disso ele é responsável pela tomada de decisões do sistema.
 
-O objetivo deste documento de arquitetura é definir as especificações do processador desenvolvido. O documento de arquitetura é importante por permitir que outras pessoas possam utilizá-lo para construir um sistema a partir dele com sucesso. O mesmo  define os parâmetros de implementação que compõem os requisitos do processador implementado, tais requisitos incluem a arquitetura do conjunto de instruções, definições de entrada e saída e a arquitetura geral do processador. 
+O objetivo deste documento de arquitetura é definir as especificações do processador desenvolvido. O documento de arquitetura é importante por permitir que outras pessoas possam utilizá-lo para construir um sistema com sucesso a partir dele. O mesmo  define os parâmetros de implementação que compõem os requisitos do processador implementado, tais requisitos incluem a arquitetura do conjunto de instruções, definições de entrada e saída e a arquitetura geral do processador. 
 
 \subsection{Organização do Documento} 
 \textbf{Sessão 2:} Apresenta uma definição de requisitos funcionais e não funcionais. \newline
@@ -104,14 +107,15 @@ O objetivo deste documento de arquitetura é definir as especificações do proc
     Const16 & Constante de 16 bits \\ \hline
     IM     & Instruction Memory (Memória de Instruções)\\ \hline
 	PC     & Program Counter (Contador de Programa)\\ \hline
-	RB     & Banco de Registradores\\ \hline
-	UC     & Unit Control (Unidade de Controle)\\ \hline
+	RB     & Register Bank (Banco de Registradores)\\ \hline
+	SG     & Signal Generator (Gerador de Sinal)\\ \hline
 	ALU    & Arithmetic Logic Unit (Unidade Lógica Aritmética)\\ \hline
 	RF     & Register Flag (Registrador de Flags)\\ \hline
 	TF     & Tests Flag (Testador de Flags)\\ \hline
 	MX     & Multiplexer (Multiplexador)\\ \hline
 	DM     & Data Memory (Memória de Dados)\\ \hline
 	SE     & Signal Extender (Extensor de Sinal)\\ \hline
+	FU     & Forward Unit (Unidade de encaminhamento)\\ \hline
 	RISC   & Reduced Instruction Set Computer (Computador com um Conjunto Reduzido de Instruções)\\ \hline
 
 \caption{Tabela de acrônimos e abreviações}
@@ -173,7 +177,8 @@ Os requisitos foram atendidos, de forma que as instruções, apresentadas nas se
 \section{Visão Geral da Arquitetura}
 Este documento descreve um processador µRISC adaptado à 32 bits. Esse processador possui 16 registradores de propósito geral e é composto por um conjunto de 42 instruções. 
 
-Para uma instrução ser executada são necessários quatro ciclos. Esses ciclos são denominados IF, ID, EX/MEN e WB, como apresentado na figura abaixo. No primeiro ciclo (IF),  a próxima instrução a ser executada, definida pelo contador de programa (PC), é lida da memória de instruções (IM). No segundo ciclo (ID), a instrução é identificada e os operandos são lidos do banco de registradores ou, em caso de operações com constantes, manipulados pelo extensor de sinal (SE). No terceiro ciclo (EX/MEM), a instrução é executa pela unidade lógica aritmética (ALU) ou pela memória, em caso de operações de armazenamento ou leitura. No quarto ciclo (WB), os resultados são escritos no banco de registradores.
+Cada instrução necessita de três ciclos de clock para serem finalizadas. Porém, devido a arquitetura ser baseada no princípio de pipeline, o processador consegue executar três instruções simultaneamente. Com isso, esta arquitetura possui o valor 1 como média de instruções por ciclo.
+A arquitetura foi dividida em 3 estágios, são eles: IF/ID/RF, EX/MEM e WB, apresentados na Figura 1. No primeiro estágio,  a próxima instrução a ser executada, definida pelo contador de programa (PC), é lida da memória de instruções (IM), decodificada e os operandos são lidos do banco de registradores ou, em caso de operações com constantes, manipulados pelo extensor de sinal (SE). Ainda no primeiro estágio são tratados os desvios do fluxo de execução, quando as operações forem deste tipo. No segundo estágio, a instrução é executa pela unidade lógica aritmética (ALU) ou pela memória, em caso de operações de armazenamento ou leitura em memória. No terceiro e último estágio (WB) os resultados são escritos no banco de registradores (quando se aplicar).
 
 \begin{figure}[H]
 \centering
@@ -181,19 +186,25 @@ Para uma instrução ser executada são necessários quatro ciclos. Esses ciclos
 \caption{Datapath Geral}
 \end{figure}
 
+OBS: O banco de registradores (RB) presente no último estágio é uma representação do mesmo presente no primeiro, utilizado apenas para facilitar a visualização e compreensão do caminho dos dados.
+\newpage
 \subsection{Principais características}
 \begin{itemize}
     \item \textbf {Arquitetura de 32 bits;}
     \item \textbf {16 GPR de 32 bits de largura (r0 ... r15);}
     \item \textbf {ISA composta por 42 instruções;}
     \item \textbf {Instruções de até 3 operandos;}
-    \item \textbf {Simulador e Montador desenvolvido na linguagem C;}
+    \item \textbf {Unidade de controle (Gerador de Sinais) hardwired;}
+    \item \textbf {Funcionamento em pipeline com três estágios}
+    \item \textbf {Detecção e tratamento de conflito de dados;}
+    \item \textbf {Execução de três instruções por ciclo de clock;}
+    \item \textbf {Sem atrasos devido a conflitos;}
     \item \textbf {Armazenamento em memória de forma big-endian;}
-    \item \textbf {Unidade de controle hardwired;}
-    \item \textbf {Endereçamento por registrador e imediato.}
+    \item \textbf {Endereçamento por registrador e imediato;}
+    \item \textbf {Montador desenvolvido na linguagem C;}
+    \item \textbf {Processador descrito utilizando a linguagem Verilog.}
 \end{itemize}
 
-\newpage
 \section{Arquitetura das Instruções}
 O conjunto de instruções do processador foi dividido nos seguintes grupos:\newline
 \begin{itemize}
@@ -206,6 +217,7 @@ O conjunto de instruções do processador foi dividido nos seguintes grupos:\new
     \item \textbf {HALT;}
 \end{itemize}
 
+\newpage
 \subsection{Instruções Lógicas e Aritméticas}
 \begin{figure}[H]
 \centering
@@ -218,8 +230,7 @@ A Figura 2 apresenta o caminho de dados específico de instruções lógicas e a
 
 Os elementos que caracterizam esse tipo de instrução são: 
 \begin{itemize}
-    \item Unidade logica aritmética (ALU): responsável por realiza a operação e gerar os sinais de flags;
-    \item Registradores de flags (RF): responsável por armazena o último estado das flags atualizadas;
+    \item Unidade logica aritmética (ALU): responsável por realiza a operação gerar e armazenar os sinais de flags;
 \end{itemize}
  
 
@@ -238,6 +249,9 @@ As instruções de lógica e aritmética possuem o seguinte formato:
     \end{center}
 \end{table}  
 % fim
+
+\newpage
+
 % inicio da tabela de operações das instruções de lógica e aritmética
 \begin{center}
 \begin{longtable}[pos]{|>{\centering\arraybackslash}m{50pt}|>{\raggedright\arraybackslash}m{80pt}|>{\raggedright\arraybackslash}m{147pt}|>{\raggedleft\arraybackslash}m{100pt}|} \hline
@@ -320,13 +334,9 @@ O elemento que caracteriza esse tipo de instrução é o extensor de sinal respo
 \includegraphics[width=\textwidth]{./pictures/DatapathMEM.pdf}
 \caption{Datapath Memória}
 \end{figure}
-
 As instruções de acesso à memória são Load e Store. Na instrução Load o endereço presente no registrador B é lido da memória, e a saída é escrita no banco de registradores no endereço especificado na pelo registrador WC. Na instrução Store os dados são lidos do banco de registradores e escritos na memória, sendo registrador A o dado a ser escrito e o registrador B o endereço onde será armazenado. 
-
-O sinal que habilita a escrita na memória de dados é o mesmo que habilita a leitura, quando em nível lógico 1 apenas a escrita é permitida, e em 0, apenas a leitura.
-
+A memória de dados realiza a leitura constantemente. Já a escrita apenas é realizada quando o sinal W\_DM é mandado em nível lógico alto.
 As instruções de acesso à memória possuem o seguinte formato:
-
 % inicio da tabela de formato de instruções de acesso à memória
 \FloatBarrier
 \begin{table}[H]
@@ -354,7 +364,7 @@ As instruções de acesso à memória possuem o seguinte formato:
   \renewcommand{\arraystretch}{1.2}
     \begin{tabular}[pos]{|>{\centering\arraybackslash}m{79pt}|>{\centering\arraybackslash}m{150pt}|>{\centering\arraybackslash}m{160pt}|} \hline
       \cellcolor[gray]{0.9}\textbf{W\_DM} & \cellcolor[gray]{0.9}\textbf{Mnemônico} & \cellcolor[gray]{0.9}\textbf{Operação} \\ \hline
-        0       & load c, b         & C = Mem[B] \\ \hline
+        X       & load c, b         & C = Mem[B] \\ \hline
         1       & store b, a        & Mem[B] = A \\ \hline
     \end{tabular}
     \caption{Tabela de Instruções de Acesso à Memória}
@@ -370,7 +380,7 @@ As instruções de acesso à memória possuem o seguinte formato:
 \caption{Datapath Desvio Condicional}
 \end{figure}
 
-O módulo que caracteriza essa instrução é o testador de flags (TF) que, a partir de uma condição, determina se um salto será ou não realizado.
+O módulo que caracteriza essa instrução é o testador de flags (TF) que, a partir de uma condição, determina qual será o próximo valor do PC. Este valor pode ser o PC + 1 (fluxo normal), a saída do SE (instruções jf, jt e j) ou a saída PRB do banco de registradores (instruções jal e jr, especificados na sessão 4.5)
 
 As instruções de desvio condicional e incondicional realizam um salto para um endereço absoluto da memória de instruções, informado pelo campo DESTINO (demonstrado na Tabela de Formato). Este endereçamento pode ser de até 2\^{}12 bits. Em caso de endereços maior que 12 bits, deve-se utilizar as instruções lcl e lch para carregar o endereço do Label de destino em um registrador. Em seguida, deve-se realizar um desvio por registrador (especificado na sessão 4.5), utilizando como parâmetro este registrador. Esta decisão de utilziar endereçamento absoluto retira da ALU a responsabilidade de calcular o novo destino.
 
@@ -427,10 +437,10 @@ As instruções de desvio condicional devem testar as condições apresentadas n
 \subsection{Instruções de Desvio por Registrador}
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{./pictures/DatapathDER.pdf}
+\includegraphics[width=\textwidth]{./pictures/DatapathDES_REG.pdf}
 \caption{Datapath Desvio por Registrador}
 \end{figure}
-São duas as instruções de desvio por registrador, jump and link e jump register. Na instrução de jump and link, o valor de PC+1 deve ser armazenado no registrador r15 (definido pela unidade de controle) e o conteúdo do registrador RB armazenado em PC. Já no caso da instrução jump register, a única operação a ser feita é armazenar o conteúdo do registrador RB em PC.\newline
+São duas as instruções de desvio por registrador, jump and link (jal) e jump register (jr). Na instrução de jump and link, o valor de PC+1 deve ser armazenado no registrador r15 (definido pelo compilador) e o conteúdo do registrador RB armazenado em PC. Já no caso da instrução jump register, a única operação a ser feita é passar o conteúdo do registrador RB para o PC.\newline
 
 As instruções de desvio por registrador possuem o seguinte formato:
 
@@ -514,7 +524,7 @@ Nessa instrução todos os sinais de controle são zerados, desta forma nada é 
 \section{Descrição dos Componentes}
 Durante algumas discussões foi decidido quais  componentes constituiriam o processador. A partir de análises das instruções foram listados os componentes apresentados nas subsessões a seguir:
 \subsection{Contador de Programa (Program Counter)}
-O Contador de Programa (PC) é o registrador que armazena o endereço da próxima instrução a ser executada. Ele é atualizado assim que a instrução atual é finalizada.
+O Contador de Programa (PC) é o registrador que armazena o endereço da próxima instrução a ser executada. Ele é atualizado a cada borda ascendente de clock.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.25\textwidth]{./pictures/PC.PNG}
@@ -533,7 +543,6 @@ O Contador de Programa (PC) é o registrador que armazena o endereço da próxim
       \cellcolor[gray]{0.9}\textbf{Descrição} \\ \hline
         in\_PC      & 32    & Entrada   & Endereço de destino do salto \\ \hline
         out\_PC     & 32    & Saída     & Saída do PC \\ \hline
-        W\_PC       & 1     & Entrada   & Sinal de controle do PC\\ \hline
         RST\_PC     & 1     & Entrada   & Sinal que limpa o pc\\ \hline
     \end{tabular}
     \caption{Tabela de Sinais do PC}
@@ -542,7 +551,7 @@ O Contador de Programa (PC) é o registrador que armazena o endereço da próxim
 % fim
 
 \subsection{Memória de Instruções}
-Tem como funcionalidade armazenar todas as instruções do programa a ser executado. 
+Tem como funcionalidade armazenar todas as instruções do programa a ser executado. A leitura da instrução acontece sempre.
 
 \begin{figure}[H]
 \centering
@@ -554,7 +563,7 @@ Tem como funcionalidade armazenar todas as instruções do programa a ser execut
 \FloatBarrier
 \begin{table}[H]
   \begin{center}
-  \renewcommand{\arraystretch}{1.1}
+  \renewcommand{\arraystretch}{1.4}
     \begin{tabular}[pos]{|>{\centering\arraybackslash}m{50pt}|>{\centering\arraybackslash}m{60pt}|>{\centering\arraybackslash}m{70pt}|>{\centering\arraybackslash}m{182pt}|} \hline
       \cellcolor[gray]{0.9}\textbf{Nome} & 
       \cellcolor[gray]{0.9}\textbf{Tamanho} & 
@@ -563,7 +572,7 @@ Tem como funcionalidade armazenar todas as instruções do programa a ser execut
        RI       & 32 & Entrada & Endereço da instrução a ser lida\\ \hline
        WI       & 32 & Entrada & Endereço de entrada na memória de instrução \\ \hline
        I        & 32 & Saída   & Instrução atual \\ \hline
-       W\_IM    & 1 & Entrada  & Sinal que habilita a leitura \\ \hline
+       W\_IM    & 1 & Entrada  & Sinal que habilita a escrita \\ \hline
        RST\_IM  & 1 & Entrada  & Sinal que limpa a memória de instruções \\ \hline
        
     \end{tabular}
@@ -573,7 +582,7 @@ Tem como funcionalidade armazenar todas as instruções do programa a ser execut
 % fim
 
 \subsection{Banco de Registradores}
-O banco de registradores consiste em um bloco formado por 16 registradores de propósito geral de 32 bits.
+O banco de registradores consiste em um bloco formado por 16 registradores de propósito geral de 32 bits. Sua função é registrar os dados utilizado por um programa. A entrada que controla escrita é ligada ao clock do processador, e a cada borda descendente de clock, a escrita é realizada, caso o sinal W\_RB esteja em nível lógico alto.
 
 \begin{figure}[H]
 \centering
@@ -606,8 +615,7 @@ O banco de registradores consiste em um bloco formado por 16 registradores de pr
 % fim
 
 \subsection{Extensor de Sinal}
-O extensor de sinal é utilizado para extender o sinal dos bits de entrada nas operações com constantes e operações de desvio.
-\newline\newline
+O extensor de sinal é utilizado para estender o sinal dos bits de entrada nas operações com constantes e operações de desvio, afim de padronizar os dados que são operados em 32 bits.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.3\textwidth]{./pictures/SE.PNG}
@@ -617,7 +625,7 @@ O extensor de sinal é utilizado para extender o sinal dos bits de entrada nas o
 \FloatBarrier
 \begin{table}[H]
   \begin{center}
-  \renewcommand{\arraystretch}{1.5}
+  \renewcommand{\arraystretch}{1.1}
     \begin{tabular}[pos]{|>{\centering\arraybackslash}m{50pt}|>{\centering\arraybackslash}m{60pt}|>{\centering\arraybackslash}m{70pt}|>{\centering\arraybackslash}m{182pt}|} \hline
       \cellcolor[gray]{0.9}\textbf{Nome} & 
       \cellcolor[gray]{0.9}\textbf{Tamanho} & 
@@ -632,8 +640,7 @@ O extensor de sinal é utilizado para extender o sinal dos bits de entrada nas o
 \end{table}  
 % fim
 \subsection{Unidade Lógica e Aritmética (Arithmetic Logic Unit)}
-A ALU é um circuito combinacional responsável por realizar operações aritméticas e lógicas dentro do processador. As operações a serem executadas são determinadas por meio dos sinais de controle e das suas entradas de operação, logo após os dados de entrada são computados e o resultado é obtido na saída do circuito.
-\newline\newline
+A ALU é um circuito combinacional responsável por realizar operações aritméticas e lógicas dentro do processador. As operações a serem executadas são determinadas por meio dos sinais de controle e das suas entradas de operação, logo após os dados de entrada são computados e o resultado é obtido na saída do circuito. Além disso é computado as flags utilizada nas comparações das condições de salto junto ao módulo testador de flags.
 
 \begin{figure}[H]
 \centering
@@ -646,7 +653,7 @@ A ALU é um circuito combinacional responsável por realizar operações aritmé
 \FloatBarrier
 \begin{table}[H]
   \begin{center}
-  \renewcommand{\arraystretch}{1.1}
+  \renewcommand{\arraystretch}{1.4}
     \begin{tabular}[pos]{|>{\centering\arraybackslash}m{50pt}|>{\centering\arraybackslash}m{60pt}|>{\centering\arraybackslash}m{70pt}|>{\centering\arraybackslash}m{182pt}|} \hline
       \cellcolor[gray]{0.9}\textbf{Nome} & 
       \cellcolor[gray]{0.9}\textbf{Tamanho} & 
@@ -656,7 +663,8 @@ A ALU é um circuito combinacional responsável por realizar operações aritmé
         B       &   32 & Entrada   & Operando B \\ \hline
         C       &   32 & Saída     & Resultado da operação \\ \hline
         F       &   4  & Saída     & Flags  \\ \hline
-        OP\_ALU  &   5  & Entrada   & Código de operação da instrução atual  \\ \hline
+        OP\_ALU &   5  & Entrada   & Código de operação da instrução atual  \\ \hline
+        W\_RF   &   3  & Entrada   & Define quais flags serão armazenadas  \\ \hline
     \end{tabular}
     \caption{Tabela de sinais da ALU}
   \end{center}
@@ -664,7 +672,7 @@ A ALU é um circuito combinacional responsável por realizar operações aritmé
 % fim
 
 \subsection{Memória de Dados (Data Memory)}
-A Memória de dados tem como propósito salvar/ler dados proveniente das instruções de acesso à memória. 
+A Memória de dados tem como propósito salvar/ler dados proveniente das instruções de acesso à memória. A leitura dessa memoria funciona da mesma maneira que a Memória de Instrução.
 
 \begin{figure}[H]
 \centering
@@ -693,40 +701,89 @@ A Memória de dados tem como propósito salvar/ler dados proveniente das instru�
 \end{table}  
 % fim
 
-\subsection{Registrador de Flags}
-Responsável por armazenar os estados das flags Overflow, Carry, Sinal e Zero. Estes estados são atualizados de acordo com o tipos e resultados das operações realizadas pela unidade lógica e aritmética. 
+\subsection{Gerador de Sinais}
+Responsável por gerar todos sinais de controle necessários para executar a instrução atual. Esses sinais são responsável por definir o fluxo dos dados por todo o processador, garantindo que a instrução atual não acesse módulos não desejados.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.3\textwidth]{./pictures/RF.PNG}
-\caption{Registrador de Flags}
+\includegraphics[width=0.3\textwidth]{./pictures/SG.PNG}
+\caption{Gerador de Sinais}
 \end{figure}
 
 % inicio da tabela
-\FloatBarrier
-\begin{table}[H]
-  \begin{center}
-  \renewcommand{\arraystretch}{1.4}
-    \begin{tabular}[pos]{|>{\centering\arraybackslash}m{50pt}|>{\centering\arraybackslash}m{60pt}|>{\centering\arraybackslash}m{70pt}|>{\centering\arraybackslash}m{182pt}|} \hline
-      \cellcolor[gray]{0.9}\textbf{Nome} & 
-      \cellcolor[gray]{0.9}\textbf{Tamanho} & 
-      \cellcolor[gray]{0.9}\textbf{Direção} &
-      \cellcolor[gray]{0.9}\textbf{Descrição} \\ \hline
-        O    &   1   & Entrada & Flag de overflow \\ \hline
-        S    &   1   & Entrada & Flag de sinal\\ \hline
-        C    &   1   & Entrada & Flag de carry\\ \hline
-        Z    &   1   & Entrada & Flag de zero \\ \hline
-        OSCZ &   4   & Saída   & Flags atualizadas \\ \hline
-        W\_RF &  3   & Entrada & Sinal que define quais flags serão atualizada \\ \hline
-        RST\_RF & 1   & Entrada & Limpa os dados do registrador \\ \hline
-    \end{tabular}
-    \caption{Tabela de Sinais do Registrador de Flags}
-  \end{center}
-\end{table}  
-% fim
+\begin{center}
+\begin{longtable}[pos]{|m{50pt}|m{60pt}|m{70pt}|m{182pt}| } \hline
+	\cellcolor[gray]{0.9} \textbf{Nome} \centering &
+	\cellcolor[gray]{0.9} \textbf{Tamanho} \centering &
+	\cellcolor[gray]{0.9} \textbf{Direção} \centering  &
+	\cellcolor[gray]{0.9} \textbf{Descrição} \\ \hline \endfirsthead \hline
+	\multicolumn{4}{|c|}{{\bfseries \textbf{continuação da tabela anterior}}} \\ \hline
+	\cellcolor[gray]{0.9} \textbf{Nome} \centering  &
+	\cellcolor[gray]{0.9} \textbf{Tamanho} \centering  &
+	\cellcolor[gray]{0.9} \textbf{Direção} \centering  &
+	\cellcolor[gray]{0.9} \textbf{Descrição} \\ \hline \endhead
+	\multicolumn{4}{|c|}{{\textbf{continua na próxima página}}} \\ \hline \endfoot
+	\hline \endlastfoot
+
+        I       \centering &   8   \centering & Entrada \centering & Define qual tipo de instrução \\ \hline
+        OP\_SE  \centering &   1   \centering & Saída   \centering & Código de operação que indica qual extensão ira ser realizada\\ \hline
+        OP\_FU  \centering &   2   \centering & Saída   \centering & Sinal que define se é necessário utilizar o adiantamento de dados para o operador A ou B das operações da ALU e memória\\ \hline
+        S\_MXSE \centering &   1   \centering & Saída   \centering & Seletor do multiplexador (mx\_b) que seleciona a origem do operador B das operações da ALU e memória\\ \hline
+        OP\_ALU \centering &   5   \centering & Saída   \centering & Código da operação a ser realizada na ALU \\ \hline
+        W\_RF   \centering &   1   \centering & Saída   \centering & Sinal que define quais flags serão armazenadas  \\ \hline
+        W\_DM   \centering &   1   \centering & Saída   \centering & Sinal que indica uma escrita na Memória de Dados  \\ \hline
+        S\_MXRB \centering &   2   \centering & Saída   \centering & Seletor do multiplexador do RB que indica qual a origem do dado a ser armazenado\\ \hline
+        OP\_TF  \centering &   3   \centering & Saída   \centering & Sinal que indica qual é o tipo de comparação será feita para condição de pulo\\ \hline
+
+\caption{Tabela de Sinais do Gerador de Sinais}
+\end{longtable}
+\end{center}
+
+
+
+\subsection{Unidade de Encaminhamento}
+Responsável por adiantar dados necessários para a operação atual, porém ainda não salvos no banco de registradores, evitando assim o conflito de dados. Este módulo verifica se:
+    \begin{itemize}  
+        \item é necessário checar o adiantamento de dados (através do sinal OP\_FU. Sendo que 00 ele não realiza a checagem, 01 verifica apenas RB, 10 apenas RA e 11 verifica os dois endereços;
+        \item a operação anterior escreverá no banco de registradores (através do sinal W\_RB);
+        \item o registrador indicado por WC (da instrução anterior) é igual a RA, ou RB.
+    \end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\textwidth]{./pictures/FU.PNG}
+\caption{Unidade de Encaminhamento}
+\end{figure}
+
+% inicio da tabela
+\begin{center}
+\begin{longtable}[pos]{|m{50pt}|m{60pt}|m{70pt}|m{182pt}| } \hline
+	\cellcolor[gray]{0.9} \textbf{Nome} \centering &
+	\cellcolor[gray]{0.9} \textbf{Tamanho} \centering &
+	\cellcolor[gray]{0.9} \textbf{Direção} \centering  &
+	\cellcolor[gray]{0.9} \textbf{Descrição} \\ \hline \endfirsthead \hline
+	\multicolumn{4}{|c|}{{\bfseries \textbf{continuação da tabela anterior}}} \\ \hline
+	\cellcolor[gray]{0.9} \textbf{Nome} \centering  &
+	\cellcolor[gray]{0.9} \textbf{Tamanho} \centering  &
+	\cellcolor[gray]{0.9} \textbf{Direção} \centering  &
+	\cellcolor[gray]{0.9} \textbf{Descrição} \\ \hline \endhead
+	\multicolumn{4}{|c|}{{\textbf{continua na próxima página}}} \\ \hline \endfoot
+	\hline \endlastfoot
+
+        RA    \centering &   4   \centering & Entrada \centering & Registrador A da instrução atual\\ \hline
+        RB    \centering &   4   \centering & Entrada \centering & Registrador B da instrução atual\\ \hline
+        WC    \centering &   4   \centering & Entrada \centering & Endereço a ser escrito da instrução anterior\\ \hline
+        OP\_FU \centering &   2  \centering & Entrada \centering & Sinal que define se é necessário verificar o operador A, ou o operador B\\ \hline
+        W\_RB \centering &   1   \centering & Entrada \centering & Sinal da instrução anterior que indica se ela escreverá no banco de registradores \\ \hline
+        fa    \centering &   1   \centering & Saída   \centering & Sinal que indica o adiantamento do operador A \\ \hline
+        fb    \centering &   1   \centering & Saída  \centering  & Sinal que indica o adiantamento do operador B \\ \hline
+
+\caption{Tabela de Sinais da Unidade de Encaminhamento}
+\end{longtable}
+\end{center}
 
 \subsection{Testador de Flags}
-Esse módulo combinacional foi criado com o objetivo de decidir se um jump será ou não realizado conforme a condição (COND) e o sinal vindo da unidade de controle. A partir do sinal COND, este módulo decide se o teste será feito utilizando a flag O(111), S(001), C(100), Z(010), S | Z(101), ou ainda, se o teste será feito com a condição true(000). A saída deste módulo é ligada diretamente ao multiplexador do pc, que seleciona se o próximo valor do PC virá da ALU (saída 0 do testador, indicando que o pulo deve ser feito) ou do somador do PC (saída 1 do testador, indicando que deve seguir o fluxo normal).
+Esse módulo combinacional foi criado com o objetivo de decidir se um jump será ou não realizado conforme a condição (COND) é o sinal vindo da unidade de controle. A partir do sinal COND, este módulo decide se o teste será feito utilizando a flag O(111), S(001), C(100), Z(010), S | Z(101), ou ainda, se o teste será feito com a condição true(000). A saída deste módulo é ligada diretamente ao multiplexador do pc, que seleciona se o próximo valor do PC virá do extensor de sinal (saída 00 do testador, indicando que um desvio por endereço de memória), do banco de registradores (saída 01 do testador, indicando um desvio por registrador) ou ainda, do somador do PC (saída 10 do testador, indicando que deve seguir o fluxo normal de execução).
 
 \begin{figure}[H]
 \centering
@@ -737,7 +794,7 @@ Esse módulo combinacional foi criado com o objetivo de decidir se um jump será
 \FloatBarrier
 \begin{table}[H]
   \begin{center}
-  \renewcommand{\arraystretch}{1.15}
+  \renewcommand{\arraystretch}{1.5}
     \begin{tabular}[pos]{|>{\centering\arraybackslash}m{50pt}|>{\centering\arraybackslash}m{60pt}|>{\centering\arraybackslash}m{70pt}|>{\centering\arraybackslash}m{182pt}|} \hline
       \cellcolor[gray]{0.9}\textbf{Nome} & 
       \cellcolor[gray]{0.9}\textbf{Tamanho} & 
@@ -756,42 +813,7 @@ Esse módulo combinacional foi criado com o objetivo de decidir se um jump será
   \end{center}
 \end{table}  
 % fim
-
-\subsection{Unidade de Controle}
-Esta unidade é responsável por gerar todos os sinais que controlam o fluxo das tarefas dentro do processador, sinais estes que permitem a leitura ou escrita em registradores, controle de barramento por meio de multiplexadores e códigos de operação para módulos combinacionais.
-
-A unidade de controle é implementada no modelo hardwired, que tem como sua característica principal uma máquina de estado finita (FSM), que seus estados são definidos pelos estágios do processador (IF,ID,EX/MEM,WB). A cada estado todos os sinais de controle são redefinidos afim de controla todos os elementos para realizar a tarefa desejada.
-
-Esse modelo de implementação tem melhor desempenho em relação ao modelo microprogramada, pois a microprogramada é composta por uma memoria de microprograma, o que lhe da a capacidade de reprograma-la sem precisar reestruturar o circuito. Por outro lado projetar uma unidade de controle hardwired é mais dificil que microprogramada. Porém em geral no modelo RISC, como formato de instrução é mais simples, utiliza-se o modelo hardwired.[
-
-% inicio da tabela
-\begin{center}
-\begin{longtable}[pos]{|>{\centering\arraybackslash}m{50pt}|>{\centering\arraybackslash}m{60pt}|>{\centering\arraybackslash}m{70pt}|>{\centering\arraybackslash}m{182pt}|} \hline
-	\cellcolor[gray]{0.9}\textbf{Nome} & \cellcolor[gray]{0.9}\textbf{Tamanho} & \cellcolor[gray]{0.9}\textbf{Direção} & \cellcolor[gray]{0.9}\textbf{Descrição}\\ \hline \endfirsthead \hline
-	\multicolumn{4}{|c|}{{\bfseries \textbf{continuação da tabela anterior}}} \\ \hline
-	\cellcolor[gray]{0.9}\textbf{Nome} & \cellcolor[gray]{0.9}\textbf{Tamanho} & \cellcolor[gray]{0.9}\textbf{Direção} & \cellcolor[gray]{0.9}\textbf{Descrição}\\ \hline \endhead
-	\multicolumn{4}{|c|}{{\textbf{continua na próxima página}}} \\ \hline \endfoot
-	\hline \endlastfoot
-	
-	
-    TYPE\_OP      &  8  & Entrada & Instrução atual \\ \hline
-    OP\_ALU       &  5   & Saída   & Código de operação da instrução atual \\ \hline
-    OP\_SE        &  1   & Saída   & Sinal de controle do extensor de sinais. Sendo 0 extende de 12 para 32, sendo 1 extende de 16 para 32 \\ \hline
-    OP\_TF        &  3   & Saída   & Sinal que indica se a instrução é jt, jf, jal, j, ou jr \\ \hline
-    W\_PC         &  1   & Saída   & Sinal de controle do PC \\ \hline
-    W\_RB         &  1   & Saída   & Sinal que habilita a escrita no banco de registradores \\ \hline
-    W\_DM         &  1   & Saída   & Sinal que habilita a escrita na memória de dados \\ \hline
-    W\_RF         &  1   & Saída   & Sinal que habilita o registrador de flags \\ \hline
-    S\_MXSE       &  1   & Saída   & Sinal que controla o multiplexador MXSE. Sendo 1, habilita para a saída do mux o valor de saída do SE, sendo 0, habilita para a saída do mux o valor do registrador B do banco de registradores.   \\ \hline
-    S\_MXRB       &  2   & Saída   & Sinal que controla o multiplexador MXRB. Sendo 11, habilita para a saída do mux o valor da saída da ULA, sendo 10, habilita para a saída do mux a saída da memória de dados e sendo 01, habilita para a saída do mux o valor de PC.  \\ \hline
-    
-    \caption{Tabela de Sinais da Unidade de Controle}
-\end{longtable}
-\end{center}
-% fim
-
-%Como esta arquitetura é baseada em RISC e o projeto exige um processador que faça juízo ao nome LAPIDOPACALAMBA, a unidade de controle será implementada em hardwired.
-
+\newpage
 \section{Assembly}
 Para a codificação dos programas deve ser utilizada a linguagem Assembly. Através dos mnemônicos já descritos anteriormente, serão escritas as instruções a serem executadas. Em seguida, através de um programa montador, o código fonte do programa será traduzido em linguagem de máquina para um arquivo binário que poderá ser entendido pelo processador e executado.\newline
 

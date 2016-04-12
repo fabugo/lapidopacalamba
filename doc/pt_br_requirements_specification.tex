@@ -39,6 +39,7 @@
       21/12/2015 & Finalização do Documento & Patricia Gomes \\ \hline      
       21/12/2015 & Revisão do Documento & Fábio Barros \\ \hline 
       28/01/2016 & Correções no Documento & Patricia Gomes \\ \hline
+      11/04/2016 & Atualizações para pipeline & Matheus Borges \\ \hline
     \end{tabular}
   \end{table}
 
@@ -55,7 +56,7 @@
  \subsection{Propósito do Documento}
  O propósito deste documento é descrever e especificar os requisitos que devem ser  atendidos pelo produto, de forma a satisfazer as necessidades dos solicitantes, bem como definir o produto a ser feito, para os desenvolvedores.
  
-  O projeto consiste no desenvolvimento um processador capaz de executar 42 instruções. O processador desenvolvido possui 16 registradores de propósito geral, sendo que cada registrador possui a capacidade de armazenamento de 32 bits.
+  O projeto consiste no desenvolvimento um processador capaz de executar 42 instruções. O processador desenvolvido possui 16 registradores de propósito geral, sendo que cada registrador possui a capacidade de armazenamento de 32 bits. O processador conta ainda com três estágios executados em pipeline, ou seja, simultaneamente.
   
   O documento descreve a lógica de implementação de todos os requisitos do processador.
 
@@ -111,11 +112,6 @@
       {Para viabilizar as operações com constantes e de saltos deve ser implementado um extensor de sinais. O mesmo deve ser capaz de extender 12 ou 16 bits para 32 bits conforme o sinal de controle enviado para o extensor. Para realizar a extensão dos sinais, o extensor deve replicar o bit de sinal.}
       {Importante}
       
-       \requirement
-      {Criação de um registrador de flags}
-      {Deve ser criado um registrador de flags de forma a armazenar as flags atualizadas de acordo com a operação da ULA. A ULA possui uma saída de flags e para essa saída devem  ser enviadas as flags atualizadas na mesma. Um sinal de controle é enviado para permitir que a saída da ULA com as flags atualizadas sejam armazenadas no registrador de flags.}
-      {Importante}
-      
     \requirement
       {Atualizar Flags}
       {A medida que uma operação é realizada algumas flags deverão ser atualizadas. A atualização dessas flags se dará de acordo com a operação realizada pela ULA. As Flags a serem atualizadas são: Overflow, Sinal, Carry e Zero. A flag de sinal é atualizada se o resultado da operação for negativo. Se o resultado for igual a 0, deve-se atualizar a flag zero. No caso da flag de overflow, a mesma deve ser atualizada se houver carry sobre o bit de sinal. Por fim, a flag de carry deve ser atualizada quando houver um "vai um" após o bit de sinal.  }
@@ -139,6 +135,16 @@
        \requirement
       {Criação de uma memória de instrução}
       {Deve existir uma memória específica para armazenar todas as instruções que deverão ser realizadas pelo processador. Essa memória deve possuir 2\^{}32 endereços e cada endereço armazenar 4Bytes (32bits)}
+      {Importante}
+      
+      \requirement
+      {Criação de gerador de sinais hardwired}
+      {Deve existir um gerador de sinais hardwire que utiliza blocos combinacionais para gerar sinais de controle para os demais módulos do processador.}
+      {Importante}
+      
+      \requirement
+      {Criação de unidade de adiantamento de dados}
+      {Deve ser criado um bloco combinacional com a funcionalidade de adiantar dados que ainda não foram escritos no banco de registradores porém são necessários na instrução atual.}
       {Importante}
     
       \end{functional}
@@ -293,12 +299,12 @@
       
        \requirement
       {Operação de desvio incondicional}
-      {Deve realizar um salto para um endereço de instrução definido na memória de instruções, de forma a permitir a execução da instrução para onde ocorreu o salto. No desvio incondicional o valor de PC deve apontar para a instrução seguinte, esse valor da memória de instruções tem o sinal extendido e o resultado vai para a ula e da ula vai um multiplexador cuja seleção dependerá do módulo responsável por testar as flags. No jump incondicional é enviando um sinal que habilita o jump no testador de flags junto com a condição TRUE da tabela de condições (consta no documento de arquitetura). O testador de Flags envia o sinal de seleção para o mux e o mux manda para sua saída o valor que havia saído da ula e esse valor volta pra PC que indicará qual instrução deverá ser realizada.}
+      {Deve realizar um salto para um endereço de instrução definido na memória de instruções, de forma a permitir a execução da instrução para onde ocorreu o salto. No desvio incondicional o valor de PC deve apontar para a instrução seguinte, esse valor da memória de instruções tem o sinal estendido e o resultado vai diretamente para o multiplexador do PC. Através do testador de flags, esse multiplexador seleciona a entrada com este valor e efetua o desvio.}
       {Importante}
       
        \requirement
       {Operação de desvios condicionais}
-      {Deve realizar um salto para um endereço de instrução definido na memória de instruções, de forma a permitir a execução da instrução para onde ocorreu o salto. No desvio incondicional o valor de PC deve apontar para a instrução seguinte, esse valor da memória de instruções tem o sinal extendido e o resultado vai para a ula e da ula vai um multiplexador cuja seleção dependerá do módulo responsável por testar as flags. Se a condição de flags for verdadeira e o jump for true, ou se a condição for falsa e o jump for false, o multiplaxador manda para sua saída o valor que havia saído da ula e esse valor volta pra PC que insicará qual instrução deverá ser realizada.
+      {Deve realizar um salto para um endereço de instrução definido na memória de instruções, de forma a permitir a execução da instrução para onde ocorreu o salto. No desvio incondicional o valor de PC deve apontar para a instrução seguinte, esse valor da memória de instruções tem o sinal estendido e o resultado vai diretamente para o multiplexador do PC. Através do testador de flags, este multiplexador pode selecionar o endereço do desvio ou o de fluxo normal de execução.
 .}
       {Importante}
       
@@ -331,11 +337,6 @@
     \requirement
     {Armazenamento em memória de forma big-endian}
     {O armazenamento na memória deve ser feito de forma big-endian, logo, o bit mais significativo do dado deve ser armazenado na posição menos significativa da memória.}
-    {Importante}
-
-    \requirement
-    {Unidade de controle hardwired}
-    {A unidade de controle deve ser hardwire, logo, sinais de controle devemm ser gerados com o uso de técnicas de circuitos lógicos convencionais.}
     {Importante}
   \end{nonfunctional}
 
